@@ -1,23 +1,22 @@
 CONAN
 =====
 
-.. image:: images/conan_overview.png
-  :width: 600
-  :alt: Tengo un cimbrel matutino
-
 .. image:: ../images/conan_overview.png
   :width: 600
-  :alt: Tengo un cimbrel matutino
+  :alt: Alt text que no se para que vale
 
-.. image:: docs/images/conan_overview.png
-  :width: 600
-  :alt: Tengo un cimbrel matutino
 
-.. image:: wiki/docs/images/conan_overview.png
-  :width: 600
-  :alt: Tengo un cimbrel matutino
+- The dependencies are writed on a file called **conanfile.txt**
 
-conanfile.txt
+.. code-block:: text
+  :lineno-start: 1
+
+   [requires]
+   Poco/1.7.2@lasote/stable
+
+   [generators]
+   cmake
+   
 
 .. code-block:: console
 
