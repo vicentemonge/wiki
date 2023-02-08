@@ -23,3 +23,4 @@ Contents
    conan
    bash
    git
+   vscode
