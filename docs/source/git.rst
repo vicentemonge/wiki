@@ -12,6 +12,6 @@ diff
     A file1
     D file2
     M file3
-    $ git diff --name-status --diff-filter=d # add a filter to hide deleted files 
+    $ git diff --name-status --diff-filter=d # add a filter to hide deleted files, all options are --diff-filter=ACMRTUXBD
     A file1
     M file3
