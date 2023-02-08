@@ -22,3 +22,4 @@ Contents
    api
    conan
    bash
+   git
