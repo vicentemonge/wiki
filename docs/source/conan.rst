@@ -17,20 +17,40 @@ CONAN
    [generators]
    cmake
 
-- [conan install] To install dependencies (direct dependencies and transitive dependencies):
+- [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
   /connanfile/txt/path $ mkdir build && cd build/ && conan install ..
 
-- [conan info] To show the dependecie graph as text:
+  And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can to use in my CMakeLists.txt:
+.. code-block:: cmake
+  
+  ...
+  include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+  conan_basic_setup()
+  ...
+  target_link_libraries(project_name ${CONAN_LIBS})
+  ...
+
+
+
+- [conan **info**] To show the dependecies graph as text:
 .. code-block:: console
 
   /connanfile/txt/path/build $ conan info ..
 
-- [conan search] To show local cache, all connan packages and their versions are available in my local system. To see info of a package can type:
+- [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
 .. code-block:: console
 
-   $ conan search 
+   $ conan search poco
+
+- [${HOME}/**.conan**] Local cache folder
+
+
+
+
+
+
 
 
 .. code-block:: console
