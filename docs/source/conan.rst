@@ -20,7 +20,7 @@ CONAN
 - [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
-  /connanfile/txt/path $ mkdir build && cd build/ && conan install ..
+  /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
 
   And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can to use in my CMakeLists.txt:
 .. code-block:: cmake
@@ -32,19 +32,33 @@ CONAN
   target_link_libraries(project_name ${CONAN_LIBS})
   ...
 
-
-
 - [conan **info**] To show the dependecies graph as text:
 .. code-block:: console
 
-  /connanfile/txt/path/build $ conan info ..
+  /connanfile/txt/path/build:$ conan info ..
 
 - [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
 .. code-block:: console
 
    $ conan search poco
 
-- [${HOME}/**.conan**] Local cache folder
+**NOTE**: *${HOME}/.conan* is out local cache folder
+
+- [**build**] Now we can compile our code:
+.. code-block:: console
+
+   /connanfile/txt/path/build:$ cmake .. -G "Visual Studio 14 Win64"
+   /connanfile/txt/path/build:$ cmake --build . --config Debug
+
+
+- [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
+.. code-block:: console
+
+   $ conan search poco
+
+
+
+   HASTA AQUI 35:00 del vídeo
 
 
 
