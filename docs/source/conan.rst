@@ -1,4 +1,4 @@
-  CONAN
+CONAN
 =====
 
 .. image:: ../images/conan_overview.png
@@ -37,12 +37,7 @@
 
   /connanfile/txt/path/build:$ conan info ..
 
-- [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
-.. code-block:: console
-
-   $ conan search poco
-
-**NOTE**: *${HOME}/.conan* is out local cache folder
+**NOTE**: *${HOME}/.conan* is our local cache folder
 
 - [**build**] Now we can compile our code:
 .. code-block:: console
@@ -56,9 +51,41 @@
 
    $ conan search poco
 
+Building your own packages
+------------------------
 
+- Create recipe file **conanfile.py**:
+.. code-block:: python
 
-   HASTA AQUI 35:00 del vídeo
+  from conans import ConanFile, AutoToolsBuildEnvironment
+  from conans import tools
+
+  class HelloConan(ConanFile):
+    name = "hello"
+    version = "0.1"
+    settings = "os", "compiler", "build_type", "arch"
+    
+    def build(self):
+        self.run("git clone https//github/memshared/hello.git")
+
+    def build(self):
+        cmake = CMake(self.settings)
+        self.run('cmake hello %s' % (cmake.command_line))
+        self.run("cmake --build . %s" % cmake.build_config)
+
+    def package(self):
+        self.copy("*.h", dst="include", src="hello  ")
+        self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ["hello"]
+
+- [conan **export**]: Export the recipe to local cache
+
+.. code-block:: console
+
+   $ conan export .
 
 
 
@@ -70,14 +97,4 @@
 .. code-block:: console
 
    (.venv) $ pip install lumache
-
-
-Title
-=====
-
-Section
--------
-
-Subsection
-~~~~~~~~~~
 
