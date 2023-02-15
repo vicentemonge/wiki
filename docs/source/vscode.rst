@@ -26,6 +26,6 @@ configs
 
 debug
 -----
-https://code.visualstudio.com/docs/cpp/cmake-linux
-https://code.visualstudio.com/docs/cpp/cpp-debug
-https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html
+`vscode cmake-linux <https://code.visualstudio.com/docs/cpp/cmake-linux>`_
+`vscode cpp-debug <https://code.visualstudio.com/docs/cpp/cpp-debug>`_
+`cmake-tools debugging<https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html>`_
