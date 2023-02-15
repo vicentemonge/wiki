@@ -37,7 +37,9 @@ CONAN
 
   /connanfile/txt/path/build:$ conan info ..
 
-**NOTE**: *${HOME}/.conan* is our local cache folder
+.. note::
+  
+  ${HOME}/.conan* is our local cache folder
 
 - [**build**] Now we can compile our code:
 .. code-block:: console
