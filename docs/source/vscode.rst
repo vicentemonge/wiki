@@ -18,7 +18,7 @@ configs
 - default config are placed in the extension folder. Such as default cmake build folder:
 
 .. code-block:: text
-    :caption:.vscode/extensions/ms-vscode.cmake-tools-1.13.45/package.json
-    :lineno-start:1065
-    
+    :caption: .vscode/extensions/ms-vscode.cmake-tools-1.13.45/package.json
+    :lineno-start: 1065
+
     "default": "${workspaceFolder}/build",
