@@ -23,3 +23,9 @@ configs
     :lineno-start: 1065
 
     "default": "${workspaceFolder}/build",
+
+debug
+-----
+https://code.visualstudio.com/docs/cpp/cmake-linux
+https://code.visualstudio.com/docs/cpp/cpp-debug
+https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html
