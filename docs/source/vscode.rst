@@ -4,6 +4,7 @@ vscode
 shortcuts
 ---------
 
+- go previous/following place: CTRL + ALT + - **/** CTRL + SHIFT + -
 - show object defined current file: CTRL + SHIFT + O
 - swith between header/source: ALT + O
 - show/hide left panel: CTRL + B
