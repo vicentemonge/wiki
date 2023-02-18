@@ -20,7 +20,7 @@ CONAN
 
 .. note::
   
-  pkg/0.1@user/channel is called the recipe reference
+  pkg/0.1@user/channel is called the **recipe reference**
 
 - **Conan Center Index** [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
 
@@ -64,7 +64,9 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
 - [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
 .. code-block:: console
 
-   $ conan search poco
+   $ conan search # to get all packages by its recipe reference pkg/0.1@user/channel
+   $ conan search pkg # filter by filter short name
+   $ conan seach pkg@ # to show details TODO: undertand how its works, pkg@ or pkg/0.1@user/channel@ ...
 
 Building your own packages
 ------------------------
