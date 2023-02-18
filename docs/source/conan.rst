@@ -21,6 +21,8 @@ CONAN
   
   pkg/0.1@user/channel is called the recipe reference
 
+- **Conan Center Index** [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
+
 - [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
