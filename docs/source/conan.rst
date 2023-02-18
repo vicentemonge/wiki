@@ -38,6 +38,8 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
   conan_basic_setup()
   ...
   target_link_libraries(project_name ${CONAN_LIBS})
+  #some times needed:
+  #target_link_libraries(project_name CONAN_PKG::poco)
   ...
 
 - [conan **info**] To show the dependecies graph as text:
