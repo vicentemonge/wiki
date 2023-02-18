@@ -23,5 +23,6 @@ Contents
    conan
    bash
    git
-   vscode
    linux
+   vscode
+   yocto
