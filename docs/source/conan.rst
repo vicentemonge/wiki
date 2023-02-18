@@ -50,14 +50,19 @@ It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need 
 Using the **cmake_find_package** instead of the plain **cmake** generator we no need to add conan especific content to the CMakeLists.txt:
 
 .. code-block:: cmake
+  :caption: <caption>
+  :linenos:
+  :lineno-start: 1
+  :emphasize-lines: 6,7,9,10,13
+  :name: <reference-label>
 
   cmake_minimum_required(VERSION 3.0)
   project(timer)
   add_compile_options(-std=c++11)
 
   # Using the "cmake_find_package" generator, files are in the bin dir
-  **set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})**
-  **set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR} ${CMAKE_PREFIX_PATH})**
+  set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})
+  set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR} ${CMAKE_PREFIX_PATH})
 
   find_package(Boost REQUIRED)
   find_package(Poco REQUIRED)
