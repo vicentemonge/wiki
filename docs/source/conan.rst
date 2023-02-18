@@ -30,6 +30,9 @@ CONAN
 .. code-block:: console
 
   /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
+  # downloads the binary packages (Release by default) if exists or the source code eoc
+  # to specify build version:
+  # conan install .. -s build_type=Debug
 
 And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can to use in my CMakeLists.txt:
 .. code-block:: cmake
