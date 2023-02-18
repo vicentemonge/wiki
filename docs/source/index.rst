@@ -18,11 +18,11 @@ Contents
 
 .. toctree::
 
+   bash
+   linux
+   conan
+   yocto
+   vscode
+   git
    usage
    api
-   conan
-   bash
-   git
-   linux
-   vscode
-   yocto
