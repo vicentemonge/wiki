@@ -73,7 +73,7 @@ Using the **cmake_find_package** instead of the plain **cmake** generator we no 
 
 .. note::
 
-  Generators generates text files to be used in the build system. In this case to CMake generates **conanbuildinfo.cmake**.
+  Generators generates text files to be used in the build system. In this the CMake cases generates **conanbuildinfo.cmake** or **FindXXXX.cmake** in the last case.
   We can generate a text file with the native compiler arguments without generators specifying *-g compiler_args*:
 
   *conan install . -g compiler_args*
