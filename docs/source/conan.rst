@@ -30,8 +30,8 @@ CONAN
 .. code-block:: console
 
   /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
-  # downloads the binary packages (Release by default) if exists or the source code eoc
-  # to specify build version:
+  # downloads the binary packages (Release by default) if exists or the source code eoc and build
+  # to specify build version of the package:
   # conan install .. -s build_type=Debug
 
 It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need to use in my CMakeLists.txt:
@@ -46,6 +46,25 @@ It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need 
   #some times needed:
   #target_link_libraries(project_name CONAN_PKG::poco)
   ...
+
+Using the **cmake_find_package** instead of the plain **cmake** generator we no need to add conan especific content to the CMakeLists.txt:
+
+.. code-block:: cmake
+
+  cmake_minimum_required(VERSION 3.0)
+  project(timer)
+  add_compile_options(-std=c++11)
+
+  # Using the "cmake_find_package" generator, files are in the bin dir
+  **set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR} ${CMAKE_MODULE_PATH})**
+  **set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR} ${CMAKE_PREFIX_PATH})**
+
+  find_package(Boost REQUIRED)
+  find_package(Poco REQUIRED)
+
+  add_executable(timer timer.cpp)
+  target_link_libraries(timer Poco::Poco Boost::Boost)
+
 
 .. note::
 
