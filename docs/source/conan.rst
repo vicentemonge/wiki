@@ -5,6 +5,7 @@ CONAN
   :width: 600
   :alt: Alt text que no se para que vale
 
+- Dependencies are placed typically on code, on build system files and now on Conan recipes to resolve them.
 
 - **conanfile.txt** with 2 sections corresponding on dependencies (*requires*) and build systems (*generators*)
 
