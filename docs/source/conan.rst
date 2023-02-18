@@ -58,9 +58,8 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
 - [**build**] Now we can compile our code:
 .. code-block:: console
 
-   /connanfile/txt/path/build:$ cmake .. -G "Visual Studio 14 Win64"
-   /connanfile/txt/path/build:$ cmake --build . --config Debug
-
+   /connanfile/txt/path/build:$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+   /connanfile/txt/path/build:$ cmake --build .
 
 - [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
 .. code-block:: console
