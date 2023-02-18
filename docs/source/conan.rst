@@ -33,8 +33,6 @@ CONAN
   # downloads the binary packages (Release by default) if exists or the source code eoc
   # to specify build version:
   # conan install .. -s build_type=Debug
-  ## if no generators are specified we can add *-g compiler_args* to generate compile arguments file and use them
-  # g++ timer.cpp @conanbuildinfo.args -o timer -std=c++11
 
 And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can to use in my CMakeLists.txt:
 .. code-block:: cmake
@@ -47,6 +45,17 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
   #some times needed:
   #target_link_libraries(project_name CONAN_PKG::poco)
   ...
+
+.. note::
+
+  Generators generates text files to be used in the build system. In this case to CMake generates **conanbuildinfo.cmake**.
+  We can generate a text file with the native compiler arguments without generators specifying *-g compiler_args*:
+
+  *conan install . -g compiler_args*
+  
+  and then use:
+
+  *g++ timer.cpp @conanbuildinfo.args -o timer -std=c++11*
 
 - [conan **info**] To show the dependecies graph as text:
 .. code-block:: console
