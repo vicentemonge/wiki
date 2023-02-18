@@ -17,6 +17,10 @@ CONAN
    [generators]
    cmake
 
+.. note::
+  
+  pkg/0.1@user/channel is called the recipe reference
+
 - [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
