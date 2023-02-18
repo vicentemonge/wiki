@@ -97,6 +97,8 @@ Existing packages for recipe zlib/1.2.13:
             os: Linux
         Outdated from recipe: False
 
+.. image:: ../images/conan_package_install.png
+  Package install process. First in the local cache and then remote search by index order.
 
 Building your own packages
 ------------------------
