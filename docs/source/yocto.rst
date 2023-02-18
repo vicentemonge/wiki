@@ -23,3 +23,8 @@ This creates a **working directory** for you named **build-myproject/** and make
 
 Building
 --------
+
+Run BitBake, telling it which root filesystem image you want to create. It will work backward and build all the dependencies first, beginning with the toolchain.
+    .. code-block:: console
+    
+    $ bitbake core-image-minimal
