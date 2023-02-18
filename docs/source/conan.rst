@@ -23,6 +23,8 @@ CONAN
 
 - **Conan Center Index** [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
 
+.. image:: ../images/conan_center_index.png
+
 - [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
