@@ -49,7 +49,7 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
 - [conan **info**] To show the dependecies graph as text:
 .. code-block:: console
 
-  /connanfile/txt/path/build:$ conan info ..
+  /connanfile/txt/path/build:$ conan info .. # --graph=file.html to output graphically as html file
 
 .. note::
   
@@ -67,6 +67,8 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
    $ conan search # to get all packages by its recipe reference pkg/0.1@user/channel
    $ conan search pkg # filter by filter short name
    $ conan seach pkg@ # to show details TODO: undertand how its works, pkg@ or pkg/0.1@user/channel@ ...
+   # --table=file.html to output to html file
+   # -r conancenter to search on remote (conancenter is the name of the remote by default)
 
 .. code-block:: console
 
