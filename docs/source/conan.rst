@@ -34,7 +34,8 @@ CONAN
   # to specify build version:
   # conan install .. -s build_type=Debug
 
-And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can to use in my CMakeLists.txt:
+It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need to use in my CMakeLists.txt:
+
 .. code-block:: cmake
   
   ...
