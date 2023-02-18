@@ -68,6 +68,36 @@ And to generates **conanbuildinfo.cmake** with CONAN cmake variables that I can 
    $ conan search pkg # filter by filter short name
    $ conan seach pkg@ # to show details TODO: undertand how its works, pkg@ or pkg/0.1@user/channel@ ...
 
+.. code-block:: console
+
+conan@48674d6a3546:~/training/consumer/build$ conan search zlib/1.2.13@
+Existing packages for recipe zlib/1.2.13:
+
+    Package_ID: 19729b9559f3ae196cad45cb2b97468ccb75dcd1
+        [options]
+            fPIC: True
+            shared: False
+        [settings]
+            arch: x86_64
+            build_type: Release
+            compiler: gcc
+            compiler.version: 10
+            os: Linux
+        Outdated from recipe: False
+
+    Package_ID: 75e99b627c196b65c439728670655ec3c366b334
+        [options]
+            fPIC: True
+            shared: False
+        [settings]
+            arch: x86_64
+            build_type: Debug
+            compiler: gcc
+            compiler.version: 10
+            os: Linux
+        Outdated from recipe: False
+
+
 Building your own packages
 ------------------------
 
