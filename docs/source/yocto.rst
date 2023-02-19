@@ -97,8 +97,12 @@ Add itself to BBPATH, BBFILES, BBFILE_COLLECTIONS variables.
 Adding
 ~~~~~~
 
+.. code-block:: console
+
     $ bitbake-layers add-layer ../meta-nova
 
+Bitbake and recipes
+-------------------
 
-.. code-block:: console
+
     
