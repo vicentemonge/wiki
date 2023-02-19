@@ -64,4 +64,4 @@ The core layers of the Yocto Project are as follows:
 
 - meta: This is the OpenEmbedded core and contains some changes for Poky.
 - meta-poky: This is the metadata specific to the Poky distribution.
-- meta-yocto-bsp: This contains the board supp
+- meta-yocto-bsp: This contains the board support packages for the machines that the Yocto Project supports.
