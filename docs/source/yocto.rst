@@ -104,5 +104,11 @@ Adding
 Bitbake and recipes
 -------------------
 
+- Recipes: **.bb** files info about get the source code, dependencies, build and install.
+- Append: **.bbappend** override or extend .bb file.
+- Include: **.inc** recipes common info that can be added by **require**(fails if no exist) or **include**(not fail).
+- Classes: **.bbclass** common build info that can be inherited by **inherit** word. The classes/base.bbclass class is
+implicitly inherited in every recipe.
+- Configuration: **.conf** define variables to govern build process.
 
     
