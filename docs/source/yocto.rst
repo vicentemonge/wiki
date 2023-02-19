@@ -43,8 +43,25 @@ Run BitBake, telling it **which root filesystem** image you want to create. It w
     $ bitbake core-image-minimal
 
 .. note::
-    
+
     **core-image-minimal**: This is a small console-based system that is useful for tests and as the basis for custom images.
     **core-image-minimal-initramfs**: This is similar to core-image-minimal but built as a ramdisk.
     **core-image-x11**: This is a basic image with support for graphics through an X11 server and the xterminal Terminal app.
     **core-image-full-cmdline**: This console-based system offers a standard CLI experience and full support for the target hardware.
+
+This genererates several folders inside build-myproject:
+
+- downloads/: all the source.
+- tmp/work/: staging area for the root filesystem
+- deploy/images/[machine name]/: Contains the bootloader, the kernel and the root filesystem images ready to be run on the target.
+- deploy/rpm/: This contains the RPM packages that make up the images.
+
+Layers
+------
+
+The metadata for the Yocto Project is structured into layers. By convention, each layer has a name beginning with meta.
+The core layers of the Yocto Project are as follows:
+
+- meta: This is the OpenEmbedded core and contains some changes for Poky.
+- meta-poky: This is the metadata specific to the Poky distribution.
+- meta-yocto-bsp: This contains the board supp
