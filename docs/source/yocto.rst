@@ -4,7 +4,7 @@ YOCTO
 Installing
 ----------
 
-.. code-block:: console    
+.. code-block:: console
     
     $ git clone -b kirkstone git://git.yoctoproject.org/poky.git
 
@@ -36,7 +36,8 @@ Contains the following configuration files for this project:
 Building
 --------
 
-Run BitBake, telling it **which root filesystem** image you want to create. It will work backward and build all the dependencies first, beginning with the toolchain.
+Run BitBake, telling it **which root filesystem** image you want to create. It will work backward and build all the
+dependencies first, beginning with the toolchain.
 
 .. code-block:: console
     
@@ -59,9 +60,45 @@ This genererates several folders inside build-myproject:
 Layers
 ------
 
+.. code-block:: console
+    
+    $ bitbake-layers show-layers
+
 The metadata for the Yocto Project is structured into layers. By convention, each layer has a name beginning with meta.
 The core layers of the Yocto Project are as follows:
 
 - meta: This is the OpenEmbedded core and contains some changes for Poky.
 - meta-poky: This is the metadata specific to the Poky distribution.
 - meta-yocto-bsp: This contains the board support packages for the machines that the Yocto Project supports.
+
+Each meta layer need to has a **conf/layer.conf** config file
+
+build-myproject/conf/bblayers.conf
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Stores the list of layers in which BitBake searches for recipes and, by default, includes all three layers mentioned in
+the preceding list. Useful list of  layers: http://layers.openembedded.org/layerindex/
+
+Adding a layers is add a location to that file.
+
+README, need to be read for dependencies, version, etc.
+
+Create
+~~~~~~
+
+.. code-block:: console
+    
+    $ source poky/oe-init-build-env build-nova
+    $ bitbake-layers create-layer nova
+    $ mv nova ../meta-nova
+
+Add itself to BBPATH, BBFILES, BBFILE_COLLECTIONS variables.
+
+Adding
+~~~~~~
+
+    $ bitbake-layers add-layer ../meta-nova
+
+
+.. code-block:: console
+    
