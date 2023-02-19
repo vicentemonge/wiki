@@ -10,7 +10,8 @@ Installing
 
 Preparing workspace
 -------------------
-    .. code-block:: console
+
+.. code-block:: console
     
     $ source poky/oe-init-build-env build-myproject
 
@@ -24,6 +25,7 @@ build-myproject/conf/
 
 Contains the following configuration files for this project:
 - **local.conf**: This contains a specification of the device you are going to build and the build environment. We select a machine:
+
 .. code-block:: text
 
     MACHINE ?= "qemuarm"
@@ -34,6 +36,7 @@ Building
 --------
 
 Run BitBake, telling it which root filesystem image you want to create. It will work backward and build all the dependencies first, beginning with the toolchain.
-    .. code-block:: console
+
+.. code-block:: console
     
     $ bitbake core-image-minimal
