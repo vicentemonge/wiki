@@ -31,7 +31,11 @@ templates_path = ['_templates']
 
 # html_theme = 'sphinx_rtd_theme'
 # html_theme = 'insegel'
-html_theme = 'groundwork'
+# html_theme = 'groundwork'
+import sphinx_pdj_theme
+html_theme = 'sphinx_pdj_theme'
+html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
+
 
 
 # -- Options for EPUB output

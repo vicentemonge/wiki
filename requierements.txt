@@ -2,3 +2,5 @@
 insegel
 # groundwork theme
 groundwork-sphinx-theme
+# PDJ Sample theme
+sphinx-pdj-theme
