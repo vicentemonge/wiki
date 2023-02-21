@@ -1,1 +1,4 @@
+# insegel theme
 insegel
+# groundwork theme
+groundwork-sphinx-theme
