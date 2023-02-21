@@ -24,5 +24,6 @@ Contents
    yocto
    vscode
    git
+   sandbox
    usage
    api
