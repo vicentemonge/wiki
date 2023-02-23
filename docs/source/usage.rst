@@ -35,7 +35,8 @@ For example:
 CODIGO FUENTE EJECUTABLE
 
 .. raw:: html
-   
+
+   <script>window.onload = coliru.addRunButtons</script>
     <pre>
         <code data-lang="c++">
             int main()
