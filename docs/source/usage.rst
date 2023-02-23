@@ -32,3 +32,16 @@ For example:
 >>> lumache.get_random_ingredients()
 ['shells', 'gorgonzola', 'parsley']
 
+CODIGO FUENTE EJECUTABLE
+
+.. raw:: html
+   
+    <pre>
+        <code data-lang="c++">
+            int main()
+            {
+                return 0;
+            }
+        </code>
+    </pre>
+
