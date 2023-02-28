@@ -12,6 +12,8 @@ shortcuts
 - collapse all: CTRL + K CTRL + 0
 - expand all: CTRL + K CTRL + J
 - show settings: CTRL + ,
+- find files: CTRL + P
+- execute commands: CTRL + + SHIFT + P
 
 configs
 -------
