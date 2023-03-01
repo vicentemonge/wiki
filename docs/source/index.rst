@@ -18,6 +18,8 @@ Contents
 
 .. toctree::
 
+   c
+   c++
    bash
    linux
    conan
