@@ -14,6 +14,7 @@ shortcuts
 - show settings: CTRL + ,
 - find files: CTRL + P
 - execute commands: CTRL + + SHIFT + P
+- go line: CTRL + g
 
 configs
 -------
