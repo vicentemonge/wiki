@@ -6,6 +6,11 @@ Usage
 Installation
 ------------
 
+`Wiki de pe_linux <https://bobafett.pelectronics.local/vmonge/pe_linux_nayax/-/wikis/HOME>`_
+
+
+
+
 To use Lumache, first install it using pip:
 
 .. code-block:: console
