@@ -22,6 +22,7 @@ Contents
    c++
    bash
    linux
+   cmake
    conan
    yocto
    vscode
