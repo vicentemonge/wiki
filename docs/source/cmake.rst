@@ -22,3 +22,12 @@ Macros vs functions
 
    if(NOT DEFINED VAR_NAME) and if(NOT DEFINED ${VAR_NAME})
 
+- **if**
+
+.. code-block:: cmake
+
+   if((condition) AND (condition OR (NOT condition)))
+   elseif(<condition>)
+   else()
+   endif()
+
