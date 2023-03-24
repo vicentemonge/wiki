@@ -13,7 +13,7 @@ Commands
 
 **alias** list all the alias
 
-- **GREP** https://man7.org/linux/man-pages/man1/grep.1.html
+**GREP** https://man7.org/linux/man-pages/man1/grep.1.html
 
     --exclude-dir=, to skip folders if -r option
     --include=, wildcarded pattern to match files
