@@ -72,4 +72,13 @@ tag
     $ git push --delete <remote> <tag_name> # remotely
     $ git push <remote> :refs/tags/<tag_name> # if you have a branch wiith the same name the above command fails
 
+ - update local tags:
+
+.. code-block:: console
+
+    $ git fetch <remote>    --tags
+    $ # if someone gone in the remote the easy way is:
+    $ git tag -l | xargs git tag -d
+    $ git fetch --tags
+
 
