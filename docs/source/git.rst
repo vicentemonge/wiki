@@ -64,3 +64,12 @@ tag
     $ git tag -l <pattern>
 
 
+ - remove locally and remote respec:
+
+ .. code-block:: console
+
+    $ git tag -d <tag_name> # locally
+    $ git push --delete <remote> <tag_name> # remotely
+    $ git push <remote> :refs/tags/<tag_name> # if you have a branch wiith the same name the above command fails
+
+
