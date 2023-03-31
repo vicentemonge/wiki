@@ -24,6 +24,9 @@ with 2 sections corresponding on dependencies (*requires*) and build systems (*g
 .. note::
   
   [pkg]/[version]@[user]/[channel] is called the **recipe reference**
+  No user/channel for official packages, only for custom packages
+  user = company/team/identifier
+  channel = convention is testing or stable
 
 **Conan Center Index**
 ----------------------
@@ -189,7 +192,19 @@ Building your own packages
 
     def package_info(self):
         self.cpp_info.libs = ["hello"]
+        # self.cpp_info.libdirs = ["lib"] # defualt value
+        # self.cpp_info.includedirs = ["include"] # defualt value
 
+
+From scratch
+-------------
+
+    $ conan new [package]/[version] # generate template
+    $ conan create . user/testing  # create package in local cache
+    $ conan search # show local cahce
+    # conan search hello/0.1@user/testing
+    # conan create . user/testing -s build_type=Debug
+    # conan search hello/0.1@user/testing
 
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
