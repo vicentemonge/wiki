@@ -2,7 +2,7 @@ CONAN
 =====
 
 .. image:: ../images/conan_overview.png
-  :width: 600
+  :width: 800
   :alt: Alt text que no se para que vale
 
 - Dependencies are placed typically on code, on build system files and now on Conan recipes to resolve them.
@@ -31,6 +31,7 @@ with 2 sections corresponding on dependencies (*requires*) and build systems (*g
  [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
 
 .. image:: ../images/conan_center_index.png
+  :width: 800
 
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
