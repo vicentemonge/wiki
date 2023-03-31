@@ -199,12 +199,15 @@ Building your own packages
 From scratch
 -------------
 
+.. code-block:: console
+
     $ conan new [package]/[version] # generate template
     $ conan create . user/testing  # create package in local cache
     $ conan search # show local cahce
     # conan search hello/0.1@user/testing
     # conan create . user/testing -s build_type=Debug
     # conan search hello/0.1@user/testing
+    $ conan new [package]/[version] -s # from local sources
 
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
