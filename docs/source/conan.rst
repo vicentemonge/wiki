@@ -41,7 +41,7 @@ To install dependencies (direct dependencies and transitive dependencies):
 .. code-block:: console
 
   /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
-  # downloads the binary packages (Release by default) if exists or the source code eoc and build
+  # downloads the binary packages (Release by default) if exists or the source code and build
   # to specify build version of the package:
   # conan install .. -s build_type=Debug
 
@@ -61,7 +61,7 @@ It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need 
 Using the **cmake_find_package** instead of the plain **cmake** generator we no need to add conan especific content to the CMakeLists.txt:
 
 .. code-block:: cmake
-  :caption: <caption>
+  :caption: Example CMakeLists.txt
   :linenos:
   :lineno-start: 1
   :emphasize-lines: 6,7,9,10,13
