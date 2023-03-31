@@ -93,7 +93,12 @@ Using the **cmake_find_package** instead of the plain **cmake** generator we no 
 
   *g++ timer.cpp @conanbuildinfo.args -o timer -std=c++11*
 
-- [conan **info**] To show the dependecies graph as text:
+
+[conan **info**]
+~~~~~~~~~~~~~~~~
+
+To show the dependecies graph as text:
+
 .. code-block:: console
 
   /connanfile/txt/path/build:$ conan info .. # --graph=file.html to output graphically as html file
@@ -108,7 +113,12 @@ Using the **cmake_find_package** instead of the plain **cmake** generator we no 
    /connanfile/txt/path/build:$ cmake .. -DCMAKE_BUILD_TYPE=Debug
    /connanfile/txt/path/build:$ cmake --build .
 
-- [conan **search**] To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
+
+[conan **search**]
+~~~~~~~~~~~~~~~~~~~
+
+To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
+
 .. code-block:: console
 
    $ conan search # to get all packages by its recipe reference pkg/0.1@user/channel
@@ -179,8 +189,11 @@ Building your own packages
     def package_info(self):
         self.cpp_info.libs = ["hello"]
 
-- [conan **export**]: Export the recipe to local cache
 
+[conan **export**]
+~~~~~~~~~~~~~~~~~~~
+
+Export the recipe to local cache
 .. code-block:: console
 
    $ conan export .
