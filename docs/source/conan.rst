@@ -105,7 +105,7 @@ To show the dependecies graph as text:
 
 .. note::
   
-  ${HOME}/.conan* is our local cache folder
+  ${HOME}/.conan/ is our local cache folder
 
 - [**build**] Now we can compile our code:
 .. code-block:: console
@@ -156,7 +156,6 @@ To show local cache, all connan packages and their versions are available in my 
             os: Linux
         Outdated from recipe: False
 
-asdadaasasadadsadads
 
 .. image:: ../images/conan_package_install.png
   :caption: Package install process. First in the local cache and then remote search by index order.
@@ -175,7 +174,7 @@ Building your own packages
     version = "0.1"
     settings = "os", "compiler", "build_type", "arch"
     
-    def build(self):
+    def source(self):
         self.run("git clone https//github/memshared/hello.git")
 
     def build(self):
