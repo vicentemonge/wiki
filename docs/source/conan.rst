@@ -156,9 +156,10 @@ To show local cache, all connan packages and their versions are available in my 
             os: Linux
         Outdated from recipe: False
 
+asdadaasasadadsadads
+
 .. image:: ../images/conan_package_install.png
-  
-  Package install process. First in the local cache and then remote search by index order.
+  :caption: Package install process. First in the local cache and then remote search by index order.
 
 Building your own packages
 ------------------------
