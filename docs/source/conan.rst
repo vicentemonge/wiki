@@ -7,7 +7,10 @@ CONAN
 
 - Dependencies are placed typically on code, on build system files and now on Conan recipes to resolve them.
 
-- **conanfile.txt** with 2 sections corresponding on dependencies (*requires*) and build systems (*generators*)
+**conanfile.txt**
+-----------------
+
+with 2 sections corresponding on dependencies (*requires*) and build systems (*generators*)
 
 .. code-block:: text
   :lineno-start: 1
@@ -20,13 +23,20 @@ CONAN
 
 .. note::
   
-  pkg/0.1@user/channel is called the **recipe reference**
+  [pkg]/[version]@[user]/[channel] is called the **recipe reference**
 
-- **Conan Center Index** [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
+**Conan Center Index**
+----------------------
+
+ [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
 
 .. image:: ../images/conan_center_index.png
 
-- [conan **install**] To install dependencies (direct dependencies and transitive dependencies):
+[conan **install**]
+~~~~~~~~~~~~~~~~~~~
+
+To install dependencies (direct dependencies and transitive dependencies):
+
 .. code-block:: console
 
   /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
