@@ -129,8 +129,8 @@ To show local cache, all connan packages and their versions are available in my 
 
 .. code-block:: console
 
-conan@48674d6a3546:~/training/consumer/build$ conan search zlib/1.2.13@
-Existing packages for recipe zlib/1.2.13:
+  conan@48674d6a3546:~/training/consumer/build$ conan search zlib/1.2.13@
+  Existing packages for recipe zlib/1.2.13:
 
     Package_ID: 19729b9559f3ae196cad45cb2b97468ccb75dcd1
         [options]
@@ -157,6 +157,7 @@ Existing packages for recipe zlib/1.2.13:
         Outdated from recipe: False
 
 .. image:: ../images/conan_package_install.png
+  
   Package install process. First in the local cache and then remote search by index order.
 
 Building your own packages
