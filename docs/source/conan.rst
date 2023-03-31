@@ -213,9 +213,13 @@ From scratch
 ~~~~~~~~~~~~~~~~~~~
 
 Export the recipe to local cache
+
 .. code-block:: console
 
-   $ conan export .
+   $ conan create . demo/testing
+   # equivalent to
+   $ conan export . demo/testing
+   $ conan install hello/0.1@demo/testing --build=hello
 
 
 
