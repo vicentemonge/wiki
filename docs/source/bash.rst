@@ -72,3 +72,17 @@ some commands
     if [ ! -d /path/to/directory ]; then
         mkdir /path/to/directory
     fi
+
+- Exit against whatever error:
+
+.. code-block:: console
+
+    #!/bin/bash -e
+
+    # do some commands that may fail
+    command1
+    command2
+    command3
+
+    # if we get here, all commands succeeded
+    echo "All commands succeeded"
