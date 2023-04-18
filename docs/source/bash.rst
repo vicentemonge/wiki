@@ -21,3 +21,54 @@ some commands
     $ rm !(*.ext) # deletes all files on this folder except those with .ext extension
     $ rm !(*.ext|*.ext2) # same with .ext2 too
     $ shopt -u extglob # deactivate extglob
+
+- My template header:
+
+.. code-block:: console
+
+    # current path for commands in scripts is the EXECUTION_DIR
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    SCRIPT_NAME="$( basename "${BASH_SOURCE[0]}" )"
+    EXECUTION_DIR="$( pwd )"
+
+- Numeric comparison:
+
+    -eq: equal to
+    -ne: not equal to
+    -lt: less than
+    -le: less than or equal to
+    -gt: greater than
+    -ge: greater than or equal to
+
+- Check last command ok:
+
+.. code-block:: console
+
+    some-command
+    if [ $? -eq 0 ]; then
+    echo "The command was successful"
+    else
+    echo "The command failed"
+    fi
+
+- Check params number:
+
+.. code-block:: console
+
+    if [ -z $4 ]; then # check we have 4 parameters at least
+        echo $USAGE
+        exit 1
+    fi
+
+- Check file exist:
+
+    -e: true if the path exist (file or folder)
+    -f: true if the path is a regular file
+    -d: true if the path is a directory
+    -s: true if the file exists and has a size greater than zero
+
+.. code-block:: console
+
+    if [ ! -d /path/to/directory ]; then
+        mkdir /path/to/directory
+    fi
