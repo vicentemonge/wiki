@@ -86,3 +86,7 @@ some commands
 
     # if we get here, all commands succeeded
     echo "All commands succeeded"
+
+    # too is possible to set in this way
+    set -e # enable the -e option
+    set +e # disable the -e option
