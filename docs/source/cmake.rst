@@ -22,21 +22,27 @@ Macros vs functions
 
    if(NOT DEFINED VAR_NAME) and if(NOT DEFINED ${VAR_NAME})
 
-- Check variables 2: Check a variable is true or false. False only in this cases:
+- Check variables 2: Check a variable is true or false. False only in this cases (case insensitive):
 
 .. code-block:: cmake
+   :linenos:
+   :lineno-start: 1
 
-   cmake -DVAR_NAME .
+   cmake -DVAR_NAME= .
    cmake -DVAR_NAME=OFF .
    cmake -DVAR_NAME=0 .
    cmake -DVAR_NAME=NO .
    cmake -DVAR_NAME=FALSE .
+   cmake . # -DVAR_NAME
 
    ...
    if (NOT VAR_NAME)
       # pass here
    endif()
-
+   if (DEFINED VAR_NAME)
+      # pass here except last case
+   endif()
+   ...
 
 - **if**
 
