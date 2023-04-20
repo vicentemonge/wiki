@@ -22,7 +22,7 @@ Macros vs functions
 
    if(NOT DEFINED VAR_NAME) and if(NOT DEFINED ${VAR_NAME})
 
-- Check variables 2: Check a variable is true or false. False only in this cases (case insensitive):
+- Check variables 2 [examples]: Check a variable is true or false. False only in this cases (case insensitive):
 
 .. code-block:: cmake
    :linenos:
