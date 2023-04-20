@@ -22,6 +22,22 @@ Macros vs functions
 
    if(NOT DEFINED VAR_NAME) and if(NOT DEFINED ${VAR_NAME})
 
+- Check variables 2: Check a variable is true or false. False only in this cases:
+
+.. code-block:: cmake
+
+   cmake -DVAR_NAME .
+   cmake -DVAR_NAME=OFF .
+   cmake -DVAR_NAME=0 .
+   cmake -DVAR_NAME=NO .
+   cmake -DVAR_NAME=FALSE .
+
+   ...
+   if (NOT VAR_NAME)
+      # pass here
+   endif()
+
+
 - **if**
 
 .. code-block:: cmake
