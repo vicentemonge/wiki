@@ -8,6 +8,25 @@ Shortcuts
 
 - Unlock events: cat /var/log/auth.log | grep unlocked
 
+Install
+------------------------------
+
+.. code-block:: console
+
+    $ sudo dpkg -i package_with_unsatisfied_dependencies.deb
+    dpkg: dependency problems prevent ... 
+    [additional messages]
+
+    $ sudo apt-get -f install
+    [apt messages]
+    Setting up [dependency]...
+    Setting up package_with_unsatisfied_dependencies...
+
+    $ # OR
+
+    $ sudo apt install package_with_unsatisfied_dependencies.deb
+
+
 Commands
 ------------------------------
 
@@ -25,5 +44,8 @@ Commands
     -n, print line number
     -H, print file name
     -w, exact match
+
+
+
 
 
