@@ -42,6 +42,9 @@ Macros vs functions
    if (DEFINED VAR_NAME)
       # pass here except last case
    endif()
+   if (VAR_NAME)
+      # for other -DVAR_NAME=XXXXX
+   endif()
    ...
 
 - **if**

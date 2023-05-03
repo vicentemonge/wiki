@@ -10,4 +10,4 @@ build_folder=build
 
 cd $SCRIPT_DIR
 
-cmake . -B $build_folder -DVAR1=false -DVAR2=0 -DVAR3=off -DVAR4=no -DVAR5= 
+cmake . -B $build_folder -DVAR1=false -DVAR2=0 -DVAR3=off -DVAR4=no -DVAR5= -DVAR7=qwe
