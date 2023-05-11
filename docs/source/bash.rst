@@ -67,6 +67,17 @@ some commands
     -d: true if the path is a directory
     -s: true if the file exists and has a size greater than zero
 
+- Check abolute path:
+
+.. code-block:: console
+
+    if [[ "$path" = /* ]]; then
+    echo "ABSOLUTE"
+    else
+    echo "RELATIVE"
+    fi
+
+
 .. code-block:: console
 
     if [ ! -d /path/to/directory ]; then
