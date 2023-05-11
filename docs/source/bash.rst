@@ -60,6 +60,11 @@ some commands
         exit 1
     fi
 
+    if [ "$#" -ne 4 ]; then # check we have 4 parameters exactly
+        echo $USAGE
+    fi
+
+
 - Check file exist:
 
     -e: true if the path exist (file or folder)
