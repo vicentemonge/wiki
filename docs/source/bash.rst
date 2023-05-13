@@ -9,8 +9,8 @@ NOTE: source and '.' are sinonims for bash
     . filename [arguments] 
     source filename [arguments]
 
-some commands
--------------
+some commands (more commands on linux section)
+-------------------------------------------------------------------
 
 - Delete files except some:
 

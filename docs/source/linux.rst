@@ -45,6 +45,11 @@ Commands
     -H, print file name
     -w, exact match
 
+**ssh-copy-id** install a ssh key to remote host to be authenticated without password
+
+.. code-block:: console
+
+    ssh-copy-id -i /home/<local-user>/.ssh/id_rsa.pub <remote-user>@IP
 
 
 
