@@ -47,6 +47,19 @@ Macros vs functions
    endif()
    ...
 
+- Check file exist: for files and directories. The file(EXISTS ...) evaluates to TRUE if exists, and FALSE otherwise.
+
+.. code-block:: cmake
+
+   set(FILE_PATH "/path/to/file.txt")
+
+   if (EXISTS ${FILE_PATH})
+      message("File exists: ${FILE_PATH}")
+   else()
+      message("File does not exist: ${FILE_PATH}")
+   endif()
+
+
 - **if**
 
 .. code-block:: cmake
@@ -55,4 +68,3 @@ Macros vs functions
    elseif(<condition>)
    else()
    endif()
-

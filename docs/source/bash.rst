@@ -106,3 +106,7 @@ some commands (more commands on linux section)
     # too is possible to set in this way
     set -e # enable the -e option
     set +e # disable the -e option
+
+
+PATHS
+------------------------------
