@@ -82,3 +82,23 @@ tag
     $ git fetch --tags
 
 
+TODO: submodule foreach variables
+
+    Certainly! When using the git submodule foreach command, you have access to several environment variables that provide information about each submodule. Here are some useful variables you can use:
+
+    $name: The name of the current submodule.
+    $toplevel: The top-level directory of the repository.
+    $path: The relative path to the current submodule from the repository's root.
+    $sha1: The SHA-1 hash of the commit the submodule is currently at.
+    $displaypath: The path of the submodule relative to the current working directory.
+    $sm_path: The path to the submodule from the repository root.
+
+You can use these variables to print different types of information about each submodule. For example, to print the name, path, and SHA-1 hash of each submodule, you can use the following command:
+
+bash
+
+git submodule foreach 'echo "Name: $name, Path: $path, SHA-1: $sha1"'
+
+Feel free to combine these variables in creative ways to extract the information you need for your specific use case.
+
+
