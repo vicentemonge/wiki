@@ -51,6 +51,9 @@ To install dependencies (direct dependencies and transitive dependencies):
 It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need to use in my CMakeLists.txt:
 
 .. code-block:: cmake
+  :caption: CMakeLists.txt snippet
+  :linenos:
+  :lineno-start: 1
   
   ...
   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
