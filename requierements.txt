@@ -4,3 +4,5 @@ insegel
 groundwork-sphinx-theme
 # PDJ Sample theme
 sphinx-pdj-theme
+# cloud theme
+cloud-sptheme
