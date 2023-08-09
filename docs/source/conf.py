@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'VWiki'
+copyright = '2023, vmonge'
+author = 'vmonge'
 
 release = '0.1'
 version = '0.1.0'
@@ -30,8 +30,10 @@ templates_path = ['_templates']
 # -- Options for HTML output
 
 # html_theme = 'sphinx_rtd_theme'
-html_theme = 'insegel'
+# html_theme = 'insegel'
+html_theme = 'cloud'
 # html_theme = 'groundwork'
+
 # import sphinx_pdj_theme
 # html_theme = 'sphinx_pdj_theme'
 # html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
