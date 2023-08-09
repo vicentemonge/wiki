@@ -203,7 +203,7 @@ From scratch
 
     $ conan new [package]/[version] # generate template
     $ conan create . user/testing  # create package in local cache
-    $ conan search # show local cahce
+    $ conan search # show local cache
     # conan search hello/0.1@user/testing
     # conan create . user/testing -s build_type=Debug
     # conan search hello/0.1@user/testing
