@@ -236,6 +236,7 @@ Creates template files to be filled later to create the package
 [conan **create**]
 ~~~~~~~~~~~~~~~~~~~
 Builds artifacts, including the whole package
++V+ TODO: add command options
 
 .. collapse:: How to store conan its packages local in the filesystem
   :close:

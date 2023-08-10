@@ -1,8 +1,10 @@
 # insegel theme
-insegel
+# insegel
 # groundwork theme
-groundwork-sphinx-theme
+# groundwork-sphinx-theme
 # PDJ Sample theme
-sphinx-pdj-theme
+# sphinx-pdj-theme
 # cloud theme
 cloud-sptheme
+# sphinx_toolbox.collapse
+sphinx_toolbox
