@@ -235,97 +235,109 @@ Creates template files to be filled later to create the package
 
 [conan **create**]
 ~~~~~~~~~~~~~~~~~~~
-Creates template files to be filled later to create the package 
+Builds artifacts, including the whole package
 
-.. code-block:: console
+.. collapse:: How to store conan its packages local in the filesystem
+  :close:
 
-  § tree -I '.git|CMakeFiles|*.cmake' ~/.conan/data/hello/0.1/pe/testing
-  /home/vmonge/.conan/data/hello/0.1/pe/testing
-  ├── build
-  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
-  │       ├── bin
-  │       │   └── greet
-  │       ├── CMakeCache.txt
-  │       ├── conanbuildinfo.txt
-  │       ├── conaninfo.txt
-  │       ├── hello
-  │       │   ├── CMakeLists.txt
-  │       │   ├── hello.cpp
-  │       │   ├── hello.h
-  │       │   ├── LICENSE
-  │       │   ├── main.cpp
-  │       │   └── readme.md
-  │       ├── lib
-  │       │   └── libhello.a
-  │       └── Makefile
-  ├── export
-  │   ├── conanfile.py
-  │   └── conanmanifest.txt
-  ├── export_source
-  ├── locks
-  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
-  ├── metadata.json
-  ├── metadata.json.lock
-  ├── package
-  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
-  │       ├── conaninfo.txt
-  │       ├── conanmanifest.txt
-  │       ├── include
-  │       │   └── hello.h
-  │       └── lib
-  │           └── libhello.a
-  └── source
-      └── hello
-          ├── CMakeLists.txt
-          ├── hello.cpp
-          ├── hello.h
-          ├── LICENSE
-          ├── main.cpp
-          └── readme.md
-          
-  [01;34m/home/vmonge/.conan/data/hello/0.1/pe/testing[00m
-  ├── [01;34mbuild[00m
-  │   └── [01;34mb173bbda18164d49a449ffadc1c9e817f49e819d[00m
-  │       ├── [01;34mbin[00m
-  │       │   └── [01;32mgreet[00m
-  │       ├── CMakeCache.txt
-  │       ├── conanbuildinfo.txt
-  │       ├── conaninfo.txt
-  │       ├── [01;34mhello[00m
-  │       │   ├── CMakeLists.txt
-  │       │   ├── hello.cpp
-  │       │   ├── hello.h
-  │       │   ├── LICENSE
-  │       │   ├── main.cpp
-  │       │   └── readme.md
-  │       ├── [01;34mlib[00m
-  │       │   └── libhello.a
-  │       └── Makefile
-  ├── [01;34mexport[00m
-  │   ├── conanfile.py
-  │   └── conanmanifest.txt
-  ├── [01;34mexport_source[00m
-  ├── [01;34mlocks[00m
-  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
-  ├── metadata.json
-  ├── metadata.json.lock
-  ├── [01;34mpackage[00m
-  │   └── [01;34mb173bbda18164d49a449ffadc1c9e817f49e819d[00m
-  │       ├── conaninfo.txt
-  │       ├── conanmanifest.txt
-  │       ├── [01;34minclude[00m
-  │       │   └── hello.h
-  │       └── [01;34mlib[00m
-  │           └── libhello.a
-  └── [01;34msource[00m
-      └── [01;34mhello[00m
-          ├── CMakeLists.txt
-          ├── hello.cpp
-          ├── hello.h
-          ├── LICENSE
-          ├── main.cpp
-          └── readme.md
+  .. code-block:: console
+    $ conan create . pe/testing # Release by default
+    $ conan create . pe/testing -s build_type=Debug
+    $ tree -I '.git|CMakeFiles|*.cmake|CMakeCache.txt' ~/.conan/data/hello/0.1/pe/testing
+    ${HOME}/.conan/data/hello/0.1/pe/testing
+    ├── build
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   │   ├── bin
+    │   │   │   └── greet
+    │   │   ├── conanbuildinfo.txt
+    │   │   ├── conaninfo.txt
+    │   │   ├── hello
+    │   │   │   ├── CMakeLists.txt
+    │   │   │   ├── hello.cpp
+    │   │   │   ├── hello.h
+    │   │   │   ├── LICENSE
+    │   │   │   ├── main.cpp
+    │   │   │   └── readme.md
+    │   │   ├── lib
+    │   │   │   └── libhello.a
+    │   │   └── Makefile
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    │       ├── bin
+    │       │   └── greet
+    │       ├── conanbuildinfo.txt
+    │       ├── conaninfo.txt
+    │       ├── hello
+    │       │   ├── CMakeLists.txt
+    │       │   ├── hello.cpp
+    │       │   ├── hello.h
+    │       │   ├── LICENSE
+    │       │   ├── main.cpp
+    │       │   └── readme.md
+    │       ├── lib
+    │       │   └── libhello.a
+    │       └── Makefile
+    ├── export
+    │   ├── conanfile.py
+    │   └── conanmanifest.txt
+    ├── export_source
+    ├── locks
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    ├── metadata.json
+    ├── metadata.json.lock
+    ├── package
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   │   ├── conaninfo.txt
+    │   │   ├── conanmanifest.txt
+    │   │   ├── include
+    │   │   │   └── hello.h
+    │   │   └── lib
+    │   │       └── libhello.a
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    │       ├── conaninfo.txt
+    │       ├── conanmanifest.txt
+    │       ├── include
+    │       │   └── hello.h
+    │       └── lib
+    │           └── libhello.a
+    └── source
+        └── hello
+            ├── CMakeLists.txt
+            ├── hello.cpp
+            ├── hello.h
+            ├── LICENSE
+            ├── main.cpp
+            └── readme.md
 
+
+      $ conan search hello/0.1@pe/testing 
+      Existing packages for recipe hello/0.1@pe/testing:
+
+      Package_ID: a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+          [options]
+              fPIC: True
+              shared: False
+          [settings]
+              arch: x86_64
+              build_type: Debug
+              compiler: gcc
+              compiler.libcxx: libstdc++11
+              compiler.version: 10
+              os: Linux
+          Outdated from recipe: False
+
+      Package_ID: b173bbda18164d49a449ffadc1c9e817f49e819d
+          [options]
+              fPIC: True
+              shared: False
+          [settings]
+              arch: x86_64
+              build_type: Release
+              compiler: gcc
+              compiler.libcxx: libstdc++11
+              compiler.version: 10
+              os: Linux
+          Outdated from recipe: False
 
 
 
