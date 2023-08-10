@@ -239,6 +239,12 @@ Creates template files to be filled later to create the package
 Builds artifacts, including the whole package
 +V+ TODO: add command options
 
+.. collapse:: A long code block
+
+    .. code-block:: python
+
+        print("Not really")
+
 .. collapse:: How to store conan its packages local in the filesystem
 
   .. code-block:: console
