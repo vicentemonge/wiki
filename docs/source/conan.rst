@@ -237,6 +237,98 @@ Creates template files to be filled later to create the package
 ~~~~~~~~~~~~~~~~~~~
 Creates template files to be filled later to create the package 
 
+.. code-block:: console
+
+  § tree -I '.git|CMakeFiles|*.cmake' ~/.conan/data/hello/0.1/pe/testing
+  /home/vmonge/.conan/data/hello/0.1/pe/testing
+  ├── build
+  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+  │       ├── bin
+  │       │   └── greet
+  │       ├── CMakeCache.txt
+  │       ├── conanbuildinfo.txt
+  │       ├── conaninfo.txt
+  │       ├── hello
+  │       │   ├── CMakeLists.txt
+  │       │   ├── hello.cpp
+  │       │   ├── hello.h
+  │       │   ├── LICENSE
+  │       │   ├── main.cpp
+  │       │   └── readme.md
+  │       ├── lib
+  │       │   └── libhello.a
+  │       └── Makefile
+  ├── export
+  │   ├── conanfile.py
+  │   └── conanmanifest.txt
+  ├── export_source
+  ├── locks
+  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+  ├── metadata.json
+  ├── metadata.json.lock
+  ├── package
+  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+  │       ├── conaninfo.txt
+  │       ├── conanmanifest.txt
+  │       ├── include
+  │       │   └── hello.h
+  │       └── lib
+  │           └── libhello.a
+  └── source
+      └── hello
+          ├── CMakeLists.txt
+          ├── hello.cpp
+          ├── hello.h
+          ├── LICENSE
+          ├── main.cpp
+          └── readme.md
+          
+  [01;34m/home/vmonge/.conan/data/hello/0.1/pe/testing[00m
+  ├── [01;34mbuild[00m
+  │   └── [01;34mb173bbda18164d49a449ffadc1c9e817f49e819d[00m
+  │       ├── [01;34mbin[00m
+  │       │   └── [01;32mgreet[00m
+  │       ├── CMakeCache.txt
+  │       ├── conanbuildinfo.txt
+  │       ├── conaninfo.txt
+  │       ├── [01;34mhello[00m
+  │       │   ├── CMakeLists.txt
+  │       │   ├── hello.cpp
+  │       │   ├── hello.h
+  │       │   ├── LICENSE
+  │       │   ├── main.cpp
+  │       │   └── readme.md
+  │       ├── [01;34mlib[00m
+  │       │   └── libhello.a
+  │       └── Makefile
+  ├── [01;34mexport[00m
+  │   ├── conanfile.py
+  │   └── conanmanifest.txt
+  ├── [01;34mexport_source[00m
+  ├── [01;34mlocks[00m
+  │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+  ├── metadata.json
+  ├── metadata.json.lock
+  ├── [01;34mpackage[00m
+  │   └── [01;34mb173bbda18164d49a449ffadc1c9e817f49e819d[00m
+  │       ├── conaninfo.txt
+  │       ├── conanmanifest.txt
+  │       ├── [01;34minclude[00m
+  │       │   └── hello.h
+  │       └── [01;34mlib[00m
+  │           └── libhello.a
+  └── [01;34msource[00m
+      └── [01;34mhello[00m
+          ├── CMakeLists.txt
+          ├── hello.cpp
+          ├── hello.h
+          ├── LICENSE
+          ├── main.cpp
+          └── readme.md
+
+
+
+
 From scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
