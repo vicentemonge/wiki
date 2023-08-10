@@ -52,8 +52,6 @@ It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need 
 
 .. code-block:: cmake
   :caption: CMakeLists.txt snippet
-  :linenos:
-  :lineno-start: 1
   
   ...
   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
@@ -167,7 +165,22 @@ To show local cache, all connan packages and their versions are available in my 
   :caption: Package install process. First in the local cache and then remote search by index order.
 
 Building your own packages
-------------------------
+---------------------------
+
+  1.- Create teh recipe
+  2.- Build for different configurations
+
+[conan **new**]
+~~~~~~~~~~~~~~~~~~~
+Creates template files to be filled later to create the package 
+
+
+#######################
+Recipe **conanfile.py**
+#######################
+
+Recipe **conanfile.py**
+#######################
 
 - Create recipe file **conanfile.py**:
 .. code-block:: python
