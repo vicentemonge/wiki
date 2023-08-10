@@ -248,6 +248,7 @@ Builds artifacts, including the whole package
 .. collapse:: How to store conan its packages local in the filesystem
 
   .. code-block:: console
+    
     $ conan create . pe/testing # Release by default
     $ conan create . pe/testing -s build_type=Debug
     $ tree -I '.git|CMakeFiles|*.cmake|CMakeCache.txt' ~/.conan/data/hello/0.1/pe/testing
