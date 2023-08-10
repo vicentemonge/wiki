@@ -1,32 +1,29 @@
-Welcome to wiki!
+Welcome to VWiki!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**VWiki** is a personal memory backup as Leonard Shelby do before
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Do not check out the :doc:`usage` section because is a cheat sheet for copy paste.
 
 .. note::
 
-   This project is under active development. Si me dejan.
+   This project is under active development because i am forgetting all the time all the stuff. Si me dejan.
 
 Contents
 --------
 
 .. toctree::
 
+   api
+   bash
    c
    c++
-   bash
-   linux
    cmake
    conan
+   git
+   linux
    yocto
    vscode
-   git
+   readthedocs
    sandbox
    usage
-   api
