@@ -24,7 +24,7 @@ with 2 sections corresponding on dependencies (*requires*) and build systems (*g
 .. note::
   
   [pkg]/[version]@[user]/[channel] is called the **recipe reference**
-  No user/channel for official packages, only for custom packages
+  No user/channel for official packages downloaded from conan-io, only for custom packages
   user = company/team/identifier
   channel = convention is testing or stable
 
@@ -167,8 +167,8 @@ To show local cache, all connan packages and their versions are available in my 
 Building packages
 ---------------------------
 
-  1.- Create teh recipe
-  2.- Build for different configurations
+  1.- Create the recipe
+  2.- Build for desired configurations
 
 [conan **new**]
 ~~~~~~~~~~~~~~~~~~~
@@ -201,26 +201,38 @@ Recipe **conanfile.py**
         self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
-        self.copy("*.h", dst="include", src="hello  ")
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("*.h", dst="include", src="hello  ") # from local hello folder files *.h to local package cache include folder
+        self.copy("*.lib", dst="lib", keep_path=False) # .lib for Windows systems
+        self.copy("*.a", dst="lib", keep_path=False) # .a for Unix systems
 
     def package_info(self):
-        self.cpp_info.libs = ["hello"]
-        # self.cpp_info.libdirs = ["lib"] # defualt value
-        # self.cpp_info.includedirs = ["include"] # defualt value
+        self.cpp_info.libs = ["hello"] # libs produced for this project
+        # self.cpp_info.libdirs = ["lib"] # default value, directories to search the lib
+        # self.cpp_info.includedirs = ["include"] # default value, directories to search the headers
 
 
-def source(self):
-#################
+def **source**(self):
+##################################
 
 Execute whatever command to obtain the sources
 
-def build(self):
-#################
+def **build**(self):
+##################################
 
 Responsable to invoque the build system.
-We can use ***self.run*** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see ***CMake class***.
+We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see **CMake class**.
+
+def **package**(self):
+##################################
+
+Responsable to capture artifacts produced by the build system.
+
+We use here **self.copy** to copy from local filesystem to Conan local cache.
+
+def **package_info**(self):
+##################################
+
+Define variables available for the package users storing in a special dictionary **cpp_info**
 
 
 From scratch
