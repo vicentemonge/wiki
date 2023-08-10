@@ -164,7 +164,7 @@ To show local cache, all connan packages and their versions are available in my 
 .. image:: ../images/conan_package_install.png
   :caption: Package install process. First in the local cache and then remote search by index order.
 
-Building your own packages
+Building packages
 ---------------------------
 
   1.- Create teh recipe
@@ -175,14 +175,9 @@ Building your own packages
 Creates template files to be filled later to create the package 
 
 
-#######################
 Recipe **conanfile.py**
-#######################
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Recipe **conanfile.py**
-#######################
-
-- Create recipe file **conanfile.py**:
 .. code-block:: python
 
   from conans import ConanFile, AutoToolsBuildEnvironment
@@ -198,6 +193,10 @@ Recipe **conanfile.py**
 
     def build(self):
         cmake = CMake(self.settings)
+        # example 1
+        cmake.configure(source_folder="hello")
+        cmake.build()
+        # example 2
         self.run('cmake hello %s' % (cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
@@ -212,8 +211,20 @@ Recipe **conanfile.py**
         # self.cpp_info.includedirs = ["include"] # defualt value
 
 
+def source(self):
+#################
+
+Execute whatever command to obtain the sources
+
+def build(self):
+#################
+
+Responsable to invoque the build system.
+We can use ***self.run*** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see ***CMake class***.
+
+
 From scratch
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: console
 
