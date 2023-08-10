@@ -168,6 +168,7 @@ Building packages
 ---------------------------
 
   1.- Create the recipe
+
   2.- Build for desired configurations
 
 Recipe **conanfile.py**
@@ -207,25 +208,25 @@ Recipe **conanfile.py**
 
 
 def **source**(self):
-##################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Execute whatever command to obtain the sources
 
 def **build**(self):
-##################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to invoque the build system.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see **CMake class**.
 
 def **package**(self):
-##################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to capture artifacts produced by the build system.
 
 We use here **self.copy** to copy from local filesystem to Conan local cache.
 
 def **package_info**(self):
-##################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define variables available for the package users storing in a special dictionary **cpp_info**
 
@@ -239,7 +240,6 @@ Builds artifacts, including the whole package
 +V+ TODO: add command options
 
 .. collapse:: How to store conan its packages local in the filesystem
-  :close:
 
   .. code-block:: console
     $ conan create . pe/testing # Release by default
