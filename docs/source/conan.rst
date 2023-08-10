@@ -170,11 +170,6 @@ Building packages
   1.- Create the recipe
   2.- Build for desired configurations
 
-[conan **new**]
-~~~~~~~~~~~~~~~~~~~
-Creates template files to be filled later to create the package 
-
-
 Recipe **conanfile.py**
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -234,6 +229,13 @@ def **package_info**(self):
 
 Define variables available for the package users storing in a special dictionary **cpp_info**
 
+[conan **new**]
+~~~~~~~~~~~~~~~~~~~
+Creates template files to be filled later to create the package 
+
+[conan **create**]
+~~~~~~~~~~~~~~~~~~~
+Creates template files to be filled later to create the package 
 
 From scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~

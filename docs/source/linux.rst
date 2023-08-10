@@ -51,6 +51,16 @@ Commands
 
     ssh-copy-id -i /home/<local-user>/.ssh/id_rsa.pub <remote-user>@IP
 
+**tree** paint the file tree, brief:
+    -a, hide files
+    -h, size in human readable
+    -D, date timer
+    -L level, deep level
+    -P pattern, display only match pattern
+    -I pattern, skip match pattern
+    [<directory list>], list of directories
+
+
 
 
 
