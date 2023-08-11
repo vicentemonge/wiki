@@ -1,67 +1,21 @@
 RST SYNTAX
 ==========
 
-TITULO1
-=======
+FIRST LEVEL
+===============
 
-=======
-TITULO1
-=======
+**SECOND_LEVEL.txt**
+----------------------------------
 
+[THIRD **LEVEL**]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TITULO2
-~~~~~~~
+- FOUTH LEVEL
+*****************************************
 
-~~~~~~~
-TITULO2
-~~~~~~~
+.. note::
 
-TITULO3
--------
-
--------
-TITULO3
--------
-
-TITULO4
-*******
-
-*******
-TITULO4
-*******
-
-TITULO5
-@@@@@@@
-
-@@@@@@@
-TITULO5
-@@@@@@@
-
-TITULO6
-"""""""
-
-"""""""
-TITULO6
-"""""""
-
-TITULO7
-^^^^^^^
-
-^^^^^^^
-TITULO7
-^^^^^^^
-
-CONAN
-=====
-
-**conanfile.txt**
------------------
-
-[conan **install**]
-~~~~~~~~~~~~~~~~~~~
-
-[conan **install**]
-~~~~~~~~~~~~~~~~~~~
+    ESTO ES UNA NOTA
 
 
 
@@ -196,4 +150,53 @@ CODIGO FUENTE EJECUTABLE
     </div>
     </div>
 
+TITULO1
+=======
+
+=======
+TITULO1
+=======
+
+
+TITULO2
+~~~~~~~
+
+~~~~~~~
+TITULO2
+~~~~~~~
+
+TITULO3
+-------
+
+-------
+TITULO3
+-------
+
+TITULO4
+*******
+
+*******
+TITULO4
+*******
+
+TITULO5
+@@@@@@@
+
+@@@@@@@
+TITULO5
+@@@@@@@
+
+TITULO6
+"""""""
+
+"""""""
+TITULO6
+"""""""
+
+TITULO7
+^^^^^^^
+
+^^^^^^^
+TITULO7
+^^^^^^^
 

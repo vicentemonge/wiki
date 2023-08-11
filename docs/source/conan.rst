@@ -190,6 +190,19 @@ Search for packages on the remote you select
 .. image:: ../images/conan_package_install.png
   :caption: Package install process. First in the local cache and then remote search by index order.
 
+  .. note::
+
+    In Conan, the **--query** parameter is used to search for specific package information using a SQL-like query
+    language. It's a powerful feature that allows you to retrieve detailed information about packages and their
+    dependencies stored in the Conan cache.
+
+    *conan search <pattern> --query="<query>"*
+
+    .. code::
+
+      $ conan search zlib/1.2.11@user/testing --query="SELECT id, options.compiler FROM packages WHERE id LIKE 'zlib%'"
+
+
 Building packages
 ---------------------------
 
