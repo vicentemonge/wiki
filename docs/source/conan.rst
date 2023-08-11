@@ -134,7 +134,7 @@ To show the dependecies graph as text:
 [conan **search**]
 ~~~~~~~~~~~~~~~~~~~
 
-To show local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
+Search for packages on the local cache, all connan packages and their versions are available in my local system. To see info of a specific package can type:
 
 .. code-block:: console
 
@@ -142,7 +142,16 @@ To show local cache, all connan packages and their versions are available in my 
    $ conan search pkg # filter by filter short name
    $ conan seach pkg@ # to show details TODO: undertand how its works, pkg@ or pkg/0.1@user/channel@ ...
    # --table=file.html to output to html file
-   # -r conancenter to search on remote (conancenter is the name of the remote by default)
+
+[conan **search -r[=REMOTE|REMOTE]**]
+*****************************************
+
+Search for packages on the remote you select
+
+.. code-block:: console
+
+   $ conan search -r
+   # -r=myremote to search on a remote specifically(conancenter is the name of the remote by default)
 
 .. code-block:: console
 
@@ -327,6 +336,21 @@ Builds artifacts, including the whole package
 
     $ tree -I '.git|CMakeFiles|*.cmake|CMakeCache.txt' ~/.conan/data/hello/0.1/pe/testing
     ${HOME}/.conan/data/hello/0.1/pe/testing
+    ├── package # this is the main location of the packages (created or downloaded)
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   │   ├── conaninfo.txt
+    │   │   ├── conanmanifest.txt
+    │   │   ├── include
+    │   │   │   └── hello.h
+    │   │   └── lib
+    │   │       └── libhello.a
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    │       ├── conaninfo.txt
+    │       ├── conanmanifest.txt
+    │       ├── include
+    │       │   └── hello.h
+    │       └── lib
+    │           └── libhello.a
     ├── build
     │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
     │   │   ├── bin
@@ -367,21 +391,6 @@ Builds artifacts, including the whole package
     │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
     ├── metadata.json
     ├── metadata.json.lock
-    ├── package
-    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
-    │   │   ├── conaninfo.txt
-    │   │   ├── conanmanifest.txt
-    │   │   ├── include
-    │   │   │   └── hello.h
-    │   │   └── lib
-    │   │       └── libhello.a
-    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
-    │       ├── conaninfo.txt
-    │       ├── conanmanifest.txt
-    │       ├── include
-    │       │   └── hello.h
-    │       └── lib
-    │           └── libhello.a
     └── source
         └── hello
             ├── CMakeLists.txt
@@ -425,9 +434,26 @@ From scratch
 [conan **upload**]
 ~~~~~~~~~~~~~~~~~~~
 
+Upload packages to a remote specifically. By default only the recipe is upload and we need to add --all to upload binaries.
+
 .. code-block:: console
 
     $ conan upload "hello*" -r conan_swimasd
+    $ conan upload "hello*" -r conan_swimasd --all --confirm
+    $ conan search "hello*" -r conan_swimasd # to check that is really uploaded
+
+.. collapse:: Local cache filesystem
+
+  .. code-block:: console
+
+    ${HOME}/.conan/data/hello/0.1/pe/testing
+    └── dl
+        └── pkg
+            ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+            │   └── conan_package.tgz
+            └── b173bbda18164d49a449ffadc1c9e817f49e819d
+                └── conan_package.tgz
+
 
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
