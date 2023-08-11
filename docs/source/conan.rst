@@ -414,7 +414,7 @@ From scratch
 .. image:: ../images/artifactory_get_repo_url_01.png
   :width: 800
 
-  .. image:: ../images/artifactory_get_repo_url_02.png
+.. image:: ../images/artifactory_get_repo_url_02.png
   :height: 400
 
 .. code-block:: console
