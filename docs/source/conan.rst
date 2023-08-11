@@ -39,7 +39,8 @@ Tell Conan our dependencies and our build system. For that it has 2 sections cor
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
 
-To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build if no exist(or specified by us):
+To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build if no exist(or specified by us).
+By default try with all the remotes configured, if we want to restrict to certain can add **-r <remote_name>** option (see :ref:`[conan **remote**]`). 
 
 .. code-block:: console
 
@@ -49,6 +50,8 @@ To install dependencies (direct dependencies and transitive dependencies), downl
   /connanfile/txt/path:$ conan install -if build .
   # or specifying build version of the package:
   /connanfile/txt/path:$ conan install -if build . -s build_type=Debug
+  # or specifying remote server:
+  /connanfile/txt/path:$ conan install -if build . -s build_type=Debug -r artifactory
 
 Conan generates helper build system files containing variables to consume later:
 
@@ -438,9 +441,9 @@ Upload packages to a remote specifically. By default only the recipe is upload a
 
 .. code-block:: console
 
-    $ conan upload "hello*" -r conan_swimasd
-    $ conan upload "hello*" -r conan_swimasd --all --confirm
-    $ conan search "hello*" -r conan_swimasd # to check that is really uploaded
+    $ conan upload "hello*" -r artifactory
+    $ conan upload "hello*" -r artifactory --all --confirm
+    $ conan search "hello*" -r artifactory # to check that is really uploaded
 
 .. collapse:: Local cache filesystem
 
