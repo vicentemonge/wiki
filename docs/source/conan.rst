@@ -220,25 +220,25 @@ Recipe **conanfile.py**
         # self.cpp_info.includedirs = ["include"] # default value, directories to search the headers
 
 
-def **source**(self)
+def **source** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Execute whatever command to obtain the sources
 
-def **build**(self)
+def **build** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to invoque the build system.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see **CMake class**.
 
-def **package**(self)
+def **package** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to capture artifacts produced by the build system.
 
 We use here **self.copy** to copy from local filesystem to Conan local cache.
 
-def **package_info**(self)
+def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define variables available for the package users storing in a special dictionary **cpp_info**
