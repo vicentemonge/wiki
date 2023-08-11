@@ -10,7 +10,7 @@ CONAN
 **conanfile.txt**
 -----------------
 
-with 2 sections corresponding on dependencies (*requires*) and build systems (*generators*)
+Tell Conan our dependencies and our build system. For that it has 2 sections corresponding on dependencies (*requires*) and build systems (*generators*)
 
 .. code-block:: text
   :lineno-start: 1
@@ -39,16 +39,29 @@ with 2 sections corresponding on dependencies (*requires*) and build systems (*g
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
 
-To install dependencies (direct dependencies and transitive dependencies):
+To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build if no exist(or specified by us):
 
 .. code-block:: console
 
-  /connanfile/txt/path:$ mkdir build && cd build/ && conan install ..
-  # downloads the binary packages (Release by default) if exists or the source code and build
-  # to specify build version of the package:
-  # conan install .. -s build_type=Debug
+  /connanfile/txt/path:$ mkdir build
+  /connanfile/txt/path:$ cd build/ && conan install ..
+  # or
+  /connanfile/txt/path:$ conan install -if build .
+  # or specifying build version of the package:
+  /connanfile/txt/path:$ conan install -if build . -s build_type=Debug
 
-It to generates **conanbuildinfo.cmake** with CONAN cmake variables that I need to use in my CMakeLists.txt:
+Conan generates helper build system files containing variables to consume later:
+
+.. code-block:: console
+
+  build/conanbuildinfo.cmake
+  build/conanbuildinfo.txt
+  build/conaninfo.txt
+  build/conan.lock
+  build/graph_info.json
+
+
+**conanbuildinfo.cmake** contains CONAN cmake variables that I need to use in my CMakeLists.txt:
 
 .. code-block:: cmake
   :caption: CMakeLists.txt snippet
@@ -207,50 +220,108 @@ Recipe **conanfile.py**
         # self.cpp_info.includedirs = ["include"] # default value, directories to search the headers
 
 
-def **source**(self):
+def **source**(self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Execute whatever command to obtain the sources
 
-def **build**(self):
+def **build**(self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to invoque the build system.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake, msbuild, autotools, etc. Here we can see **CMake class**.
 
-def **package**(self):
+def **package**(self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to capture artifacts produced by the build system.
 
 We use here **self.copy** to copy from local filesystem to Conan local cache.
 
-def **package_info**(self):
+def **package_info**(self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define variables available for the package users storing in a special dictionary **cpp_info**
 
 [conan **new**]
 ~~~~~~~~~~~~~~~~~~~
-Creates template files to be filled later to create the package 
+Creates template files to be filled later to create the package.
+
+.. code-block:: console
+
+    $ conan new [package]/[version] # generate template
+    $ ls
+    conanfile.py # skeleton for the new package
+
+
+[test_package **conan new -t**]
+**********************************
+
+It is a new kind of test that checks if the conan info method is completely correct and the package directory has the necessary files in all the right folders.
+If we run the command **conan new ... -t** in the package creation, conan creates the test_package itself.
+The when execute **connan create** conan run the test_package and return non-zero value if test_package fails.
+The test_package run in local folder and no add nothing to the local cache.
+
+[in-source recipe **conan new -s**]
+*********************************************
+
+For create from local source add a **-s** option to conan new. Nothing changes except the lack of remote repository and the source match a pattern is copy to the local cache, called **exports_source**
+
+.. code-block:: python
+  :emphasize-lines: 3,5
+
+    ...
+    generators = "cmake"
+    exports_sources = "src/*"
+
+    # NO SOURCE METHOD
+
+    def config_options(self):
+    ...
+
 
 [conan **create**]
 ~~~~~~~~~~~~~~~~~~~
 Builds artifacts, including the whole package
 +V+ TODO: add command options
 
-.. collapse:: A long code block
+.. code-block:: console
 
-    .. code-block:: python
+  $ conan create . pe/testing # Release by default
+  $ conan create . pe/testing -s build_type=Debug
+  $ conan search hello/0.1@pe/testing 
+  Existing packages for recipe hello/0.1@pe/testing:
 
-        print("Not really")
+  Package_ID: a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+      [options]
+          fPIC: True
+          shared: False
+      [settings]
+          arch: x86_64
+          build_type: Debug
+          compiler: gcc
+          compiler.libcxx: libstdc++11
+          compiler.version: 10
+          os: Linux
+      Outdated from recipe: False
 
-.. collapse:: How to store conan its packages local in the filesystem
+  Package_ID: b173bbda18164d49a449ffadc1c9e817f49e819d
+      [options]
+          fPIC: True
+          shared: False
+      [settings]
+          arch: x86_64
+          build_type: Release
+          compiler: gcc
+          compiler.libcxx: libstdc++11
+          compiler.version: 10
+          os: Linux
+      Outdated from recipe: False
+
+.. collapse:: How to store conan its packages in local cache on the filesystem
 
   .. code-block:: console
-    
-    $ conan create . pe/testing # Release by default
-    $ conan create . pe/testing -s build_type=Debug
+
     $ tree -I '.git|CMakeFiles|*.cmake|CMakeCache.txt' ~/.conan/data/hello/0.1/pe/testing
     ${HOME}/.conan/data/hello/0.1/pe/testing
     ├── build
@@ -318,34 +389,6 @@ Builds artifacts, including the whole package
             └── readme.md
 
 
-      $ conan search hello/0.1@pe/testing 
-      Existing packages for recipe hello/0.1@pe/testing:
-
-      Package_ID: a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
-          [options]
-              fPIC: True
-              shared: False
-          [settings]
-              arch: x86_64
-              build_type: Debug
-              compiler: gcc
-              compiler.libcxx: libstdc++11
-              compiler.version: 10
-              os: Linux
-          Outdated from recipe: False
-
-      Package_ID: b173bbda18164d49a449ffadc1c9e817f49e819d
-          [options]
-              fPIC: True
-              shared: False
-          [settings]
-              arch: x86_64
-              build_type: Release
-              compiler: gcc
-              compiler.libcxx: libstdc++11
-              compiler.version: 10
-              os: Linux
-          Outdated from recipe: False
 
 
 

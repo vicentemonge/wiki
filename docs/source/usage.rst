@@ -51,10 +51,18 @@ TITULO7
 TITULO7
 ^^^^^^^
 
+CONAN
+=====
 
-.. code-block:: console
+**conanfile.txt**
+-----------------
 
-    
+[conan **install**]
+~~~~~~~~~~~~~~~~~~~
+
+[conan **install**]
+~~~~~~~~~~~~~~~~~~~
+
 
 
 
