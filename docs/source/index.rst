@@ -20,6 +20,7 @@ Contents
    c++
    cmake
    conan
+   conan_admin
    git
    linux
    yocto
