@@ -241,7 +241,7 @@ We use here **self.copy** to copy from local filesystem to Conan local cache.
 def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define variables available for the package users storing in a special dictionary **cpp_info**
+Define variables available for the package consumers that store in a special dictionary **cpp_info**
 
 [conan **new**]
 ~~~~~~~~~~~~~~~~~~~
@@ -257,7 +257,7 @@ Creates template files to be filled later to create the package.
 [test_package **conan new -t**]
 **********************************
 
-It is a new kind of test that checks if the conan info method is completely correct and the package directory has the necessary files in all the right folders.
+It is a new kind of test that checks if the conan package and package_info method are completely correct and the package directory has the necessary files in all the right folders.
 If we run the command **conan new ... -t** in the package creation, conan creates the test_package itself.
 The when execute **connan create** conan run the test_package and return non-zero value if test_package fails.
 The test_package run in local folder and no add nothing to the local cache.
@@ -265,20 +265,23 @@ The test_package run in local folder and no add nothing to the local cache.
 [in-source recipe **conan new -s**]
 *********************************************
 
-For create from local source add a **-s** option to conan new. Nothing changes except the lack of remote repository and the source match a pattern is copy to the local cache, called **exports_source**
+For create from local source add a **-s** option to conan new. Nothing changes except the lack of remote repository and that the source match a pattern is copied to the local cache, called **exports_sources**
 
 .. code-block:: python
   :emphasize-lines: 3,5
 
-    ...
-    generators = "cmake"
-    exports_sources = "src/*"
+  ...
+  generators = "cmake"
+  exports_sources = "src/*"
 
-    # NO SOURCE METHOD
+  # NO SOURCE METHOD
 
-    def config_options(self):
-    ...
+  def config_options(self):
+  ...
 
+.. note::
+  
+  There are a third method to obtain the sources called **SCM** but not explained here, just for the record.
 
 [conan **create**]
 ~~~~~~~~~~~~~~~~~~~
@@ -388,10 +391,6 @@ Builds artifacts, including the whole package
             ├── main.cpp
             └── readme.md
 
-
-
-
-
 From scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -405,29 +404,14 @@ From scratch
     # conan search hello/0.1@user/testing
     $ conan new [package]/[version] -s # from local sources
 
+
+[conan **remote**]
+~~~~~~~~~~~~~~~~~~~
+
+.. image:: ../images/jfrog_artifactory.png
+  :height: 400
+
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
 
 Export the recipe to local cache
-
-.. code-block:: console
-
-   $ conan create . demo/testing
-   # equivalent to
-   $ conan export . demo/testing
-   $ conan install hello/0.1@demo/testing --build=hello
-
-
-
-
-
-TRAINING
-========
-
-https://docs.docker.com/engine/install/debian/
-
-
-.. code-block:: console
-
-   (.venv) $ pip install lumache
-
