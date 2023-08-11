@@ -460,6 +460,8 @@ Upload packages to a remote specifically. By default only the recipe is upload a
     $ conan upload "hello*" -r artifactory --all --confirm
     $ conan search "hello*" -r artifactory # to check that is really uploaded
 
++V+ TODO: how to upload a specific binary?
+
 .. collapse:: Local cache filesystem
 
   .. code-block:: console
@@ -476,4 +478,55 @@ Upload packages to a remote specifically. By default only the recipe is upload a
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
 
-Export the recipe to local cache
+Export the recipe to local cache ¿? +V+ TODO
+
+Build Configuration Mechanisms
+---------------------------------
+
+**Settings** (global: build_type, compiler, architecture, etc) and **Options** (local: shared, static, etc)
+
+.. code-block:: python
+
+  class HelloConan(ConanFile):
+      name = "hello"
+      settings = "os", "compiler", "build_type", "arch"
+      options = {"shared": [True, False], "fPIC": [True, False]}
+      default_options = {"shared": False, "fPIC": True}
+      ...
+
+.. code-block:: console
+
+  # Settings overriding defaults
+  $ conan create . pe/testing -o hello:shared=True -s build_type=Debug
+
+Custom options:
+
+.. code-block:: python
+  :caption: conanfile.py
+
+  class GreetConan(ConanFile):
+      name = "greet"
+      settings = "os", "compiler", "build_type", "arch"
+      options = {"language": ["English", "Spanish"]}
+      default_options = {"language": "English"}
+      ...
+      def build(self):
+        cmake = CMake(self)
+        if self.options.language == "English":
+            cmake.definitions["GREET_LANGUAGE"] = 1
+        else:
+            cmake.definitions["GREET_LANGUAGE"] = 0
+      ...
+
+.. code-block:: cmake
+  :caption: CMakeLists.txt
+  
+  ...
+  add_library(hello hello.cpp)
+  target_compile_definitions(hello PRIVATE GREET_LANGUAGE=${GREET_LANGUAGE})
+  ...
+
+.. code-block:: console
+
+  # Settings overriding defaults
+  $ conan create . pe/testing -o greet:language=Spanish
