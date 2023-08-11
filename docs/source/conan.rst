@@ -39,7 +39,7 @@ Tell Conan our dependencies and our build system. For that it has 2 sections cor
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
 
-To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build if no exist(or specified by us).
+To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build if no exist (or specified by us).
 By default try with all the remotes configured, if we want to restrict to certain can add **-r <remote_name>** option (see :ref:`[conan **remote**]`). 
 
 .. code-block:: console
@@ -121,7 +121,8 @@ To show the dependecies graph as text:
 
 .. code-block:: console
 
-  /connanfile/txt/path/build:$ conan info .. # --graph=file.html to output graphically as html file
+  /connanfile/txt/path/build:$ conan info ..
+  # --graph=file.html to output graphically as html file
 
 .. note::
   
