@@ -155,7 +155,8 @@ Search for packages on the remote you select
 .. code-block:: console
 
    $ conan search -r
-   # -r=myremote to search on a remote specifically(conancenter is the name of the remote by default)
+   # -r=myremote to search on a remote specifically
+   # (conancenter is the name of the remote by default)
 
 .. code-block:: console
 
