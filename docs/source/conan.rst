@@ -411,6 +411,24 @@ From scratch
 .. image:: ../images/jfrog_artifactory.png
   :height: 400
 
+.. image:: ../images/artifactory_get_repo_url_01.png
+  :width: 800
+
+  .. image:: ../images/artifactory_get_repo_url_02.png
+  :height: 400
+
+.. code-block:: console
+
+  $ conan remote list
+  $ conan remote add <name> <URL from SetMeUp>
+
+[conan **upload**]
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    $ conan upload "hello*" -r conan_swimasd
+
 [conan **export**]
 ~~~~~~~~~~~~~~~~~~~
 
