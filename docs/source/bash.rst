@@ -95,6 +95,9 @@ some commands (more commands on linux section)
 
     #!/bin/bash -e
 
+    # or
+    set -e # enable the -e option, and more visible
+
     # do some commands that may fail
     command1
     command2
@@ -107,6 +110,22 @@ some commands (more commands on linux section)
     set -e # enable the -e option
     set +e # disable the -e option
 
+- Debug mode, print each command before execute:
 
-PATHS
+.. code-block:: console
+
+    #!/bin/bash
+
+    set -x # enable the -x option
+    set +x # disable the -x option
+    
+
+PATH STACK
 ------------------------------
+
+- Easy to go and return from directories: // +V+ improve
+
+.. code-block:: console
+
+    $ pushd
+    $ popd

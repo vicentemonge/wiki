@@ -19,7 +19,7 @@ Contents
    c
    c++
    cmake
-   conan
+   conan2
    conan_admin
    git
    linux

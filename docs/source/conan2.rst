@@ -7,6 +7,11 @@ CONAN
 
 - Dependencies are placed typically on code, on build system files and now on Conan recipes to resolve them.
 
+**Install**
+----------------------
+
+https://docs.conan.io/2/installation.html
+
 **conanfile.txt**
 -----------------
 
