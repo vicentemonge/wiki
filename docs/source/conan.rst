@@ -594,3 +594,7 @@ PROFILES
 
 Help files to group options and settings in a file to achieve control, repeatability and comfort.
 Files are placed in *${HOME}/.conan/profiles* and have at least one, the **default** profile.
+
+.. code-block:: console
+
+  $ conan create. pe/testing # -pr=default
