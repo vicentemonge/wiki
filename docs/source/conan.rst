@@ -204,7 +204,7 @@ Search for packages on the remote you select
       $ conan search zlib/1.2.11@user/testing --query="SELECT id, options.compiler FROM packages WHERE id LIKE 'zlib%'"
 
 
-Building packages
+BUILDING PACKAGES
 ---------------------------
 
   1.- Create the recipe
@@ -480,26 +480,44 @@ Upload packages to a remote specifically. By default only the recipe is upload a
 
 Export the recipe to local cache ¿? +V+ TODO
 
-Build Configuration Mechanisms
+BUILD CONFIGURATION MECHANISM
 ---------------------------------
 
-**Settings** (global: build_type, compiler, architecture, etc) and **Options** (local: shared, static, etc)
+**Settings** (global: build_type, compiler, architecture, etc) and **Options** (local: shared, static, etc).
 
 .. code-block:: python
 
   class HelloConan(ConanFile):
       name = "hello"
+      # Limited set of possible settings and we choose some of that
+      # Available settings are defined in ${HOME}/.conan/settings.yml
       settings = "os", "compiler", "build_type", "arch"
       options = {"shared": [True, False], "fPIC": [True, False]}
       default_options = {"shared": False, "fPIC": True}
       ...
 
+**Custom settings**: can be done modifying *settings.yml*
+
+.. code-block:: yml
+  :emphasize-lines: 5
+  ...
+  os:
+  ...
+    Linux:
+      distro: [None, RHEL6, Centos]
+    iOS:
+  ...
+
+
+
 .. code-block:: console
 
-  # Settings overriding defaults
+  # Settings overriding defaults, -o OPTIONS -s SETTINGS
   $ conan create . pe/testing -o hello:shared=True -s build_type=Debug
+  # Some settings have nested fields
+  $ conan create . pe/testing -s compiler.cppstd=20
 
-Custom options:
+**Custom options**: added to recipe
 
 .. code-block:: python
   :caption: conanfile.py
@@ -507,6 +525,7 @@ Custom options:
   class GreetConan(ConanFile):
       name = "greet"
       settings = "os", "compiler", "build_type", "arch"
+      # options we need with no constraints
       options = {"language": ["English", "Spanish"]}
       default_options = {"language": "English"}
       ...
@@ -530,3 +549,48 @@ Custom options:
 
   # Settings overriding defaults
   $ conan create . pe/testing -o greet:language=Spanish
+
+[conan **inspect**]
+~~~~~~~~~~~~~~~~~~~~~
+
+Retrieve list of settings and options:
+
+.. code-block:: console
+
+  $ conan inspect greet/0.1@pe/testing 
+  name: greet
+  version: 0.1
+  url: None
+  homepage: None
+  license: None
+  author: None
+  description: None
+  topics: None
+  generators: cmake
+  exports: None
+  exports_sources: src/*
+  short_paths: False
+  apply_env: True
+  build_policy: None
+  revision_mode: hash
+  settings: ('os', 'compilers', 'build_type', 'arch')
+  options:
+      language: ['English', 'Spanish']
+  default_options:
+      language: English
+  deprecated: None
+
+[conan **get**]
+~~~~~~~~~~~~~~~~~~~
+
+**Retrieve conanfile.py**
+
+.. code-block:: console
+
+  $ conan get greet/0.1@pe/testing 
+
+PROFILES
+---------------------------------
+
+Help files to group options and settings in a file to achieve control, repeatability and comfort.
+Files are placed in *${HOME}/.conan/profiles* and have at least one, the **default** profile.

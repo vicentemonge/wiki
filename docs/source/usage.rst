@@ -13,19 +13,39 @@ FIRST LEVEL
 - FOUTH LEVEL
 *****************************************
 
+#
+
 .. note::
 
     ESTO ES UNA NOTA
 
+#
 
+.. code-block:: cmake, cpp, python, cmake, console
+  :caption: Example CMakeLists.txt
+  :linenos:
+  :lineno-start: 1
+  :emphasize-lines: 6,7,9,10,13
+  :name: <reference-label>
 
+#
 
+.. collapse:: Text always displayed
 
+  .. code-block:: console
 
+#
 
+*italic* or _italic_
+**bold** or __bold__
 
+***asdf***
+_**asdf**_
+__*asdf*__
+*__asdf__*
+**_asdf_**
 
-
+#
 
 
 
