@@ -592,13 +592,15 @@ Retrieve list of settings and options:
 PROFILES
 ---------------------------------
 
-Help files to group options and settings in a file to achieve control, repeatability and comfort.
-Files are placed in *${HOME}/.conan/profiles* and have at least one, the **default** profile.
+Help files to group options, settings and environment variables in a file to achieve control, repeatability and comfort.
+Files are placed in *${HOME}/.conan/profiles* and has at least one, the **default** profile.
+The profiles can be installed from local filesystem or remote URLs with the *command conan config install*.
 
 .. code-block:: console
 
-  $ conan create. pe/testing # -pr=default
+  $ conan create. pe/testing # -pr=default, implicit profile
+  The profiles can be installed from local filesystem or remote URLs with the command
+  $ conan config install
 
 
 
-  
