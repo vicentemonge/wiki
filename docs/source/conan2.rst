@@ -91,6 +91,8 @@ Conan have a default place for the profiles *${HOME}/.conan2/profiles* (you can 
   [options]
   [tool_requires]
   [env]
+  [buildenv]
+  # This section is used to set the environment variables that are needed to build the binaries.
 
   More settings examples:
   build_type=Debug
@@ -119,6 +121,7 @@ Adding *shared=True* option make Conan invokes **VirtualRunEnv** generator which
 
 .. code-block:: console
 
+  (conan install . --output-folder=build --build=missing --options=zlib/1.2.13:shared=True)
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/conanrun.sh
   # to deactivate
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/deactivate_conanrun.sh
@@ -193,7 +196,7 @@ For consuming packages is a powerful version of conanfile.txt where we put some 
         if multi:
             self.folders.generators = os.path.join("build", "generators")
         else:
-            self.folders.generators = os.path.join("build", str(self.setti0ngs.build_type), "generators")
+            self.folders.generators = os.path.join("build", str(self.settings.build_type), "generators")
 
         # or predefined layout
         cmake_layout(self)
@@ -221,3 +224,17 @@ def **validates** (self)
 
 This method is evaluated when Conan loads the conanfile.py and you can use it to perform checks of the input settings.
 
+CROSS-COMPILING
+---------------------------------
+
+Conan really uses 2 profiles to build binaries:
+
+.. code-block:: console
+
+  $ conan install . --build=missing --profile=someprofile
+  # is the same as
+  $ conan install . --build=missing --profile:host=someprofile --profile:build=default
+
+**profile:host**: This is the profile that defines the platform where the built binaries will run.
+
+**profile:build**: This is the profile that defines the platform where the binaries will be built.
