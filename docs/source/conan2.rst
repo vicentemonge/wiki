@@ -122,3 +122,102 @@ Adding *shared=True* option make Conan invokes **VirtualRunEnv** generator which
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/conanrun.sh
   # to deactivate
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/deactivate_conanrun.sh
+
+Recipe **conanfile.py**
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It can be used for consuming packages, like in this case, and also to create packages.
+For consuming packages is a powerful version of conanfile.txt where we put some logic using Python
+
+**conanfile.txt**
+
+.. code-block::
+
+  [requires]
+  zlib/1.2.13
+
+  [tool_requires]
+  cmake/3.22.6
+
+  [generators]
+  CMakeDeps
+  CMakeToolchain
+
+**conanfile.py**
+
+.. code-block:: python
+
+  from conan import ConanFile
+
+  class CompressorRecipe(ConanFile):
+      settings = "os", "compiler", "build_type", "arch"
+      generators = "CMakeToolchain", "CMakeDeps"
+
+      def requirements(self):
+          self.requires("zlib/1.2.11")
+
+      def build_requirements(self):
+          self.tool_requires("cmake/3.22.6")
+
+**extended conanfile.py**
+
+.. code-block:: python
+
+  import os
+
+  from conan import ConanFile
+  from conan.tools.cmake import cmake_layout
+  from conan.errors import ConanInvalidConfiguration
+
+  # Class name is free
+  class CompressorRecipe(ConanFile):
+      # This class attribute is related to how Conan manages binary compatibility
+      # as these values will affect the value of the package ID for Conan packages.
+      settings = "os", "compiler", "build_type", "arch"
+
+      # This class attribute specifies which Conan generators will be run when we call the "conan install".
+      generators = "CMakeToolchain", "CMakeDeps"
+
+      # Depencies
+      def requirements(self):
+          self.requires("zlib/1.2.13")
+
+      # Depencies
+      def build_requirements(self):
+          self.tool_requires("cmake/3.22.6")
+
+      def layout(self):
+        # We make the assumption that if the compiler is msvc the
+        # CMake generator is multi-config
+        multi = True if self.settings.get_safe("compiler") == "msvc" else False
+        if multi:
+            self.folders.generators = os.path.join("build", "generators")
+        else:
+            self.folders.generators = os.path.join("build", str(self.setti0ngs.build_type), "generators")
+
+        # or predefined layout
+        cmake_layout(self)
+
+      def validate(self):
+          if self.settings.os == "Macos" and self.settings.arch == "armv8":
+              raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
+
+
+
+def **requirements** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def **build_requirements** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def **layout** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of using *--output-folder* argument to define where we wanted to create the files that Conan generates we can
+use the more powerful **layout** method and we can add some logic or reuse a predefined layout like the example above
+
+def **validates** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This method is evaluated when Conan loads the conanfile.py and you can use it to perform checks of the input settings.
+
