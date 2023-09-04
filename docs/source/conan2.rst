@@ -238,3 +238,19 @@ Conan really uses 2 profiles to build binaries:
 **profile:host**: This is the profile that defines the platform where the built binaries will run.
 
 **profile:build**: This is the profile that defines the platform where the binaries will be built.
+
+.. code-block:: console
+  :emphasize-lines: 2,9,10,11,12
+
+  [settings]
+  arch=armv7hf
+  build_type=Release
+  compiler=gcc
+  compiler.cppstd=gnu14
+  compiler.libcxx=libstdc++11
+  compiler.version=10
+  os=Linux
+  [buildenv]
+  CC=arm-linux-gnueabihf-gcc-9
+  CXX=arm-linux-gnueabihf-g++-9
+  LD=arm-linux-gnueabihf-ld
