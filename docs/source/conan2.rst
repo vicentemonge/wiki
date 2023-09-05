@@ -14,7 +14,6 @@ For that it has 2 sections corresponding on dependencies (*requires*) and build 
 We can add a *tool_requires* section to specify build tools as Conan packages instead using the installed one.
 
 .. code-block:: text
-  :lineno-start: 1
 
   [requires]
   zlib/1.2.13
@@ -47,7 +46,6 @@ Conan generates helper build system files containing variables to consume later 
 
 BUILD CONFIGURATION MECHANISM
 ---------------------------------
-
 
 **Settings** (project-wide configuration: build_type, compiler, architecture, etc) and **Options** (package-specific
 configuration: shared, static, etc).
@@ -205,10 +203,18 @@ For consuming packages is a powerful version of conanfile.txt where we put some 
           if self.settings.os == "Macos" and self.settings.arch == "armv8":
               raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
 
+.. note::
 
+  **VERSIONING IN RANGES** We can specified a version for packages, tools, etc. in ranges:
+
+    XXX/[~1.2]    -> 1.2.X picking the last available
+    XXX/[<1.2.12] -> 1.2.11 or lower
+    XXX/[>1.2.12] -> 1.2.13 or greater
 
 def **requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add requirements to this package
 
 def **build_requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,11 +241,11 @@ Conan really uses 2 profiles to build binaries:
   # is the same as
   $ conan install . --build=missing --profile:host=someprofile --profile:build=default
 
-**profile:host**: This is the profile that defines the platform where the built binaries will run.
+**profile:build (pr:b)**: This is the profile that defines the platform where the binaries will be built.
 
-**profile:build**: This is the profile that defines the platform where the binaries will be built.
+**profile:host (pr:h)**: This is the profile that defines the platform where the built binaries will run. Raspberry Pi example:
 
-.. code-block:: console
+.. code-block:: text
   :emphasize-lines: 2,9,10,11,12
 
   [settings]
@@ -254,3 +260,86 @@ Conan really uses 2 profiles to build binaries:
   CC=arm-linux-gnueabihf-gcc-9
   CXX=arm-linux-gnueabihf-g++-9
   LD=arm-linux-gnueabihf-ld
+
+  Example:
+.. code-block:: console
+
+  $ conan install . --build=missing --options=zlib/1.2.13:shared=True --profile:host=profiles/raspberry
+  $ source build/Release/generators/conanbuild.sh
+  $ cmake -B build . -DCMAKE_TOOLCHAIN_FILE=Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+  $ cmake --build build/
+  $ file ./build/compressor
+  /build/compressor: ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), dynamically linked,
+  interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=2d32469207447b8c941b0ce4a8c72cb531b44263,
+  for GNU/Linux 3.2.0, not stripped
+
+Revisions
+~~~~~~~~~~~~~~~~~~~~~
+
+  The recipe revision is the hash that can be seen together with the package name and version in the form
+  pkgname/version#recipe_revision or pkgname/version@user/channel#recipe_revision.
+  If we modify the recipe or the source code, Conan changes the revision of the package.
+
+Lockfile
+##################
+
+
+  If we can lock a exact package version#revision we can generate a *conan.lock* file and then it is used by default
+  *conan install . == conan install . --lockfile=conan.lock*:
+
+.. code-block:: console
+
+  $ conan lock create .
+
+.. code-block:: json
+
+  {
+    "version": "0.5",
+    "requires": [
+        "zlib/1.2.11#4524fcdd41f33e8df88ece6e755a5dcc%1650538915.154"
+    ],
+    "build_requires": [],
+    "python_requires": []
+  }
+
+
+
+Creating packages
+----------------------
+
+def **source** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Execute whatever command to obtain the sources.
+
+def **requirements** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add requirements to this package.
+
+def **configure**(self) & def **config_options**(self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure settings and options.
+
+def **build** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Responsable to invoque the build system and launch the tests.
+We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake,
+msbuild, autotools, etc.
+
+def **package** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Responsable to capture artifacts produced by the build system.
+
+We use here **self.copy** to copy from local filesystem to Conan local cache.
+
+def **package_info** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Define variables available for the package consumers.
+
+Use a **test_package** to test that the Conan package can be consumed correctly.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
