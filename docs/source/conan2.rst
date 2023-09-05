@@ -339,7 +339,7 @@ We use here **self.copy** to copy from local filesystem to Conan local cache.
 def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define variables available for the package consumers.
+Define variables available for the package consumers that store in a special dictionary **cpp_info**.
 
 Use a **test_package** to test that the Conan package can be consumed correctly.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
