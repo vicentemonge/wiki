@@ -348,6 +348,11 @@ Creates template files to be filled later to create the package.
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*", "include/*"
 
+    def source(self):
+        git = Git(self)
+        git.clone(url="https://github.com/conan-io/libhello.git", target=".") # "." use same folder instead subfolder
+        # git.checkout("<tag> or <commit hash>")
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
@@ -390,7 +395,43 @@ Creates template files to be filled later to create the package.
 def **source** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Execute whatever command to obtain the sources.
+Execute whatever command to obtain the sources. 2 git examples above:
+
+.. code-block:: python
+
+  from conan.tools.files import get
+  ...
+  def source(self):
+      get(self, "https://github.com/conan-io/libhello/archive/refs/heads/main.zip",
+                strip_root=True)
+
+  from conan.tools.scm import Git
+  ...
+  def source(self):
+      git = Git(self)
+      git.clone(url="https://github.com/conan-io/libhello.git", target=".")
+      #git.checkout("<tag> or <commit hash>")
+
+  from conan.tools.files import update_conandata
+  ...
+  def export(self):
+      git = Git(self, self.recipe_folder)
+      scm_url, scm_commit = git.get_url_and_commit()
+      self.output.info(f"Obtained URL: {scm_url} and {scm_commit}")
+      # we store the current url and commit in conandata.yml
+      update_conandata(self, {"sources": {"commit": scm_commit, "url": scm_url}})
+
+  def source(self):
+      # we recover the saved url and commit from conandata.yml and use them to get sources
+      git = Git(self)
+      sources = self.conan_data["sources"]
+      self.output.info(f"Cloning sources from: {sources}")
+      git.clone(url=sources["url"], target=".")
+      git.checkout(commit=sources["commit"])
+
+.. note::
+
+   The source method must have invariant results between repetitions. Use git checkout to a commit or invariant tag.
 
 def **requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
