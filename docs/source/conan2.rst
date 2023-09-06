@@ -222,8 +222,13 @@ def **build_requirements** (self)
 def **layout** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Declares the locations where we expect to find the source files and also those where we want to save the generated files
+during the build process. Things like the folder for the generated binaries or all the files that the Conan generators
+create in the generate() method.
+
 Instead of using *--output-folder* argument to define where we wanted to create the files that Conan generates we can
-use the more powerful **layout** method and we can add some logic or reuse a predefined layout like the example above
+use the more powerful **layout** method and we can add some logic or reuse a predefined layout like cmake_layout in the
+example above.
 
 def **validates** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -307,7 +312,20 @@ Lockfile
 Creating packages
 ----------------------
 
+
+[conan **new**]
+~~~~~~~~~~~~~~~~~~~
+
+Creates template files to be filled later to create the package.
+
+.. code-block:: console
+
+    $ conan new <template> -d name=XXX -d version=XXX
+    # for example
+    $ conan new cmake_lib -d name=hello -d version=1.0
+
 .. code-block:: python
+
   from conan import ConanFile
   from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
@@ -347,39 +365,56 @@ Creating packages
         cmake.build()
 
     def package(self):
+        # Using bare commands instead a helper:
+        # from local source folder files *.h to local package cache include folder
+        # self.copy("*.h", dst="include", src="source  ")
+        # self.copy("*.a", dst="lib", keep_path=False)
         cmake = CMake(self)
         cmake.install()
 
     def package_info(self):
         self.cpp_info.libs = ["hello"]
+        # self.cpp_info.libdirs = ["lib"] # default value, directories to search the lib
+        # self.cpp_info.includedirs = ["include"] # default value, directories to search the headers
 
-Class ConanFile attributes
+**Class ConanFile attributes**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
 **version**: It is a string, and can take any value, matching the same constraints as the name attribute. In case the version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package through version ranges instead of exact versions.
 **exports_sources**: is set to define which sources are part of the Conan package.
 
-Class ConanFile methods
-~~~~~~~~~~~~~~~~~~~~~~~~~
+**Class ConanFile methods**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def **source** (self)
-######################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Execute whatever command to obtain the sources.
 
 def **requirements** (self)
-############################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add requirements to this package.
 
-def **configure**(self) & def **config_options**(self)
-########################################################################################
+def **configure**(self) 
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure settings and options.
+Allows configuring settings and options while computing dependencies
+
+def **config_options**(self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure options while computing dependency graph.
+
+def **generate**(self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This method prepares the build. In this case, CMakeToolchain generate() method will create a conan_toolchain.cmake file
+that translates the Conan settings and options to CMake syntax.
 
 def **build** (self)
-############################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Responsable to invoque the build system and launch the tests.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake,
@@ -395,7 +430,193 @@ We use here **self.copy** to copy from local filesystem to Conan local cache.
 def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define variables available for the package consumers that store in a special dictionary **cpp_info**.
+Define variables available for the package consumers that store in a special dictionary **cpp_info** and that they must
+be know to consume them.
 
-Use a **test_package** to test that the Conan package can be consumed correctly.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A special kind of test: **test_package**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is a new kind of test that checks if the conan package and package_info method are completely correct and the package
+directory has the necessary files in all the right folders and can be consumed correctly.
+It doesn’t belong in the package. It only exists in the source repository, not in the package.
+
+>>># TODO XXXXXX
+If we run the command **conan new ... -t** in the package creation, conan creates the test_package itself.
+The when execute **connan create** conan run the test_package and return non-zero value if test_package fails.
+
+
+[conan **list**]
+~~~~~~~~~~~~~~~~~~~
+
+This command lists the recipes and binaries stored in the local cache. You can found if you are specific:
+
+.. code-block:: console
+
+  $ conan list <name>/<version>#<revision>:<package_id>
+  $ conan list <name>#:* # for all
+
+[conan **create**]
+~~~~~~~~~~~~~~~~~~~
+
+Creates the package on local cache (builds happen in local cache too). Accept same parameters as *conan install*:
+
+.. code-block:: console
+
+  $ conan create . -s build_type=Debug -o hello/1.0:shared=True
+
+
+
+
+
+
+
+
+[test_package **conan new -t**]
+**********************************
+
+It is a new kind of test that checks if the conan package and package_info method are completely correct and the package directory has the necessary files in all the right folders.
+If we run the command **conan new ... -t** in the package creation, conan creates the test_package itself.
+The when execute **connan create** conan run the test_package and return non-zero value if test_package fails.
+The test_package run in local folder and no add nothing to the local cache.
+
+[in-source recipe **conan new -s**]
+*********************************************
+
+For create from local source add a **-s** option to conan new. Nothing changes except the lack of remote repository and that the source match a pattern is copied to the local cache, called **exports_sources**
+
+.. code-block:: python
+  :emphasize-lines: 3,5
+
+  ...
+  generators = "cmake"
+  exports_sources = "src/*"
+
+  # NO SOURCE METHOD
+
+  def config_options(self):
+  ...
+
+.. note::
+  
+  There are a third method to obtain the sources called **SCM** but not explained here, just for the record.
+
+[conan **create**]
+~~~~~~~~~~~~~~~~~~~
+Builds artifacts, including the whole package
++V+ TODO: add command options
+
+.. code-block:: console
+
+  $ conan create . pe/testing # Release by default
+  $ conan create . pe/testing -s build_type=Debug
+  $ conan search hello/0.1@pe/testing 
+  Existing packages for recipe hello/0.1@pe/testing:
+
+  Package_ID: a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+      [options]
+          fPIC: True
+          shared: False
+      [settings]
+          arch: x86_64
+          build_type: Debug
+          compiler: gcc
+          compiler.libcxx: libstdc++11
+          compiler.version: 10
+          os: Linux
+      Outdated from recipe: False
+
+  Package_ID: b173bbda18164d49a449ffadc1c9e817f49e819d
+      [options]
+          fPIC: True
+          shared: False
+      [settings]
+          arch: x86_64
+          build_type: Release
+          compiler: gcc
+          compiler.libcxx: libstdc++11
+          compiler.version: 10
+          os: Linux
+      Outdated from recipe: False
+
+.. collapse:: How to store conan its packages in local cache on the filesystem
+
+  .. code-block:: console
+
+    $ tree -I '.git|CMakeFiles|*.cmake|CMakeCache.txt' ~/.conan/data/hello/0.1/pe/testing
+    ${HOME}/.conan/data/hello/0.1/pe/testing
+    ├── package # this is the main location of the packages (created or downloaded)
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   │   ├── conaninfo.txt
+    │   │   ├── conanmanifest.txt
+    │   │   ├── include
+    │   │   │   └── hello.h
+    │   │   └── lib
+    │   │       └── libhello.a
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    │       ├── conaninfo.txt
+    │       ├── conanmanifest.txt
+    │       ├── include
+    │       │   └── hello.h
+    │       └── lib
+    │           └── libhello.a
+    ├── build
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   │   ├── bin
+    │   │   │   └── greet
+    │   │   ├── conanbuildinfo.txt
+    │   │   ├── conaninfo.txt
+    │   │   ├── hello
+    │   │   │   ├── CMakeLists.txt
+    │   │   │   ├── hello.cpp
+    │   │   │   ├── hello.h
+    │   │   │   ├── LICENSE
+    │   │   │   ├── main.cpp
+    │   │   │   └── readme.md
+    │   │   ├── lib
+    │   │   │   └── libhello.a
+    │   │   └── Makefile
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    │       ├── bin
+    │       │   └── greet
+    │       ├── conanbuildinfo.txt
+    │       ├── conaninfo.txt
+    │       ├── hello
+    │       │   ├── CMakeLists.txt
+    │       │   ├── hello.cpp
+    │       │   ├── hello.h
+    │       │   ├── LICENSE
+    │       │   ├── main.cpp
+    │       │   └── readme.md
+    │       ├── lib
+    │       │   └── libhello.a
+    │       └── Makefile
+    ├── export
+    │   ├── conanfile.py
+    │   └── conanmanifest.txt
+    ├── export_source
+    ├── locks
+    │   ├── a25d6c83542b56b72fdaa05a85db5d46f5f0f71c
+    │   └── b173bbda18164d49a449ffadc1c9e817f49e819d
+    ├── metadata.json
+    ├── metadata.json.lock
+    └── source
+        └── hello
+            ├── CMakeLists.txt
+            ├── hello.cpp
+            ├── hello.h
+            ├── LICENSE
+            ├── main.cpp
+            └── readme.md
+
+From scratch
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    $ conan new [package]/[version] # generate template
+    $ conan create . user/testing  # create package in local cache
+    $ conan search # show local cache
+    # conan search hello/0.1@user/testing
+    # conan create . user/testing -s build_type=Debug
+    # conan search hello/0.1@user/testing
+    $ conan new [package]/[version] -s # from local sources
