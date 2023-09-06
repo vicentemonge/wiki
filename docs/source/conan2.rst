@@ -353,29 +353,33 @@ Creating packages
     def package_info(self):
         self.cpp_info.libs = ["hello"]
 
-
+Class ConanFile attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
 **version**: It is a string, and can take any value, matching the same constraints as the name attribute. In case the version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package through version ranges instead of exact versions.
 **exports_sources**: is set to define which sources are part of the Conan package.
 
+Class ConanFile methods
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 def **source** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+######################
 
 Execute whatever command to obtain the sources.
 
 def **requirements** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+############################################
 
 Add requirements to this package.
 
 def **configure**(self) & def **config_options**(self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+########################################################################################
 
 Configure settings and options.
 
 def **build** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+############################################
 
 Responsable to invoque the build system and launch the tests.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake,
