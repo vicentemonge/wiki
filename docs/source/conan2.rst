@@ -431,7 +431,9 @@ Execute whatever command to obtain the sources. 2 git examples above:
 
 .. note::
 
-   The source method must have invariant results between repetitions. Use git checkout to a commit or invariant tag.
+   The source method must have invariant results between repetitions. Using git perform a checkout to a commit or
+   invariant tag is the recommended way. The third option store url and commit information on a **conanfile.yml** file
+   inside the recipe when calling *conan create* and reads when sources need to be obtained (create, install, etc).
 
 def **requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
