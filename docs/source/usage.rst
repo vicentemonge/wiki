@@ -52,6 +52,48 @@ __*asdf*__
 
 #
 
+Reference to places in the same document:
+
+1.- creates a label and referenced  it
+
+.. _my-section-label:
+
+:ref:`Section Title <my-section-label>`
+
+2.- auto references adding "autosectionlabel_prefix_document = True" in conf.py configuration file and section titles as
+labels
+
+My Section ->  Sphinx will generate a label named my-section
+----------
+
+:ref:`My Section` 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

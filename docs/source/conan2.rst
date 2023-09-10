@@ -61,6 +61,7 @@ For consuming packages is a powerful version of conanfile.txt where we put some 
 
 
 :ref:`def requirements` for more info
+
 :ref:`generators` for more info
 
 
@@ -100,6 +101,7 @@ configuration: shared, static, etc).
 
 
 **Custom settings**: XXX
+
 **Custom options**: XXX
 
 PROFILES
@@ -338,8 +340,43 @@ It doesn’t belong in the package. It only exists in the source repository, not
 **Class ConanFile attributes**
 --------------------------------------------
 
-**name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
-**version**: It is a string, and can take any value, matching the same constraints as the name attribute. In case the version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package through version ranges instead of exact versions.
+**name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It
+should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
+
+**version**: It is a string, and can take any value, matching the same constraints as the name attribute. In case the
+version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package
+through version ranges instead of exact versions.
+
+**generators**: both the `generators` attribute and the `generate()` method are used to generate necessary files for the build, such as files containing information to locate the dependencies, environment activation scripts, toolchain files, etc.
+The `generators` attribute is a simpler way to specify the generators. If you don't need to customize anything in a generator, you can specify it in the `generators` attribute and skip using the :ref: `def generate (self)` method for that.
+
+```python
+from conan import ConanFile
+
+class Pkg(ConanFile):
+    generators = "CMakeDeps", "CMakeToolchain"
+```
+
+On the other hand, the `generate()` method provides more flexibility. It runs after the computation and installation of the dependency graph, preparing the build by generating necessary files¹. It can explicitly instantiate those generators, use them conditionally (like using one build system in Windows, and another build system integration in other platforms), customize them, or provide a complete custom generation¹. For example:
+
+```python
+from conan import ConanFile
+from conan.tools.cmake import CMakeToolchain
+
+class Pkg(ConanFile):
+    def generate(self):
+        tc = CMakeToolchain(self)
+        # customize toolchain "tc"
+        tc.generate()
+```
+
+In many cases, you might find that declaring the `generators` attribute could be enough. However, if you need more control over the generation process or want to provide custom logic, using the `generate()` method would be more appropriate¹.
+
+Source: Conversation with Bing, 10/09/2023
+(1) generate() — conan 2.0.10 documentation. https://docs.conan.io/2.0/reference/conanfile/methods/generate.html.
+(2) Migrating the recipes — conan 1.60.2 documentation. https://docs.conan.io/1/migrating_to_2.0/recipes.html.
+(3) CMakeDeps — conan 2.0.10 documentation. https://docs.conan.io/2/reference/tools/cmake/cmakedeps.html.
+
 **exports_sources**: is set to define which sources are part of the Conan package.
 
 **Class ConanFile methods**
@@ -397,7 +434,9 @@ Add dependencies to this package by name and version.
   **VERSIONING IN RANGES** We can specified a version for packages, tools, etc. in ranges:
 
     XXX/[~1.2]    -> 1.2.X picking the last available
+
     XXX/[<1.2.12] -> 1.2.11 or lower
+    
     XXX/[>1.2.12] -> 1.2.13 or greater
 
 def **build_requirements** (self)

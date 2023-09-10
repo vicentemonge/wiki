@@ -46,3 +46,6 @@ html_theme = 'cloud'
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+
+# To use tittles as labels to :ref:`My Section` directly:
+autosectionlabel_prefix_document = True
