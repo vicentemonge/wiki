@@ -1,13 +1,27 @@
 CONAN2
 ======
 
+.. note::
+
+  PLEASE NOTE WE ARE USING THE NEW ONE **CONAN 2** VERSION LAUNCH ON 2023 THAT IN NOT BACKWARD COMPATIBLE. BECAUSE
+  PREVIOUS VERSION 1 HAS BEEN AROUND FOR A LONG TIME, MOST THE INFO YOU CAN FIND IS FROM THE OLD VERSION. PLEASE USE 
+  https://docs.conan.io/2/index.html (THE OFFICIAL DOCUMENTATION) FOR EXTEND THE CONTENT FOUND HERE.
+
 **Install**
 ----------------------
 
 https://docs.conan.io/2/installation.html
 
-**conanfile.txt**
------------------
+**Introduction**
+----------------------
+
+Conan is a dependency and package manager for C and C++ languages. It is free and open-source, works in all platforms
+( Windows, Linux, OSX, FreeBSD, Solaris, etc.), and can be used to develop for all targets including embedded, mobile
+(iOS, Android), and bare metal. It also integrates with all build systems like CMake, Visual Studio (MSBuild), Makefiles
+, SCons, etc., including proprietary ones.
+
+**How to CONAN know we needs? The conanfile[.txt/.py]**
+--------------------------------------------------------------------
 
 Tell Conan our dependencies and our build system.
 For that it has 2 sections corresponding on dependencies (*requires*) and build systems (*generators*).
@@ -27,6 +41,24 @@ We can add a *tool_requires* section to specify build tools as Conan packages in
   CMakeDeps
   # generates conan_toolchain.cmake (-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake) from current package configuration, settings, and options.
   CMakeToolchain
+
+.. code-block:: python
+
+  from conan import ConanFile
+
+  class CompressorRecipe(ConanFile):
+      settings = "os", "compiler", "build_type", "arch"
+      generators = "CMakeToolchain", "CMakeDeps"
+
+      def requirements(self):
+          self.requires("zlib/1.2.11")
+
+      def build_requirements(self):
+          self.tool_requires("cmake/3.22.6")
+
+
+:ref:`def requirements` for more info
+:ref:`generators` for more info
 
 
 [conan **install**]
@@ -129,36 +161,6 @@ Recipe **conanfile.py**
 
 It can be used for consuming packages, like in this case, and also to create packages.
 For consuming packages is a powerful version of conanfile.txt where we put some logic using Python
-
-**conanfile.txt**
-
-.. code-block::
-
-  [requires]
-  zlib/1.2.13
-
-  [tool_requires]
-  cmake/3.22.6
-
-  [generators]
-  CMakeDeps
-  CMakeToolchain
-
-**conanfile.py**
-
-.. code-block:: python
-
-  from conan import ConanFile
-
-  class CompressorRecipe(ConanFile):
-      settings = "os", "compiler", "build_type", "arch"
-      generators = "CMakeToolchain", "CMakeDeps"
-
-      def requirements(self):
-          self.requires("zlib/1.2.11")
-
-      def build_requirements(self):
-          self.tool_requires("cmake/3.22.6")
 
 **extended conanfile.py**
 
@@ -441,17 +443,17 @@ def **requirements** (self)
 
 Add requirements to this package.
 
-def **configure**(self) 
+def **configure** (self) 
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allows configuring settings and options while computing dependencies
 
-def **config_options**(self)
+def **config_options** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure options while computing dependency graph.
 
-def **generate**(self)
+def **generate** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method prepares the build. In this case, CMakeToolchain generate() method will create a conan_toolchain.cmake file
