@@ -42,6 +42,9 @@ We can add a *tool_requires* section to specify build tools as Conan packages in
   # generates conan_toolchain.cmake (-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake) from current package configuration, settings, and options.
   CMakeToolchain
 
+The .py version can be used for consuming packages, like in this case, and also to create packages.
+For consuming packages is a powerful version of conanfile.txt where we put some logic using Python
+
 .. code-block:: python
 
   from conan import ConanFile
@@ -61,6 +64,9 @@ We can add a *tool_requires* section to specify build tools as Conan packages in
 :ref:`generators` for more info
 
 
+CONSUMING PACKAGES
+----------------------
+
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
 
@@ -77,7 +83,7 @@ if no exist (or specified by us).
 Conan generates helper build system files containing variables to consume later in the build folder (+V+ IMPROVE)
 
 BUILD CONFIGURATION MECHANISM
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Settings** (project-wide configuration: build_type, compiler, architecture, etc) and **Options** (package-specific
 configuration: shared, static, etc).
@@ -97,7 +103,7 @@ configuration: shared, static, etc).
 **Custom options**: XXX
 
 PROFILES
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Help files to group options, settings and environment variables in a file to achieve control, repeatability and comfort.
 When you build or install a package you can specify a profile with the option *--profile*.
@@ -155,87 +161,6 @@ Adding *shared=True* option make Conan invokes **VirtualRunEnv** generator which
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/conanrun.sh
   # to deactivate
   /connanfile/txt/path:$ source ${BUILD_FOLDER}/deactivate_conanrun.sh
-
-Recipe **conanfile.py**
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It can be used for consuming packages, like in this case, and also to create packages.
-For consuming packages is a powerful version of conanfile.txt where we put some logic using Python
-
-**extended conanfile.py**
-
-.. code-block:: python
-
-  import os
-
-  from conan import ConanFile
-  from conan.tools.cmake import cmake_layout
-  from conan.errors import ConanInvalidConfiguration
-
-  # Class name is free
-  class CompressorRecipe(ConanFile):
-      # This class attribute is related to how Conan manages binary compatibility
-      # as these values will affect the value of the package ID for Conan packages.
-      settings = "os", "compiler", "build_type", "arch"
-
-      # This class attribute specifies which Conan generators will be run when we call the "conan install".
-      generators = "CMakeToolchain", "CMakeDeps"
-
-      # Depencies
-      def requirements(self):
-          self.requires("zlib/1.2.13")
-
-      # Depencies
-      def build_requirements(self):
-          self.tool_requires("cmake/3.22.6")
-
-      def layout(self):
-        # We make the assumption that if the compiler is msvc the
-        # CMake generator is multi-config
-        multi = True if self.settings.get_safe("compiler") == "msvc" else False
-        if multi:
-            self.folders.generators = os.path.join("build", "generators")
-        else:
-            self.folders.generators = os.path.join("build", str(self.settings.build_type), "generators")
-
-        # or predefined layout
-        cmake_layout(self)
-
-      def validate(self):
-          if self.settings.os == "Macos" and self.settings.arch == "armv8":
-              raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
-
-.. note::
-
-  **VERSIONING IN RANGES** We can specified a version for packages, tools, etc. in ranges:
-
-    XXX/[~1.2]    -> 1.2.X picking the last available
-    XXX/[<1.2.12] -> 1.2.11 or lower
-    XXX/[>1.2.12] -> 1.2.13 or greater
-
-def **requirements** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Add requirements to this package
-
-def **build_requirements** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-def **layout** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Declares the locations where we expect to find the source files and also those where we want to save the generated files
-during the build process. Things like the folder for the generated binaries or all the files that the Conan generators
-create in the generate() method.
-
-Instead of using *--output-folder* argument to define where we wanted to create the files that Conan generates we can
-use the more powerful **layout** method and we can add some logic or reuse a predefined layout like cmake_layout in the
-example above.
-
-def **validates** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This method is evaluated when Conan loads the conanfile.py and you can use it to perform checks of the input settings.
 
 CROSS-COMPILING
 ---------------------------------
@@ -311,9 +236,18 @@ Lockfile
 
 
 
-Creating packages
+CREATING PACKAGES
 ----------------------
 
+[conan **list**]
+~~~~~~~~~~~~~~~~~~~
+
+This command lists the recipes and binaries stored in the local cache. You can found if you are specific:
+
+.. code-block:: console
+
+  $ conan list <name>/<version>#<revision>:<package_id>
+  $ conan list <name>#:* # for all
 
 [conan **new**]
 ~~~~~~~~~~~~~~~~~~~
@@ -324,7 +258,7 @@ Creates template files to be filled later to create the package.
 
     $ conan new <template> -d name=XXX -d version=XXX
     # for example
-    $ conan new cmake_lib -d name=hello -d version=1.0
+    $ conan new cmake_lib -d name=hello -d version=1.0 # creates a example library
 
 .. code-block:: python
 
@@ -385,15 +319,110 @@ Creates template files to be filled later to create the package.
         # self.cpp_info.libdirs = ["lib"] # default value, directories to search the lib
         # self.cpp_info.includedirs = ["include"] # default value, directories to search the headers
 
+[conan **create**]
+~~~~~~~~~~~~~~~~~~~
+
+Creates the package on local cache (builds happen in local cache too). Accept same parameters as *conan install*:
+
+.. code-block:: console
+
+  $ conan create . -s build_type=Debug -o hello/1.0:shared=True
+
+A special kind of test: **test_package**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is a new kind of test that checks if the conan package and package_info method are completely correct and the package
+directory has the necessary files in all the right folders and can be consumed correctly.
+It doesn’t belong in the package. It only exists in the source repository, not in the package.
+
 **Class ConanFile attributes**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
 **version**: It is a string, and can take any value, matching the same constraints as the name attribute. In case the version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package through version ranges instead of exact versions.
 **exports_sources**: is set to define which sources are part of the Conan package.
 
 **Class ConanFile methods**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
+
+.. code-block:: python
+
+  import os
+
+  from conan import ConanFile
+  from conan.tools.cmake import cmake_layout
+  from conan.errors import ConanInvalidConfiguration
+
+  # Class name is free
+  class CompressorRecipe(ConanFile):
+      # This class attribute is related to how Conan manages binary compatibility
+      # as these values will affect the value of the package ID for Conan packages.
+      settings = "os", "compiler", "build_type", "arch"
+
+      # This class attribute specifies which Conan generators will be run when we call the "conan install".
+      generators = "CMakeToolchain", "CMakeDeps"
+
+      # Depencies
+      def requirements(self):
+          self.requires("zlib/1.2.13")
+
+      # Depencies
+      def build_requirements(self):
+          self.tool_requires("cmake/3.22.6")
+
+      def layout(self):
+        # We make the assumption that if the compiler is msvc the
+        # CMake generator is multi-config
+        multi = True if self.settings.get_safe("compiler") == "msvc" else False
+        if multi:
+            self.folders.generators = os.path.join("build", "generators")
+        else:
+            self.folders.generators = os.path.join("build", str(self.settings.build_type), "generators")
+
+        # or predefined layout
+        cmake_layout(self)
+
+      def validate(self):
+          if self.settings.os == "Macos" and self.settings.arch == "armv8":
+              raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
+
+
+def **requirements** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add dependencies to this package by name and version.
+
+.. note::
+
+  **VERSIONING IN RANGES** We can specified a version for packages, tools, etc. in ranges:
+
+    XXX/[~1.2]    -> 1.2.X picking the last available
+    XXX/[<1.2.12] -> 1.2.11 or lower
+    XXX/[>1.2.12] -> 1.2.13 or greater
+
+def **build_requirements** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def **layout** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Declares the locations where we expect to find the source files and also those where we want to save the generated files
+during the build process. Things like the folder for the generated binaries or all the files that the Conan generators
+create in the generate() method.
+
+Instead of using *--output-folder* argument to define where we wanted to create the files that Conan generates we can
+use the more powerful **layout** method and we can add some logic or reuse a predefined layout like cmake_layout in the
+example above.
+
+def **validates** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This method is evaluated when Conan loads the conanfile.py and you can use it to perform checks of the input settings.
+
+
+########################################################################################################################
+
+
 
 def **source** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -438,11 +467,6 @@ Execute whatever command to obtain the sources. 2 git examples above:
    invariant tag is the recommended way. The third option store url and commit information on a **conanfile.yml** file
    inside the recipe when calling *conan create* and reads when sources need to be obtained (create, install, etc).
 
-def **requirements** (self)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Add requirements to this package.
-
 def **configure** (self) 
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -478,32 +502,6 @@ def **package_info** (self)
 
 Define variables available for the package consumers that store in a special dictionary **cpp_info** and that they must
 be know to consume them.
-
-A special kind of test: **test_package**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It is a new kind of test that checks if the conan package and package_info method are completely correct and the package
-directory has the necessary files in all the right folders and can be consumed correctly.
-It doesn’t belong in the package. It only exists in the source repository, not in the package.
-
-[conan **list**]
-~~~~~~~~~~~~~~~~~~~
-
-This command lists the recipes and binaries stored in the local cache. You can found if you are specific:
-
-.. code-block:: console
-
-  $ conan list <name>/<version>#<revision>:<package_id>
-  $ conan list <name>#:* # for all
-
-[conan **create**]
-~~~~~~~~~~~~~~~~~~~
-
-Creates the package on local cache (builds happen in local cache too). Accept same parameters as *conan install*:
-
-.. code-block:: console
-
-  $ conan create . -s build_type=Debug -o hello/1.0:shared=True
 
 
 
