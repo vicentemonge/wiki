@@ -346,7 +346,8 @@ Creates template files to be filled later to create the package.
     default_options = {"shared": False, "fPIC": True}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
-    exports_sources = "CMakeLists.txt", "src/*", "include/*"
+    # exports_sources = "CMakeLists.txt", "src/*", "include/*"
+    # or obtain trough git url
 
     def source(self):
         git = Git(self)
