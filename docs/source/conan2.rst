@@ -81,7 +81,9 @@ if no exist (or specified by us).
   /connanfile/txt/path:$ cmake --build ${BUILD_FOLDER}
 
 
-Conan generates helper build system files containing variables to consume later in the build folder (+V+ IMPROVE)
+If not **--build=missing** is added Conan launch an error if no binary found that matches our config.
+
+Conan generates helper build system files containing variables to consume later in the build folder (TODO: to be extended)
 
 BUILD CONFIGURATION MECHANISM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -342,18 +344,30 @@ It doesn’t belong in the package. It only exists in the source repository, not
 
 .. code-block:: python
 
-  import os
-
   from conan import ConanFile
 
+  ...
   # Class name is free
-  class CompressorRecipe(ConanFile):
+  class MyAwesomeName(ConanFile):
       # This class attribute is related to how Conan manages binary compatibility
       # as these values will affect the value of the package ID for Conan packages.
       settings = "os", "compiler", "build_type", "arch"
 
+      # options with some custom options "my_flag"
+      options = {"shared": [True, False], "fPIC": [True, False],
+                "my_flag": [True, False]}
+
+      # default values for options if not specified
+      default_options = {"shared": False, "fPIC": True,
+                        "my_flag": True}
+
       # This class attribute specifies which Conan generators will be run when we call the "conan install".
       generators = "CMakeToolchain", "CMakeDeps"
+
+      # Sources are located in the same place as this recipe, copy them to the recipe
+      exports_sources = "CMakeLists.txt", "src/*", "include/*"
+      # or better obtain trough git url using source() method
+  ...
 
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It
 should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
@@ -362,13 +376,20 @@ should start with alphanumeric or underscore and can contain alphanumeric, under
 version follows semantic versioning in the form X.Y.Z-pre1+build2, that value might be used for requiring this package
 through version ranges instead of exact versions.
 
+**options**: Accessed via *self.options.XXX*
+
 **generators**: both the `generators` attribute and the `generate()` method are used to generate necessary files for the
 uild, such as files containing information to locate the dependencies, environment activation scripts, toolchain files,
 etc. The `generators` attribute is a simpler way to specify the generators. If you don't need to customize anything in
 a generator, you can specify it in the `generators` attribute and skip using the :ref: `def generate (self)` method for
 that.
 
-**exports_sources**: is set to define which sources are part of the Conan package.
+**exports_sources**: is set to define which sources are part of the Conan package copying them.
+
+.. note::
+
+  Recommended is to use a Git commit and checkout in the *source* method because the code is not replicated and we have
+  more clear traceability.
 
 **Class ConanFile methods**
 --------------------------------------------
@@ -438,7 +459,6 @@ define tool_requires and test_requires.
       self.test_requires("gtest/1.13.0")
   ...
 
-
 def **layout** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -488,11 +508,6 @@ This method is evaluated when Conan loads the conanfile.py and you can use it to
       check_min_cppstd(self, "11")
       check_max_cppstd(self, "14")
 
-
-########################################################################################################################
-
-
-
 def **source** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -536,15 +551,35 @@ Execute whatever command to obtain the sources. 2 git examples above:
    invariant tag is the recommended way. The third option store url and commit information on a **conanfile.yml** file
    inside the recipe when calling *conan create* and reads when sources need to be obtained (create, install, etc).
 
-def **configure** (self) 
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Allows configuring settings and options while computing dependencies
-
 def **config_options** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure options while computing dependency graph.
+Configure options while computing dependency graph. This method is used to **constraint the available options in a
+package before they take a value**. If a value is assigned to a setting or option that is deleted inside this method,
+Conan will raise an error. In this case we are deleting the fPIC option in Windows because that option does not exist
+for that operating system. Note that this method is executed before the configure() method.
+
+.. code-block:: python
+
+    def config_options(self):
+      if self.settings.os == "Windows":
+          del self.options.fPIC
+
+def **configure** (self) 
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Allows configuring settings and options while computing dependencies. Use this method to configure **which options or
+settings of the recipe are available**. For example, in this case, we delete the fPIC option, because it should only be
+True if we are building the library as shared (in fact, some build systems will add this flag automatically when
+building a shared library).
+
+.. code-block:: python
+
+    def configure(self):
+        if self.options.shared:
+            # If os=Windows, fPIC will have been removed in config_options()
+            # use rm_safe to avoid double delete errors
+            self.options.rm_safe("fPIC")
 
 def **generate** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -559,6 +594,21 @@ Responsable to invoque the build system and launch the tests.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake,
 msbuild, autotools, etc.
 
+.. code-block:: python
+
+  ...
+  def build(self):
+      if self.settings.os == "Windows":
+          cmake = CMake(self)
+          cmake.configure()
+          cmake.build()
+      else:
+          autotools = Autotools(self)
+          autotools.autoreconf()
+          autotools.configure()
+          autotools.make()
+  ...
+
 def **package** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -571,6 +621,47 @@ def **package_info** (self)
 
 Define variables available for the package consumers that store in a special dictionary **cpp_info** and that they must
 be know to consume them.
+
+.. _package-id:
+Conan packages binary compatibility: the package ID
+----------------------------------------------------------
+
+Each time you create the package for one of those configurations, Conan will build a new binary. Each of them is related
+to a generated hash called the package ID. The package ID is just a way to convert a set of settings, options and
+information about the requirements of the package to a unique identifier. 
+
+Now, when you want to install a package, Conan will:
+
+- Collect the settings and options applied, along with some information about the requirements and calculate the hash
+for the corresponding package ID.
+- If that package ID matches one of the packages stored in the local Conan cache Conan will use that. If not, and we
+have any Conan remote configured, it will search for a package with that package ID in the remotes.
+- If that calculated package ID does not exist in the local cache and remotes, Conan will fail with a “missing binary”
+error message, or will try to build that package from sources (this depends on the value of the --build argument). This
+build will generate a new package ID in the local cache.
+
+
+.. note::
+  
+  If we delete settings or options in Conan recipes, those values will not be added to the computation of the package ID,
+  so even if you define them, the resulting package ID will be the same. For that is important to remove all staff do
+  not affect really to the final binary, like:
+
+  **C libraries**:
+
+  .. code-block:: python
+
+    def configure(self):
+      del self.settings.compiler.cppstd
+      del self.settings.compiler.libcxx
+
+  **Header-only libraries**:
+
+  .. code-block:: python
+
+    def package_id(self):
+      self.info.clear()
+
 
 
 
