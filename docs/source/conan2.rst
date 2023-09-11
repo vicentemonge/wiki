@@ -340,6 +340,21 @@ It doesn’t belong in the package. It only exists in the source repository, not
 **Class ConanFile attributes**
 --------------------------------------------
 
+.. code-block:: python
+
+  import os
+
+  from conan import ConanFile
+
+  # Class name is free
+  class CompressorRecipe(ConanFile):
+      # This class attribute is related to how Conan manages binary compatibility
+      # as these values will affect the value of the package ID for Conan packages.
+      settings = "os", "compiler", "build_type", "arch"
+
+      # This class attribute specifies which Conan generators will be run when we call the "conan install".
+      generators = "CMakeToolchain", "CMakeDeps"
+
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It
 should start with alphanumeric or underscore and can contain alphanumeric, underscore, +, ., - characters.
 
@@ -358,52 +373,42 @@ that.
 **Class ConanFile methods**
 --------------------------------------------
 
-.. code-block:: python
-
-  import os
-
-  from conan import ConanFile
-  from conan.tools.cmake import cmake_layout
-  from conan.errors import ConanInvalidConfiguration
-
-  # Class name is free
-  class CompressorRecipe(ConanFile):
-      # This class attribute is related to how Conan manages binary compatibility
-      # as these values will affect the value of the package ID for Conan packages.
-      settings = "os", "compiler", "build_type", "arch"
-
-      # This class attribute specifies which Conan generators will be run when we call the "conan install".
-      generators = "CMakeToolchain", "CMakeDeps"
-
-      # Depencies
-      def requirements(self):
-          self.requires("zlib/1.2.13")
-
-      # Depencies
-      def build_requirements(self):
-          self.tool_requires("cmake/3.22.6")
-
-      def layout(self):
-        # We make the assumption that if the compiler is msvc the
-        # CMake generator is multi-config
-        multi = True if self.settings.get_safe("compiler") == "msvc" else False
-        if multi:
-            self.folders.generators = os.path.join("build", "generators")
-        else:
-            self.folders.generators = os.path.join("build", str(self.settings.build_type), "generators")
-
-        # or predefined layout
-        cmake_layout(self)
-
-      def validate(self):
-          if self.settings.os == "Macos" and self.settings.arch == "armv8":
-              raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
-
-
 def **requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add dependencies to this package by name and version.
+
+.. code-block:: python
+
+  ...
+  # Depencies
+  def requirements(self):
+      self.requires("zlib/1.2.13")
+      # anD  with some traits
+      self.requires("math/1.0", headers=True, libs=True)
+  ...
+
+**Requirement traits**: attributes of a requiere clause. They determine how various parts of a dependency are treated
+and propagated by Conan. This new *advance dependency model* has been the more relevant change en Conan 2. Are: headers,
+libs, build, visible, transitive_headers, transitive_libs, test, package_id_mode, force, override, direct.
+
+- **headers**:  Indicates that there are headers that are going to be #included from this package at compile time.
+The dependency will be in the host context.
+
+- **libs**: The dependency contains some library or artifact that will be used at link time of the consumer. The
+dependency will be in the host context.
+
+- **run**: This dependency is a build tool, an application or executable, like cmake, that is used exclusively at build
+time. It is not linked/embedded into binaries, and will be in the build context.
+
+- **visible**: This require will be propagated downstream, even if it doesn’t propagate headers, libs or run traits.
+Requirements that propagate downstream can cause version conflicts. 
+
+- **transitive_headers**: If True the headers of the dependency will be visible downstream.
+
+- **transitive_libs**: If True the libraries to link with of the dependency will be visible downstream.
+
+`Official doc about reference-conanfile-methods-requirements <https://docs.conan.io/2/reference/conanfile/methods/requirements.html#reference-conanfile-methods-requirements>`_
 
 .. note::
 
@@ -415,8 +420,24 @@ Add dependencies to this package by name and version.
     
     XXX/[>1.2.12] -> 1.2.13 or greater
 
+
 def **build_requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The build_requirements() method in a conanfile.py is functionally equivalent to the requirements() method, and it is
+executed just after it. It’s not strictly necessary, and everything that is inside this method could theoretically be
+done at the end of the requirements() method. However, build_requirements() is useful for having a dedicated place to
+define tool_requires and test_requires.
+
+.. code-block:: python
+
+  ...
+  # Depencies
+  def build_requirements(self):
+      self.tool_requires("cmake/3.23.5")
+      self.test_requires("gtest/1.13.0")
+  ...
+
 
 def **layout** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -429,10 +450,43 @@ Instead of using *--output-folder* argument to define where we wanted to create 
 use the more powerful **layout** method and we can add some logic or reuse a predefined layout like cmake_layout in the
 example above.
 
+.. code-block:: python
+
+  ...
+  from conan.tools.cmake import cmake_layout
+  ...
+  def layout(self):
+    # We make the assumption that if the compiler is msvc the
+    # CMake generator is multi-config
+    multi = True if self.settings.get_safe("compiler") == "msvc" else False
+    if multi:
+        self.folders.generators = os.path.join("build", "generators")
+    else:
+        self.folders.generators = os.path.join("build", str(self.settings.build_type), "generators")
+
+    # or predefined layout
+    cmake_layout(self)
+
+
 def **validates** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method is evaluated when Conan loads the conanfile.py and you can use it to perform checks of the input settings.
+
+.. code-block:: python
+
+  ...
+  from conan.errors import ConanInvalidConfiguration
+  from conan.tools.build import check_max_cppstd, check_min_cppstd
+  ...
+
+  def validate(self):
+      # some settings check as example
+      if self.settings.os == "Macos" and self.settings.arch == "armv8":
+          raise ConanInvalidConfiguration("ARM v8 not supported in Macos")
+      # c++ std check
+      check_min_cppstd(self, "11")
+      check_max_cppstd(self, "14")
 
 
 ########################################################################################################################
