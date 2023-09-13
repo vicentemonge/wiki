@@ -106,6 +106,24 @@ configuration: shared, static, etc).
 
 **Custom options**: XXX
 
+**More**: There are a lot of configuration variables like but those exceed this document intention.
+`Here <https://docs.conan.io/2/reference/commands/config.html>`_ you can find much more info.
+
+.. note::
+
+  Helpful configuration variable **tools.build:skip_test** set to True Conan will automatically inject the BUILD_TESTING
+  variable to CMake set to OFF. And is very useful for activate or deactivate test build:
+
+  .. code-block:: cmake
+    :caption: CMakeLists.txt
+
+    ...
+    if (NOT BUILD_TESTING STREQUAL OFF)
+        add_subdirectory(tests)
+    endif()
+  ...
+
+
 PROFILES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,7 +384,7 @@ It doesn’t belong in the package. It only exists in the source repository, not
 
       # Sources are located in the same place as this recipe, copy them to the recipe
       exports_sources = "CMakeLists.txt", "src/*", "include/*"
-      # or better obtain trough git url using source() method
+      # or BETTER obtain trough git url using source() method
   ...
 
 **name**: a string, with a minimum of 2 and a maximum of 100 lowercase characters that defines the package name. It
@@ -598,16 +616,24 @@ msbuild, autotools, etc.
 
   ...
   def build(self):
+
       # Select the build system you want to use conditionally
       if self.settings.os == "Windows":
           cmake = CMake(self)
-          cmake.configure()
-          cmake.build()
+          cmake.configure()  # equivalent to self.run("cmake . <other args>")
+          cmake.build() # equivalent to self.run("cmake --build . <other args>")
+          cmake.test()  # equivalent to self.run("cmake --target=RUN_TESTS")
       else:
           autotools = Autotools(self)
           autotools.autoreconf()
           autotools.configure()
           autotools.make()
+
+      # Or it could run your own build system
+      self.run("mybuildsystem . --configure")
+      self.run("mybuildsystem . --build")
+      # or scripts
+      self.run("./build.sh")
   ...
 
 def **package** (self)
