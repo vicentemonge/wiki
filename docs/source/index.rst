@@ -28,3 +28,4 @@ Contents
    readthedocs
    sandbox
    usage
+   thirdparty/Markdown-Cheatsheet
