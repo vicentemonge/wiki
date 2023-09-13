@@ -83,6 +83,7 @@ tag
 
 
 TODO: submodule foreach variables
+--------------------------------------------
 
     Certainly! When using the git submodule foreach command, you have access to several environment variables that provide information about each submodule. Here are some useful variables you can use:
 
@@ -101,4 +102,45 @@ git submodule foreach 'echo "Name: $name, Path: $path, SHA-1: $sha1"'
 
 Feel free to combine these variables in creative ways to extract the information you need for your specific use case.
 
+
+**COMO ADELGACE LA MATRIX**
+----------------------------------
+
+
+# Solamente current branch
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch -r \*.tar.gz' --prune-empty -- --all
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch -r \*.tar.bz2' --prune-empty -- --all
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch -r \*.tar.xz' --prune-empty -- --all
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch compilation.txt' --prune-empty -- --all
+# Todo el repo
+git filter-repo --path \*.tar.gz --invert-path -f
+git filter-repo --path \*.tar.bz2 --invert-path -f
+git filter-repo --path \*.tar.gz --invert-path -f
+git filter-repo --path compilation.txt --invert-path -f
+git reflog expire --expire=now --all && git gc --prune=now --aggressive
+git push
+
+
+# Files por tamaño de archivo
+git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 | tail -n 100 | cut -c 1-12,41- | $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+
+
+
+# TO MAKE A REPO BACKUP
+https://stackoverflow.com/questions/6865302/push-local-git-repo-to-new-remote-including-all-branches-and-tags
+
+To push all your branches, use either (replace REMOTE with the name of the remote, for example "origin"):
+
+git push REMOTE '*:*'
+git push REMOTE --all
+
+To push all your tags:
+
+git push REMOTE --tags
+
+Finally, I think you can do this all in one command with:
+
+git push REMOTE --mirror
+
+However, in addition --mirror, will also push your remotes, so this might not be exactly what you want.
 

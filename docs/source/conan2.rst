@@ -592,12 +592,13 @@ def **build** (self)
 
 Responsable to invoque the build system and launch the tests.
 We can use **self.run** for execute whatever command but Conan provide helper classes for most popular system as cmake,
-msbuild, autotools, etc.
+msbuild, autotools, etc. 
 
 .. code-block:: python
 
   ...
   def build(self):
+      # Select the build system you want to use conditionally
       if self.settings.os == "Windows":
           cmake = CMake(self)
           cmake.configure()
