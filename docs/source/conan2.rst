@@ -675,7 +675,28 @@ def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define variables available for the package consumers that store in a special dictionary **cpp_info** and that they must
-be know to consume them.
+be know to consume them. In case of a library we need name, path, include path:
+
+.. code-block:: python
+
+  def package_info(self):
+      self.cpp_info.libs = ["hello"]
+      # conan sets libdirs = ["lib"] and includedirs = ["include"] by default
+      self.cpp_info.libdirs = ["lib"]
+      self.cpp_info.includedirs = ["include"]
+
+.. note::
+
+  If a package have more than one binary output we can configure separately its package_info with conan components:
+
+  .. code-block:: python
+
+    def package_info(self):
+      self.cpp_info.components["utils"].libs = ["algorithms"]
+      self.cpp_info.components["utils"].set_property("cmake_target_name", "algorithms")
+
+  `docs.conan.io <https://docs.conan.io/2/examples/conanfile/package_info/components.html#examples-conanfile-package-info-components>`_
+  
 
 .. _package-id:
 Conan packages binary compatibility: the package ID
