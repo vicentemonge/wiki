@@ -641,7 +641,35 @@ def **package** (self)
 
 Responsable to capture artifacts produced by the build system.
 
-We use here **self.copy** to copy from local filesystem to Conan local cache.
+We use CMake install to copy **self.copy** to copy from local filesystem to Conan local cache.
+
+.. code-block:: python
+
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
+    
+    def package(self):
+        copy(self, "LICENSE", src=self.source_folder, dst=os.path.join(self.package_folder, "licenses"))
+        copy(self, pattern="*.h", src=os.path.join(self.source_folder, "include"), dst=os.path.join(self.package_folder, "include"))
+        copy(self, pattern="*.a", src=self.build_folder, dst=os.path.join(self.package_folder, "lib"), keep_path=False)
+        copy(self, pattern="*.so", src=self.build_folder, dst=os.path.join(self.package_folder, "lib"), keep_path=False)
+        copy(self, pattern="*.lib", src=self.build_folder, dst=os.path.join(self.package_folder, "lib"), keep_path=False)
+        copy(self, pattern="*.dll", src=self.build_folder, dst=os.path.join(self.package_folder, "bin"), keep_path=False)
+        copy(self, pattern="*.dylib", src=self.build_folder, dst=os.path.join(self.package_folder, "lib"), keep_path=False)
+
+.. note::
+
+  Conan have some tools to manage symlinks. Example (make absolute symlinks to relative):
+
+  .. code-block:: python
+
+    from conan.tools.files.symlinks import absolute_to_relative_symlinks
+
+    def package(self):
+      ...
+      absolute_to_relative_symlinks(self, self.package_folder)
+  
 
 def **package_info** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -691,4 +719,66 @@ build will generate a new package ID in the local cache.
 
 
 
+Cache directories notes
+----------------------------------------------------------
+
+**Directory package ${HOME}/.conan2/p/hello**
+
+.. code-block:: console
+
+  ${HOME}/.conan2/p/hello5a0c1556f8e48/
+  ├── d
+  │   └── metadata
+  ├── e -------------------------------> recipe/package
+  │   ├── conanfile.py
+  │   └── conanmanifest.txt
+  ├── es
+  └── s -------------------------------> sources
+      ├── CMakeLists.txt
+      ├── include
+      │   └── hello.h
+      ├── LICENSE
+      ├── README.md
+      ├── src
+      │   └── hello.cpp
+      └── tests
+          ├── CMakeLists.txt
+          └── test.cp
+
+**Directory build ${HOME}/.conan2/p/b/hello**
+
+.. code-block:: console
+
+  /home/vmonge/.conan2/p/b/hello4f31b135fb0a3/
+  ├── b
+  │   ├── build
+  │   │   └── Release
+  |   |       ...
+  │   │       ├── libhello.a
+  │   │       └── tests
+  │   │           ...
+  │   │           └── test_hello
+  |   ...
+  │   ├── CMakeLists.txt
+  │   ├── CMakeUserPresets.json
+  │   ├── conaninfo.txt
+  │   ├── include
+  │   │   └── hello.h
+  │   ├── LICENSE
+  │   ├── README.md
+  │   ├── src
+  │   │   └── hello.cpp
+  │   └── tests
+  │       ├── CMakeLists.txt
+  │       └── test.cpp
+  ├── d
+  │   └── metadata
+  └── p -------------------------------> package created
+      ├── conaninfo.txt
+      ├── conanmanifest.txt
+      |--------------------------------- install output below
+      ├── include
+      │   └── hello.h
+      └── lib
+          └── libhello.a
 
