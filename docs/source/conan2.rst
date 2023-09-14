@@ -68,13 +68,38 @@ For consuming packages is a powerful version of conanfile.txt where we put some 
 CONSUMING PACKAGES
 ----------------------
 
+[conan **remote**]
+~~~~~~~~~~~~~~~~~~~
+
+.. image:: ../resources/images/jfrog_artifactory.png
+  :height: 400
+
+.. image:: ../resources/images/artifactory_get_repo_url_01.png
+  :width: 800
+
+.. image:: ../resources/images/artifactory_get_repo_url_02.png
+  :height: 400
+
+
+Now, let’s configure the Conan client to connect with the “conan-local” repository. First add the remote to the Conan
+remote registry from images above:
+
+.. code-block:: console
+
+  $ conan remote add <local_repo> http://srv-artifactory:8081/artifactory/api/conan/<local_repo>
+
+Then configure the credentials for the remote:
+
+.. code-block:: console
+
+  $ conan remote login <local_repo> <user> -p <password>
+
 [conan **install**]
 ~~~~~~~~~~~~~~~~~~~
 
 To install dependencies (direct dependencies and transitive dependencies), download binaries or the source code and build
 if no exist (or specified by us).
 
-.. code-block:: console
 
   /connanfile/txt/path:$ conan install . --output-folder=${BUILD_FOLDER} --build=missing
   /connanfile/txt/path:$ cmake . -B ${BUILD_FOLDER} -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release
@@ -349,6 +374,18 @@ Creates the package on local cache (builds happen in local cache too). Accept sa
 .. code-block:: console
 
   $ conan create . -s build_type=Debug -o hello/1.0:shared=True
+
+[conan **upload**]
+~~~~~~~~~~~~~~~~~~~~
+
+
+TODO: improve
+
+.. code-block:: console
+
+  $ conan upload <package_name> -r=<local_repo>
+  $ conan search "*" -r=<local_repo>
+
 
 **Class ConanFile attributes**
 --------------------------------------------
