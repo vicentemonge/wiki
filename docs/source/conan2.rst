@@ -350,13 +350,6 @@ Creates the package on local cache (builds happen in local cache too). Accept sa
 
   $ conan create . -s build_type=Debug -o hello/1.0:shared=True
 
-A special kind of test: **test_package**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It is a new kind of test that checks if the conan package and package_info method are completely correct and the package
-directory has the necessary files in all the right folders and can be consumed correctly.
-It doesn’t belong in the package. It only exists in the source repository, not in the package.
-
 **Class ConanFile attributes**
 --------------------------------------------
 
@@ -423,7 +416,7 @@ Add dependencies to this package by name and version.
   # Depencies
   def requirements(self):
       self.requires("zlib/1.2.13")
-      # anD  with some traits
+      # and  with some traits
       self.requires("math/1.0", headers=True, libs=True)
   ...
 
@@ -696,7 +689,64 @@ be know to consume them. In case of a library we need name, path, include path:
       self.cpp_info.components["utils"].set_property("cmake_target_name", "algorithms")
 
   `docs.conan.io <https://docs.conan.io/2/examples/conanfile/package_info/components.html#examples-conanfile-package-info-components>`_
-  
+
+A special kind of test: **test_package**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is a new kind of test that checks if the conan package and package_info method are completely correct and the package
+directory has the necessary files in all the right folders and can be consumed correctly.
+It doesn’t belong in the package. It only exists in the source repository, not in the package.
+
+It is a small Conan project itself, it contains its own conanfile.py, and its source code including build scripts, that
+depends on the package being created, and builds and execute a small application that requires the library in the package.
+
+The test_package is invoked on *conan create* but you can force with *conan test test_package <package>/<vers>*
+
+.. code-block:: console
+
+  test_package
+  ├── CMakeLists.txt
+  ├── conanfile.py
+  └── src
+      └── example.cpp
+
+.. code-block:: python
+  :caption: test_package/conanfile.py
+
+  import os
+
+  from conan import ConanFile
+  from conan.tools.cmake import CMake, cmake_layout
+  from conan.tools.build import can_run
+
+
+  class helloTestConan(ConanFile):
+      settings = "os", "compiler", "build_type", "arch"
+      generators = "CMakeDeps", "CMakeToolchain"
+
+      def requirements(self):
+          # tested_reference_str filled by conan to reuses test_package recipe between versions
+          self.requires(self.tested_reference_str)
+
+      def build(self):
+          cmake = CMake(self)
+          cmake.configure()
+          cmake.build()
+
+      def layout(self):
+          cmake_layout(self)
+
+      def test(self):
+          # conan.tools.build.cross_building tool to check if we can run the built executable in our platform
+          if can_run(self):
+              cmd = os.path.join(self.cpp.build.bindir, "example")
+              self.run(cmd, env="conanrun")
+
+def **test** (self)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Method only invoked in test_package recipes. It executes immediately after build() is called, and it’s meant to run some
+executable or tests on binaries to prove the package is correctly created.
 
 .. _package-id:
 Conan packages binary compatibility: the package ID
@@ -764,7 +814,7 @@ Cache directories notes
       │   └── hello.cpp
       └── tests
           ├── CMakeLists.txt
-          └── test.cp
+          └── test.cpp
 
 **Directory build ${HOME}/.conan2/p/b/hello**
 
