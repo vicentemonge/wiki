@@ -252,37 +252,6 @@ Conan really uses 2 profiles to build binaries:
   interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=2d32469207447b8c941b0ce4a8c72cb531b44263,
   for GNU/Linux 3.2.0, not stripped
 
-Revisions
-~~~~~~~~~~~~~~~~~~~~~
-
-  The recipe revision is the hash that can be seen together with the package name and version in the form
-  pkgname/version#recipe_revision or pkgname/version@user/channel#recipe_revision.
-  If we modify the recipe or the source code, Conan changes the revision of the package.
-
-Lockfile
-##################
-
-
-  If we can lock a exact package version#revision we can generate a *conan.lock* file and then it is used by default
-  *conan install . == conan install . --lockfile=conan.lock*:
-
-.. code-block:: console
-
-  $ conan lock create .
-
-.. code-block:: json
-
-  {
-    "version": "0.5",
-    "requires": [
-        "zlib/1.2.11#4524fcdd41f33e8df88ece6e755a5dcc%1650538915.154"
-    ],
-    "build_requires": [],
-    "python_requires": []
-  }
-
-
-
 CREATING PACKAGES
 ----------------------
 
@@ -825,7 +794,34 @@ build will generate a new package ID in the local cache.
     def package_id(self):
       self.info.clear()
 
+Revisions
+~~~~~~~~~~~~~~~~~~~~~
 
+  The recipe revision is the hash that can be seen together with the package name and version in the form
+  pkgname/version#recipe_revision or pkgname/version@user/channel#recipe_revision.
+  If we modify the recipe or the source code, Conan changes the revision of the package.
+
+Lockfile
+##################
+
+
+  If we can lock a exact package version#revision we can generate a *conan.lock* file and then it is used by default
+  *conan install . == conan install . --lockfile=conan.lock*:
+
+.. code-block:: console
+
+  $ conan lock create .
+
+.. code-block:: json
+
+  {
+    "version": "0.5",
+    "requires": [
+        "zlib/1.2.11#4524fcdd41f33e8df88ece6e755a5dcc%1650538915.154"
+    ],
+    "build_requires": [],
+    "python_requires": []
+  }
 
 Cache directories notes
 ----------------------------------------------------------
