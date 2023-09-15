@@ -71,13 +71,13 @@ CONSUMING PACKAGES
 [conan **remote**]
 ~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../resources/images/jfrog_artifactory.png
+.. image:: ../../resources/images/jfrog_artifactory.png
   :height: 400
 
-.. image:: ../resources/images/artifactory_get_repo_url_01.png
+.. image:: ../../resources/images/artifactory_get_repo_url_01.png
   :width: 800
 
-.. image:: ../resources/images/artifactory_get_repo_url_02.png
+.. image:: ../../resources/images/artifactory_get_repo_url_02.png
   :height: 400
 
 

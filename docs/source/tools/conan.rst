@@ -1,7 +1,7 @@
 CONAN
 =====
 
-.. image:: ../images/conan_overview.png
+.. image:: ../../resources/images/conan_overview.png
   :width: 800
   :alt: Alt text que no se para que vale
 
@@ -33,7 +33,7 @@ Tell Conan our dependencies and our build system. For that it has 2 sections cor
 
  [https://github.com/conan-io/conan-center-index] is the source index of recipes of the ConanCenter package repository for Conan.
 
-.. image:: ../images/conan_center_index.png
+.. image:: ../../resources/images/conan_center_index.png
   :width: 800
 
 [conan **install**]
@@ -188,7 +188,7 @@ Search for packages on the remote you select
         Outdated from recipe: False
 
 
-.. image:: ../images/conan_package_install.png
+.. image:: ../../resources/images/conan_package_install.png
   :caption: Package install process. First in the local cache and then remote search by index order.
 
   .. note::
@@ -435,13 +435,13 @@ From scratch
 [conan **remote**]
 ~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../images/jfrog_artifactory.png
+.. image:: ../../resources/images/jfrog_artifactory.png
   :height: 400
 
-.. image:: ../images/artifactory_get_repo_url_01.png
+.. image:: ../../resources/images/artifactory_get_repo_url_01.png
   :width: 800
 
-.. image:: ../images/artifactory_get_repo_url_02.png
+.. image:: ../../resources/images/artifactory_get_repo_url_02.png
   :height: 400
 
 .. code-block:: console
