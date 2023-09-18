@@ -833,11 +833,11 @@ Cache directories notes
   ${HOME}/.conan2/p/hello5a0c1556f8e48/
   ├── d
   │   └── metadata
-  ├── e -------------------------------> recipe/package
+  ├── e --------------------------------> recipe/package
   │   ├── conanfile.py
   │   └── conanmanifest.txt
-  ├── es
-  └── s -------------------------------> sources
+  ├── es -------------------------------> exports_sources
+  └── s --------------------------------> sources
       ├── CMakeLists.txt
       ├── include
       │   └── hello.h
