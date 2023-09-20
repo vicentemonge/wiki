@@ -22,6 +22,7 @@ Contents
    conan
    conan2
    conan_admin
+   docker
    git
    linux
    yocto
