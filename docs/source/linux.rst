@@ -32,6 +32,8 @@ Commands
 
 **alias** list all the alias
 
+**\<command>** execute the original command if has an alias changing it
+
 **GREP** https://man7.org/linux/man-pages/man1/grep.1.html
 
     --exclude-dir=, to skip folders if -r option
@@ -59,6 +61,15 @@ Commands
     -P pattern, display only match pattern
     -I pattern, skip match pattern
     [<directory list>], list of directories
+
+
+**find**
+
+Execute a command by each match:
+
+.. code-block:: console
+
+    -exec [COMMAND] {} \;
 
 
 

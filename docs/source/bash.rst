@@ -118,7 +118,15 @@ some commands (more commands on linux section)
 
     set -x # enable the -x option
     set +x # disable the -x option
-    
+
+- **AWK**
+.. code-block:: console
+
+    # basic syntax
+    $ awk -F 'separator' '/pattern/ { action }' input-file
+    # print lines start by start word and the second column separated by ' ' and '.'
+    $ awk -F '[ |.]'/^start/' { print $2 }'
+
 
 PATH STACK
 ------------------------------
