@@ -37,11 +37,11 @@ docker ps -a
 docker container ls -a
 
 
-- **Run a container** (creates if no exist):
+- **Create and start a new container**:
 # -v share folder between 2 worlds
 docker run -it -v /local/folder/to/be/shared/:/docker/folder/name/ --name my_debian11 debian:11
 
-- **Enter a running container**:
+- **Enter a started container**:
 
 #container name or ID and the shell you want to use
 docker exec -it CONTAINER_NAME_OR_ID /bin/bash

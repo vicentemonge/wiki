@@ -82,7 +82,6 @@ some commands (more commands on linux section)
     echo "RELATIVE"
     fi
 
-
 .. code-block:: console
 
     if [ ! -d /path/to/directory ]; then
@@ -127,6 +126,9 @@ some commands (more commands on linux section)
     # print lines start by start word and the second column separated by ' ' and '.'
     $ awk -F '[ |.]'/^start/' { print $2 }'
 
+- **Parameter handling**
+
+(See the example *examples/bash/handling_options_and_arguments.sh*)
 
 PATH STACK
 ------------------------------

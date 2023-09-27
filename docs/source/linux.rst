@@ -72,6 +72,14 @@ Execute a command by each match:
     -exec [COMMAND] {} \;
 
 
+**jq**
+
+Lightweight JSON processor
+
+.. code-block:: console
+
+    $ curl XXXXX | jq > /to/file.json
+
 
 
 
