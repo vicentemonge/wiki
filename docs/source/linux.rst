@@ -26,6 +26,28 @@ Install
 
     $ sudo apt install package_with_unsatisfied_dependencies.deb
 
+System queue
+-----------------
+
+List mq queues:
+
+.. code-block:: console
+
+    $ ll /dev/mqueue/
+
+
+Services
+-----------------
+
+Status of a service: **systemctl status service_name**
+Enable a service: **systemctl enable service_name**
+Start a service: **systemctl start service_name**
+Stop a service: **systemctl stop service_name**
+Logs from service: **journalctl -u service_name**
+Follow logs from service: **journalctl -u service_name -f**
+See running service: **systemctl --state=running**
+See present service: **systemctl --type=service**
+Binary of a service: **systemctl show --property=ExecStart service_name**
 
 Commands
 ------------------------------

@@ -4,8 +4,6 @@
 option=""
 list=()
 
-# not complettly working example
-
 # Loop through command-line arguments
 # NOTE: for loop do not accept internal 'shift' to cut the list
 while [[ $# -gt 0 ]]; do
@@ -14,7 +12,7 @@ while [[ $# -gt 0 ]]; do
             echo -e "\n+ option: '$1'"
 
             # Display help message
-            echo "Usage: myscript.sh [-h|--help] [-v|--verbose] [-o|--option value] [--longoption=argv] [-l|--list val1 val2 ...] [--longlist=val1 val2 ...]"
+            echo "Usage: myscript.sh [-h|--help] [-v|--verbose] [-o|--option value] [-l|--list val1 val2 ...]]"
             exit 0
             ;;
         -v|--verbose)

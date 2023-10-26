@@ -31,6 +31,8 @@ some commands (more commands on linux section)
     SCRIPT_NAME="$( basename "${BASH_SOURCE[0]}" )"
     EXECUTION_DIR="$( pwd )"
 
+(See template file *templates/bash.sh*)
+
 - Numeric comparison:
 
     -eq: equal to
