@@ -101,6 +101,9 @@ Lightweight JSON processor
 .. code-block:: console
 
     $ curl XXXXX | jq > /to/file.json
+    
+    $ formatted_json=$(echo "$json_content" | jq .)
+
 
 
 
