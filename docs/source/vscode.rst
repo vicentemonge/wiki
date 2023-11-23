@@ -78,6 +78,34 @@ debug
 
 **CTRL + SHIFT + D** To access debug view and **createa lauch.json file** select type between available options
 
+.. code-block:: json
+
+    {
+        "name": "(gdb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/pe_gateway/fake_micro",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+            {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            },
+            {
+                "description": "Set Disassembly Flavor to Intel",
+                "text": "-gdb-set disassembly-flavor intel",
+                "ignoreFailures": true
+            }
+        ]
+    }
+
+
 `vscode cmake-linux <https://code.visualstudio.com/docs/cpp/cmake-linux>`_
 `vscode cpp-debug <https://code.visualstudio.com/docs/cpp/cpp-debug>`_
 `cmake-tools debugging<https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html>`_

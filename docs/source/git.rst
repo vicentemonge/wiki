@@ -53,6 +53,19 @@ diff
     A file1
     M file3
 
+--cached
+---------
+
+ - remove only from index (untrack files)
+
+.. code-block:: console
+
+    # for a single file
+    $ git rm --cached file_to_remove.txt
+    # and for a single directory:
+    $ git rm --cached -r directory_to_remove
+
+
 tag
 ---
 
@@ -80,6 +93,19 @@ tag
     $ # if someone gone in the remote the easy way is:
     $ git tag -l | xargs git tag -d
     $ git fetch --tags
+
+ - delete tags:
+
+.. code-block:: console
+
+    # To delete remote tags (before deleting local tags) simply do:
+    $ git tag -l | xargs -n 1 git push --delete origin
+    # and then delete the local copies:
+    $ git tag | xargs git tag -d
+
+
+
+
 
 
 TODO: submodule foreach variables
