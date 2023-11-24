@@ -110,4 +110,13 @@ debug
 `vscode cpp-debug <https://code.visualstudio.com/docs/cpp/cpp-debug>`_
 `cmake-tools debugging<https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html>`_
 
+keep open
+-----------
 
+This setting is referring to **"workbench.editor.enablePreview"** setting to open a file from left file tree and close
+it in the next opening or keep open.
+
+.. note::
+    
+    single-click -> preview mode (with **"workbench.editor.enablePreview": true**)
+    double-click -> keep open mode
