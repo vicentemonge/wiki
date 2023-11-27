@@ -54,7 +54,21 @@ Commands
 
 **alias** list all the alias
 
-**\<command>** execute the original command if has an alias changing it
+**original aliased command**
+
+You can bypass aliases by the following methods:
+
+    the full pathname of the command: **/bin/ls**
+
+    command substitution: **$(which ls)**
+
+    the command builtin: **command ls**
+
+    double quotation marks: **"ls"**
+
+    single quotation marks: **'ls'**
+
+    a backslash character: **\ls**
 
 **GREP** https://man7.org/linux/man-pages/man1/grep.1.html
 
