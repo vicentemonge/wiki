@@ -6,7 +6,7 @@ shortcuts
 
 - go previous/following place: CTRL + ALT + - **/** CTRL + SHIFT + -
 - show object defined current file: CTRL + SHIFT + O
-- swith between header/source: ALT + O
+- switch between header/source: ALT + O
 - show/hide left panel: CTRL + B
 - show/hide terminal: CTRL + `
 - collapse all: CTRL + K CTRL + 0
@@ -120,3 +120,10 @@ it in the next opening or keep open.
     
     single-click -> preview mode (with **"workbench.editor.enablePreview": true**)
     double-click -> keep open mode
+
+see spaces and tabs
+------------------------
+
+.. note::
+
+    "editor.renderWhitespace": "all"
