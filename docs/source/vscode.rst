@@ -17,6 +17,16 @@ shortcuts
 - go line: CTRL + G
 - debug view: CTRL + SHIFT + O
 
+rulers
+-------
+
+Add this line to settings.json with all vertical rulers you want:
+
+.. code-block:: json
+
+    "editor.rulers": [120]
+
+
 configs
 -------
 
