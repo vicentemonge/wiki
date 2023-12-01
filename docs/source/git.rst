@@ -103,7 +103,16 @@ tag
     # and then delete the local copies:
     $ git tag | xargs git tag -d
 
+update-index
+--------------
 
+    Ignore changes on tracked files:
+
+.. code-block:: console
+    
+    $ git update-index --assume-unchanged path/to/file
+    $ git update-index --no-assume-unchanged path/to/file # back to normal git file tracking
+    $ git ls-files -v | grep '^[[:lower:]]' # list ignored but tracked files
 
 
 
