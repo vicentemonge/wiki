@@ -20,16 +20,32 @@ FIRST LEVEL
 [THIRD **LEVEL**]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+::
+    [THIRD **LEVEL**]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
 - FOURTH LEVEL
 *****************************************
 
-#
+::
+    
+  - FOURTH LEVEL
+  *****************************************
+
+
+
+Notes
+***********
 
 .. note::
 
     ESTO ES UNA NOTA
 
-#
+
+Code block
+*******************
 
 .. code-block:: cmake, cpp, python, cmake, console
   :caption: Example CMakeLists.txt
@@ -39,13 +55,15 @@ FIRST LEVEL
   :name: <reference-label>
   :file: external_code.py # to include external code
 
-#
+Collapsable content
+*************************
 
 .. collapse:: Text always displayed
 
   .. code-block:: console
 
-#
+Format
+***********
 
 *italic* or _italic_
 **bold** or __bold__
@@ -64,6 +82,7 @@ __*asdf*__
 #
 
 Reference to places in the same document:
+******************************************
 
 1.- creates a label and referenced  it
 
@@ -79,15 +98,10 @@ My Section ->  Sphinx will generate a label named my-section
 
 :ref:`My Section` 
 
-# urls
+URLS
+*******
 
 `link text <http://example.com>`_
-
-#
-
-
-
-
 
 
 
