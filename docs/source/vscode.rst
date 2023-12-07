@@ -8,6 +8,7 @@ shortcuts
 - show object defined current file: CTRL + SHIFT + O
 - switch between header/source: ALT + O
 - show/hide left panel: CTRL + B
+- show/hide bottom panel: CTRL + B
 - show/hide terminal: CTRL + `
 - collapse all: CTRL + K CTRL + 0
 - expand all: CTRL + K CTRL + J
@@ -137,3 +138,10 @@ see spaces and tabs
 .. note::
 
     "editor.renderWhitespace": "all"
+
+search with line numbers
+---------------------------
+
+.. note::
+
+    "search.showLineNumbers": true

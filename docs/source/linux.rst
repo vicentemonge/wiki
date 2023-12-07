@@ -118,7 +118,11 @@ Lightweight JSON processor
     
     $ formatted_json=$(echo "$json_content" | jq .)
 
+**ls**
 
-
+-v	by name, naturel order (1 < 2 < 11)
+-S	by size, largest first
+-X	by extension, alphabetically
+-t	by last modification date (mtime), newer first
 
 

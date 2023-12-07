@@ -28,6 +28,6 @@ Contents
    yocto
    vscode
    readthedocs
+   restructuredtext
    sandbox
-   usage
    thirdparty/Markdown-Cheatsheet
