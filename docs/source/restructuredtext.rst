@@ -47,7 +47,7 @@ Notes
 Code block
 *******************
 
-.. code-block:: cmake, cpp, python, cmake, console
+.. code-block:: cmake, cpp, python, cmake, console `[more] <https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingReST/Reference/Code/Codeblocks.html#available-lexers>`
   :caption: Example CMakeLists.txt
   :linenos:
   :lineno-start: 1

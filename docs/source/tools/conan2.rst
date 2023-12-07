@@ -113,7 +113,70 @@ Conan generates helper build system files containing variables to consume later 
 BUILD CONFIGURATION MECHANISM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Settings** (project-wide configuration: build_type, compiler, architecture, etc) and **Options** (package-specific
+ - **Settings** (project-wide configuration: build_type, compiler, architecture, etc). All available settings are listed on
+the **$CONAN_HOME/settings.yml** `[info from] <https://docs.conan.io/2/reference/config_files/settings.html>`
+(auto-gerenerated file that can be static if you erase comments on header). This settings can be modified directly on
+that file making it static erasing comments on header (see the file to understand that) or including a
+**$CONAN_HOME/settings_user.yml** `[info from] https://docs.conan.io/2.0/examples/config_files/settings/settings_user.html>`.
+
+(see *conan install config* command, that can install this files to coordinate a team or something like that)
+
+ - **Custom settings** You can add new settings as the root `[info from] https://docs.conan.io/2/reference/config_files/settings.html#customizing-settings>`:
+
+  .. code-block:: yaml
+    :emphasize-lines: 4
+
+    os:
+        Windows:
+            subsystem: [xxxxx]
+    distro: [null, RHEL6, CentOS, Debian]
+
+  If we want to create different binaries from our recipes defining this new setting, we would need to add to our recipes that:
+
+  .. code-block:: python
+    
+    class Pkg(ConanFile):
+        settings = "os", "compiler", "build_type", "arch", "distro"
+
+  For sub-settings this is not necessary:
+
+  .. code-block:: yaml
+    :emphasize-lines: 5
+
+    os:
+        Windows:
+            subsystem: [xxxxx]
+        Linux:
+            distro: [null, RHEL6, CentOS, Debian]
+
+
+  With this definition we could define our profiles as, and any attempt to define os.distro for another os value rather
+  than Linux will raise an error:
+
+  .. code-block:: ini
+
+    [settings]
+    os = "Linux"
+    os.distro = "CentOS"
+    compiler = "gcc"
+
+  You can add to new values:
+
+  .. code-block:: yaml
+    :emphasize-lines: 8
+
+    os:
+        Windows:
+            subsystem: [null, cygwin, msys, msys2, wsl]
+      ...
+    compiler:
+        gcc:
+            ...
+        mycompiler:
+            version: [1.1, 1.2]
+        msvc:
+
+ - **Options** (package-specific
 configuration: shared, static, etc).
 
 .. code-block:: console
@@ -127,7 +190,6 @@ configuration: shared, static, etc).
   # zlib/1.2.13:shared=True
 
 
-**Custom settings**: XXX
 
 **Custom options**: XXX
 
@@ -755,8 +817,36 @@ Method only invoked in test_package recipes. It executes immediately after build
 executable or tests on binaries to prove the package is correctly created.
 
 .. _package-id:
-Conan packages binary compatibility: the package ID
+BINARY COMPATIBILITY: the package ID
 ----------------------------------------------------------
+
+**package_id** is the *sha1sum* of the **conaninfo.txt** generated file that includes settings, options and requires. The
+info inside this file is the same you can see with *conan list* `info from <https://docs.conan.io/2.0/reference/binary_model/package_id.html>`:
+
+.. code-block:: console
+
+  $ conan list <package>/<version>:<pacakage_id>
+  Local Cache
+    package
+    package/version
+      revisions
+        d2b2087639c055542ccdcfb8cbbafdde (2023-12-07 08:08:29 UTC)
+          packages
+            33c9c689f13b7b4976a621f265e4ae12c5b47b6f <= THIS!!
+              info
+                settings
+                  arch: x86_64
+                  build_type: Release
+                  compiler: gcc
+                  compiler.cppstd: 20
+                  compiler.libcxx: libstdc++11
+                  compiler.version: 12
+                  os: Linux
+                options:
+                  shared: True
+                requires
+                  pe-cfg_charger/1.Y.Z
+
 
 Each time you create the package for one of those configurations, Conan will build a new binary. Each of them is related
 to a generated hash called the package ID. The package ID is just a way to convert a set of settings, options and
@@ -771,6 +861,11 @@ have any Conan remote configured, it will search for a package with that package
 - If that calculated package ID does not exist in the local cache and remotes, Conan will fail with a “missing binary”
 error message, or will try to build that package from sources (this depends on the value of the --build argument). This
 build will generate a new package ID in the local cache.
+
+Customizing package_id
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://docs.conan.io/2.0/reference/binary_model/custom_compatibility.html
 
 
 .. note::
