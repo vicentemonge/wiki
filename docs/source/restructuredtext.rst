@@ -1,5 +1,5 @@
-RST SYNTAX
-==========
+reStructuredText SYNTAX
+============================
 
 FIRST LEVEL
 ===============
@@ -21,6 +21,7 @@ FIRST LEVEL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
+
     [THIRD **LEVEL**]
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -30,10 +31,9 @@ FIRST LEVEL
 *****************************************
 
 ::
-    
+
   - FOURTH LEVEL
   *****************************************
-
 
 
 Notes
@@ -74,17 +74,16 @@ __*asdf*__
 *__asdf__*
 **_asdf_**
 
-#
+Literal include
+********************
 
 .. literalinclude:: api_response.json
    :language: json
 
-#
+Reference to places in the same document o to another files:
+*************************************************************
 
-Reference to places in the same document:
-******************************************
-
-1.- creates a label and referenced  it
+1.- creates a label (same or other file) and can referenced it:
 
 .. _my-section-label:
 
@@ -96,7 +95,24 @@ labels
 My Section ->  Sphinx will generate a label named my-section
 ----------
 
-:ref:`My Section` 
+:ref:`My Section`
+
+3.- Custom link text
+
+:ref:`custom text<Heading Text>`
+
+4.- To other file
+
+:doc:`git.rst`
+:doc:`git doc <git.rst>`
+
+5.- File in other project (do not tested). I also have inter-sphinx extension in my conf.py file:
+
+extensions = ['sphinx.ext.intersphinx']
+
+:doc:`git doc <git.rst>`
+
+
 
 URLS
 *******
