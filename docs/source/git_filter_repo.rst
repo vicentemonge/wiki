@@ -1,3 +1,7 @@
+https://github.com/newren/git-filter-repo#how-do-i-use-it
+
+https://www.mankier.com/1/git-filter-repo#Examples
+
 **COMO ADELGACE PE LINUX PACKAGE**
 ----------------------------------
 # Install git-filter-repo

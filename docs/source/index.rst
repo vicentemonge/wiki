@@ -19,9 +19,9 @@ Contents
    c
    c++
    cmake
-   conan
-   conan2
-   conan_admin
+   tools/conan
+   tools/conan2
+   tools/conan_admin
    docker
    git
    linux
