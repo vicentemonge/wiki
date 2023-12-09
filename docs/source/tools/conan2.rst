@@ -114,14 +114,14 @@ BUILD CONFIGURATION MECHANISM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  - **Settings** (project-wide configuration: build_type, compiler, architecture, etc). All available settings are listed on
-the **$CONAN_HOME/settings.yml** `[info from] <https://docs.conan.io/2/reference/config_files/settings.html>`
+the **$CONAN_HOME/settings.yml** `[info from] <https://docs.conan.io/2/reference/config_files/settings.html>`_
 (auto-gerenerated file that can be static if you erase comments on header). This settings can be modified directly on
 that file making it static erasing comments on header (see the file to understand that) or including a
-**$CONAN_HOME/settings_user.yml** `[info from] https://docs.conan.io/2.0/examples/config_files/settings/settings_user.html>`.
+**$CONAN_HOME/settings_user.yml** `[info from] <https://docs.conan.io/2.0/examples/config_files/settings/settings_user.html>`_.
 
 (see *conan install config* command, that can install this files to coordinate a team or something like that)
 
- - **Custom settings** You can add new settings as the root `[info from] https://docs.conan.io/2/reference/config_files/settings.html#customizing-settings>`:
+ - **Custom settings** You can add new settings as the root `[info from] https://docs.conan.io/2/reference/config_files/settings.html#customizing-settings>`_:
 
   .. code-block:: yaml
     :emphasize-lines: 4
