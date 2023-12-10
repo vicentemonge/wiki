@@ -214,7 +214,11 @@ configuration: shared, static, etc).
 PROFILES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Help files to group options, settings and environment variables in a file to achieve control, repeatability and comfort.
+Conan profiles allow users to group configuration: settings, options, environment variables (for build time and runtime
+context), tool requirements, and configuration variables in a file to achieve control, repeatability and comfort.
+
+
+
 When you build or install a package you can specify a profile with the option *--profile*.
 If no profile is specified apply the **default** profile that need to be created the first time.
 Conan have a default place for the profiles *${HOME}/.conan2/profiles* (you can check with *conan config home* command).
@@ -229,19 +233,37 @@ Conan have a default place for the profiles *${HOME}/.conan2/profiles* (you can 
   arch=x86_64
   build_type=Release
   compiler=gcc
+  compiler.cppstd=20
+  compiler.libcxx=libstdc++11
+  compiler.version=10
+  os=Linux
+
+More general example:
+
+.. code-block:: console
+
+  [settings]
+  arch=x86_64
+  build_type=Release
+  compiler=gcc
   compiler.cppstd=gnu14
   compiler.libcxx=libstdc++11
   compiler.version=10
   os=Linux
+
   [options]
+  MyLib:shared=True
+
   [tool_requires]
+  tool1/0.1@user/channel
+  *: tool4/0.1@user/channel
+
   [env]
   [buildenv]
   # This section is used to set the environment variables that are needed to build the binaries.
 
-  More settings examples:
-  build_type=Debug
-
+  [conf]
+  tools.build:jobs=2
 
 SETTING VIRTUAL ENVIRONMENT
 ---------------------------------
