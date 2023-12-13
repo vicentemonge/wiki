@@ -74,7 +74,7 @@ some commands (more commands on linux section)
     -d: true if the path is a directory
     -s: true if the file exists and has a size greater than zero
 
-- Check abolute path:
+- Check absolute path:
 
 .. code-block:: console
 
@@ -131,6 +131,12 @@ some commands (more commands on linux section)
 - **Parameter handling**
 
 (See the example *examples/bash/handling_options_and_arguments.sh*)
+
+- Lists
+
+.. code-block:: console
+    
+    $ list_size = ${#list[@]}
 
 PATH STACK
 ------------------------------

@@ -240,8 +240,9 @@ Conan have a default place for the profiles *${HOME}/.conan2/profiles* (you can 
 
 More general example:
 
-.. code-block:: console
+.. code-block:: ini
 
+  # Whatever existing in settings.yml (and settings_user.yml)
   [settings]
   arch=x86_64
   build_type=Release
@@ -251,12 +252,38 @@ More general example:
   compiler.version=10
   os=Linux
 
+  # Whatever from the recipe or its dependencies
   [options]
+  my_pkg_option=True
+  shared=True
   MyLib:shared=True
 
+  # List of tool_requires required by your recipe or its dependencies:
   [tool_requires]
+  cmake/3.25.2
   tool1/0.1@user/channel
   *: tool4/0.1@user/channel
+
+  # search first for installed on system of the tool requires
+  [system_tools]
+  cmake/3.24.2
+
+  .. conanfile.py
+
+  .. from conan import ConanFile
+
+  .. class PkgConan(ConanFile):
+  ..     name = "pkg"
+  ..     version = "2.0"
+  ..     # ....
+
+  ..     # Exact version
+  ..     def build_requirements(self):
+  ..         self.tool_requires("cmake/3.24.2")
+
+  ..     # Or even version ranges
+  ..     def build_requirements(self):
+  ..         self.tool_requires("cmake/[>=3.20.0]")
 
   [env]
   [buildenv]
