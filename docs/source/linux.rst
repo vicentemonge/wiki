@@ -26,8 +26,11 @@ Shortcuts
 
 - Unlock events: cat /var/log/auth.log | grep unlocked
 
-Install
+PACKAGES
 ------------------------------
+
+Install
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: console
 
@@ -43,6 +46,14 @@ Install
     $ # OR
 
     $ sudo apt install package_with_unsatisfied_dependencies.deb
+
+Package versions
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    $ apt install
+    $ dpkg --list
 
 System queue
 -----------------
@@ -144,5 +155,6 @@ Lightweight JSON processor
 -S	by size, largest first
 -X	by extension, alphabetically
 -t	by last modification date (mtime), newer first
+
 
 
