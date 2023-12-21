@@ -68,3 +68,38 @@ Macros vs functions
    elseif(<condition>)
    else()
    endif()
+
+set
+-------
+
+Set **Normal Variable**: *set(<variable> <value>... [PARENT_SCOPE])*
+
+- if no value unset the variable
+- PARENT_SCOPE: the variable will be set in the scope above the current scope (Each new directory or function() command
+creates a new scope, and the command block() too)
+
+Set **Cache Variable**: *set(<variable> <value>... CACHE <type> <docstring> [FORCE])*
+
+- CMake stores a separate set of "cache" variables, or "cache entries", whose values persist across multiple runs within
+a project build tree. 
+- [FORCE]: does not overwrite existing cache entries by default. FORCE option overwrite existing entries.
+- <type>: BOOL (ON/OFF), FILEPATH (file path), PATH (folder path), STRING (text), INTERNAL (text, persistent and implies FORCE)
+- <docstring>: quick summary
+- 
+Set **Environment Variable**: *set(ENV{<variable>} [<value>])*
+
+- Set an environment variable in the current CMake process, not the process from which CMake was called, nor the system
+environment at large, nor the environment of subsequent build or test processes.
+- *cmake -E env [<options>] [--] <command> [<arg>...]* Run command in a modified environment.
+  https://cmake.org/cmake/help/latest/manual/cmake.1.html#cmdoption-cmake-E-arg-env
+
+
+install
+-----------
+
+**CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT**: TRUE when CMAKE_INSTALL_PREFIX init to the default CMake value, typically on
+the first run of CMake within a new build tree.
+
+**CMAKE_INSTALL_PREFIX**: this directory is prepended onto all install directories, if relative first converted to absolute.
+**DESTDIR**: environment variable used for make inner command to prepend to output directory
+**--prefix**: CMAKE_INSTALL_PREFIX for command line and overwrites the value (*cmake --install --prefix xxxxx*)
