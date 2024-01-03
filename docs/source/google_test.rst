@@ -33,5 +33,30 @@ non-void function you’ll get a confusing compile error like "error: void value
 initialize return object of type 'bool' with an rvalue of type 'void'" or "error: no viable conversion from 'void' to
 'string'". To use a fatal failure in a non-void-returning function may rewrite and pass return as parameter.
 
-SUCCEED()
-~~~~~~~~~~~
+- **SUCCEED()**: is purely documentary and currently doesn’t generate any user-visible output.
+- **FAIL()**: fatal failure, only on void-returning functions
+- **ADD_FAILURE()**: nonfatal failure.
+- **ADD_FAILURE_AT(file_path, line_number)**: nonfatal failure at that line on that file.
+- **EXPECT_THAT(value, matcher)**:
+- **ASSERT_THAT(value, matcher)**:
+
+.. code-block:: cpp
+
+    #include <gmock/gmock.h>
+
+    using ::testing::AllOf;
+    using ::testing::Gt;
+    using ::testing::Lt;
+    using ::testing::MatchesRegex;
+    using ::testing::StartsWith;
+    ...
+    EXPECT_THAT(value1, StartsWith("Hello"));
+    EXPECT_THAT(value2, MatchesRegex("Line \\d+"));
+    ASSERT_THAT(value3, AllOf(Gt(5), Lt(10)));
+
+
+`builtin matchers <https://google.github.io/googletest/reference/matchers.html>`_
+`code custom matchers <https://google.github.io/googletest/gmock_cook_book.html#NewMatchers>`_
+
+- **EXPECT_TRUE(condition)**
+- **ASSERT_TRUE(condition)**

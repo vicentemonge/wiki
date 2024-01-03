@@ -18,12 +18,13 @@ Contents
    bash
    c
    c++
-   cmake
+   cmake   
    tools/conan
    tools/conan2
    tools/conan_admin
    docker
    git
+   google_test
    linux
    yocto
    vscode
