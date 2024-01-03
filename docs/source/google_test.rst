@@ -4,19 +4,15 @@ GOOGLE TEST
 
 `official doc <https://google.github.io/googletest/primer.html>`_
 
-- **assertions**: which are statements that check whether a condition is true. An assertion’s result can be **success**,
-**nonfatal failure** , or **fatal failure**. If a **fatal failure** occurs, it aborts the current function; otherwise
-the program continues normally.
+- **assertions**: which are statements that check whether a condition is true. An assertion’s result can be **success**, **nonfatal failure** , or **fatal failure**. If a **fatal failure** occurs, it aborts the current function; otherwise the program continues normally.
 
 - ASSERT_* versions generate fatal failures when they fail, and abort the current function.
   
-- EXPECT_* versions generate nonfatal failures, which don’t abort the current function. Usually EXPECT_* are preferred,
-as they allow more than one failure to be reported in a test.
+- EXPECT_* versions generate nonfatal failures, which don’t abort the current function. Usually EXPECT_* are preferred, as they allow more than one failure to be reported in a test.
 
 - If a **test crashes** or has a failed assertion, then it fails; otherwise it succeeds.
 
-- You should group your tests into test suites that reflect the structure of the tested code. When multiple tests in a
-test suite need to share common objects and subroutines, you can put them into a **test fixture** class.
+- You should group your tests into test suites that reflect the structure of the tested code. When multiple tests in a test suite need to share common objects and subroutines, you can put them into a **test fixture** class.
 
 - A **test program** can contain multiple test suites.
 
@@ -25,7 +21,7 @@ test suite need to share common objects and subroutines, you can put them into a
 **ASSERTIONS**
 ------------------
 
-`official doc <https://google.github.io/googletest/advanced.html#assertion-placement>`_
+`assertions <https://google.github.io/googletest/advanced.html#assertion-placement>`_
 
 You can use assertions in any C++ function, but assertion that generates a **fatal failure (FAIL* and ASSERT_*) can only
 be used in void-returning functions (constructor and destructor aren't void-returning functions)**. By placing it in a
@@ -60,3 +56,32 @@ initialize return object of type 'bool' with an rvalue of type 'void'" or "error
 
 - **EXPECT_TRUE(condition)**
 - **ASSERT_TRUE(condition)**
+- **EXPECT_FALSE(condition)**
+- **ASSERT_FALSE(condition)**
+
+- **EXPECT_EQ(val1,val2)**
+- **ASSERT_EQ(val1,val2)**
+- **EXPECT_NE(val1,val2)**
+- **ASSERT_NE(val1,val2)**
+- **EXPECT_LT(val1,val2)**
+- **ASSERT_LT(val1,val2)**
+- **EXPECT_LE(val1,val2)**
+- **ASSERT_LE(val1,val2)**
+- **EXPECT_GT(val1,val2)**
+- **ASSERT_GT(val1,val2)**
+- **EXPECT_GE(val1,val2)**
+- **ASSERT_GE(val1,val2)**
+
+.. note:: 
+    
+    If an argument supports the << operator, it will be called to print the argument when the assertion fails
+    `teaching-googletest-how-to-print-your-values <https://google.github.io/googletest/advanced.html#teaching-googletest-how-to-print-your-values>`_
+
+- **EXPECT_STREQ(str1,str2)**
+- **ASSERT_STREQ(str1,str2)**
+- **EXPECT_STRNE(str1,str2)**
+- **ASSERT_STRNE(str1,str2)**
+- **EXPECT_STRCASEEQ(str1,str2)**
+- **ASSERT_STRCASEEQ(str1,str2)**
+- **EXPECT_STRCASENE(str1,str2)**
+- **ASSERT_STRCASENE(str1,str2)**
