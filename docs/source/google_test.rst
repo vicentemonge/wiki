@@ -85,3 +85,11 @@ initialize return object of type 'bool' with an rvalue of type 'void'" or "error
 - **ASSERT_STRCASEEQ(str1,str2)**
 - **EXPECT_STRCASENE(str1,str2)**
 - **ASSERT_STRCASENE(str1,str2)**
+
+- **FLOATING POINT COMPARISON** 
+EXPECT_FLOAT_EQ(val1,val2)
+ASSERT_FLOAT_EQ(val1,val2)
+EXPECT_DOUBLE_EQ(val1,val2)
+ASSERT_DOUBLE_EQ(val1,val2)
+EXPECT_NEAR(val1,val2,abs_error)
+ASSERT_NEAR(val1,val2,abs_error)
