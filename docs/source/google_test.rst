@@ -77,19 +77,102 @@ initialize return object of type 'bool' with an rvalue of type 'void'" or "error
     If an argument supports the << operator, it will be called to print the argument when the assertion fails
     `teaching-googletest-how-to-print-your-values <https://google.github.io/googletest/advanced.html#teaching-googletest-how-to-print-your-values>`_
 
-- **EXPECT_STREQ(str1,str2)**
-- **ASSERT_STREQ(str1,str2)**
-- **EXPECT_STRNE(str1,str2)**
-- **ASSERT_STRNE(str1,str2)**
-- **EXPECT_STRCASEEQ(str1,str2)**
-- **ASSERT_STRCASEEQ(str1,str2)**
-- **EXPECT_STRCASENE(str1,str2)**
-- **ASSERT_STRCASENE(str1,str2)**
-
-- **FLOATING POINT COMPARISON** 
+- **STRING COMPARISON**  **EXPECT_STREQ(str1,str2)** **ASSERT_STREQ(str1,str2)** **EXPECT_STRNE(str1,str2)** **ASSERT_STRNE(str1,str2)** **EXPECT_STRCASEEQ(str1,str2)** **ASSERT_STRCASEEQ(str1,str2)** **EXPECT_STRCASENE(str1,str2)** **ASSERT_STRCASENE(str1,str2)**
+  
+- **FLOATING POINT COMPARISON**
+- 
 EXPECT_FLOAT_EQ(val1,val2)
 ASSERT_FLOAT_EQ(val1,val2)
 EXPECT_DOUBLE_EQ(val1,val2)
 ASSERT_DOUBLE_EQ(val1,val2)
 EXPECT_NEAR(val1,val2,abs_error)
 ASSERT_NEAR(val1,val2,abs_error)
+
+- **EXCEPTION ASSERTIONS** The following assertions verify that a piece of code throws, or does not throw, an exception.
+
+EXPECT_THROW(statement,exception_type)
+ASSERT_THROW(statement,exception_type)
+EXPECT_ANY_THROW(statement)
+ASSERT_ANY_THROW(statement)
+EXPECT_NO_THROW(statement)
+ASSERT_NO_THROW(statement)
+
+.. code-block:: cpp
+  :caption: Note that the piece of code under test can be a compound statement, for example:
+
+    EXPECT_NO_THROW({
+      int n = 5;
+      DoSomething(&n);
+    });
+
+- **PREDICATE ASSERTIONS**
+
+EXPECT_PREDN(pred,val1, val2, ..., valn)
+ASSERT_PREDN(pred,val1, val2, ..., valn)
+
+.. code-block:: cpp
+  :caption: the parameter pred is a function or functor that accepts as many arguments as the corresponding macro accepts values:
+
+    // Returns true if m and n have no common divisors except 1.
+    bool MutuallyPrime(int m, int n) { ... }
+    ...
+    const int a = 3;
+    const int b = 4;
+    const int c = 10;
+    ...
+    EXPECT_PRED2(MutuallyPrime, a, b);  // Succeeds
+    EXPECT_PRED2(MutuallyPrime, b, c);  // Fails
+
+.. note::
+    
+    When the assertion fails, it prints the value of each argument. Arguments are always evaluated exactly once:
+
+    MutuallyPrime(b, c) is false, where
+    b is 4
+    c is 10
+
+
+EXPECT_PRED_FORMATN(pred_formatter,val1, val2, ..., valn)
+ASSERT_PRED_FORMATN(pred_formatter,val1, val2, ..., valn)
+
+
+.. code-block:: cpp
+  :caption: the parameter pred_formatter is a predicate-formatter, which is a function or functor with the signature:
+
+    testing::AssertionResult PredicateFormatter(const char* expr1,
+                                                const char* expr2,
+                                                ...
+                                                const char* exprn,
+                                                T1 val1,
+                                                T2 val2,
+                                                ...
+                                                Tn valn);
+
+where val1, val2, …, valn are the values of the predicate arguments, and expr1, expr2, …, exprn are the corresponding expressions as they appear in the source code. 
+
+.. code-block:: cpp
+
+    testing::AssertionResult IsEven(int n) {
+    if ((n % 2) == 0)
+        return testing::AssertionSuccess() << n << " is even";
+    else
+        return testing::AssertionFailure() << n << " is odd";
+    }
+
+.. note::
+
+    EXPECT_TRUE(IsEven(Fib(4)))
+
+    Value of: IsEven(Fib(4))
+      Actual: false (3 is odd)
+    Expected: true
+
+    EXPECT_FALSE(IsEven(Fib(6)))
+
+    Value of: IsEven(Fib(6))
+      Actual: true (8 is even)
+    Expected: false
+
+`using-a-function-that-returns-an-assertionresult <https://google.github.io/googletest/advanced.html#using-a-function-that-returns-an-assertionresult>`_
+
+
