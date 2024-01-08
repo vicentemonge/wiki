@@ -80,7 +80,7 @@ initialize return object of type 'bool' with an rvalue of type 'void'" or "error
 - **STRING COMPARISON**  **EXPECT_STREQ(str1,str2)** **ASSERT_STREQ(str1,str2)** **EXPECT_STRNE(str1,str2)** **ASSERT_STRNE(str1,str2)** **EXPECT_STRCASEEQ(str1,str2)** **ASSERT_STRCASEEQ(str1,str2)** **EXPECT_STRCASENE(str1,str2)** **ASSERT_STRCASENE(str1,str2)**
   
 - **FLOATING POINT COMPARISON**
-- 
+
 EXPECT_FLOAT_EQ(val1,val2)
 ASSERT_FLOAT_EQ(val1,val2)
 EXPECT_DOUBLE_EQ(val1,val2)
@@ -174,5 +174,9 @@ where val1, val2, …, valn are the values of the predicate arguments, and expr1
     Expected: false
 
 `using-a-function-that-returns-an-assertionresult <https://google.github.io/googletest/advanced.html#using-a-function-that-returns-an-assertionresult>`_
+
+- **DEATH ASSERTIONS**
+
+`death assertions <https://google.github.io/googletest/reference/assertions.html#death>`_
 
 
