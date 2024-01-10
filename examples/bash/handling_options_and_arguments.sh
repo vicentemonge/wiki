@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
             # Enable verbose mode
             verbose=true
             ;;
-        -f|--field)
+        -f|--field) # --field value
             echo -e "\n+ option: '$1'"
             option="$1"
             shift # remove -f/--field from param list

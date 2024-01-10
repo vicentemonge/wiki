@@ -18,6 +18,21 @@ GOOGLE TEST
 
 - **Custom messages**: ASSERT_*/EXPECT_*() << "Anything that can be streamed to an ostream()";
 
+
+**TEST()/TEST_F()**
+-----------------------
+
+TEST(TestSuiteName, TestName)
+arguments go from general to specific. The first argument is the name of the test suite, and the second argument is the
+test's name within the test suite. Both names must be valid C++ identifiers, and they should not contain any underscores
+(_). A test's full name consists of its containing test suite and its individual name. Tests from different test suites
+can have the same individual name.
+
+TEST_F(TestFixtureClassName, TestName)
+Unlike TEST(), in TEST_F() the first argument must be the name of the test fixture class. (_F stands for “Fixture”). No
+test suite name is specified for this macro.
+
+
 **ASSERTIONS**
 ------------------
 
@@ -29,7 +44,7 @@ non-void function you’ll get a confusing compile error like "error: void value
 initialize return object of type 'bool' with an rvalue of type 'void'" or "error: no viable conversion from 'void' to
 'string'". To use a fatal failure in a non-void-returning function may rewrite and pass return as parameter.
 
-- **SUCCEED()**: is purely documentary and currently doesn’t generate any user-visible output.
+- **SUCCEED()**: is purely documentary and currently doesn't generate any user-visible output.
 - **FAIL()**: fatal failure, only on void-returning functions
 - **ADD_FAILURE()**: nonfatal failure.
 - **ADD_FAILURE_AT(file_path, line_number)**: nonfatal failure at that line on that file.
