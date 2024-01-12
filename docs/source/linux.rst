@@ -156,5 +156,8 @@ Lightweight JSON processor
 -X	by extension, alphabetically
 -t	by last modification date (mtime), newer first
 
+**echo**
+ 
+-n "no trailing newline" 
 
 
