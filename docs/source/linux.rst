@@ -137,6 +137,10 @@ Execute a command by each match:
 .. code-block:: console
 
     -exec [COMMAND] {} \;
+    
+    # print each match \n\n and cat
+    $ find -iname project.ini -exec bash -c "echo -e \"\n\n{}\" && cat -n \"{}\"" \;
+
 
 
 **jq**
@@ -159,5 +163,6 @@ Lightweight JSON processor
 **echo**
  
 -n "no trailing newline" 
+-e "interpret \n as new line"
 
 
