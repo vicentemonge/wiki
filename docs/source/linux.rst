@@ -166,3 +166,24 @@ Lightweight JSON processor
 -e "interpret \n as new line"
 
 
+
+**zip, rar, tar**
+
+You can store **symlinks** as symlinks (as opposed to a copy of the file/directory they point to) using the --symlinks or -y
+parameters of the zip program. Assuming foo is a directory containing symlinks:
+
+.. code-block:: console
+
+    zip --symlinks -r foo.zip foo/
+    # or
+    zip -y -r foo.zip foo/
+
+    # Rar equivalent:
+    rar a -ol foo.rar foo/
+
+    #tar stores them as is by default.
+    tar czpvf foo.tgz foo/
+
+
+
+

@@ -42,6 +42,11 @@ some commands (more commands on linux section)
     -gt: greater than
     -ge: greater than or equal to
 
+- Check variables:
+
+    -n: not empty
+    -z: empty
+
 - Check last command ok:
 
 .. code-block:: console

@@ -30,5 +30,6 @@ Contents
    vscode
    readthedocs
    restructuredtext
+   rust
    sandbox
    thirdparty/Markdown-Cheatsheet

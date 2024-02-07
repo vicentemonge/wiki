@@ -18,11 +18,15 @@ echo 0 > /sys/class/leds/pass_light/brightness
 
 ## MACS
 
+03
+MAC Address: 00:25:CA:7E:09:AD (LS Research)
+
 05
 MAC Address: 00:25:CA:7E:09:A7 (LS Research)
 
 07
 MAC Address: 00:25:CA:7E:09:87 (LS Research)
+
 
 # SFTP AWS
 

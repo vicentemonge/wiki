@@ -6,6 +6,13 @@ Macros vs functions
 
 (See CMakelist.txt in folder resources)
 
+- CMakeLists.txt path:
+
+.. code-block:: cmake
+
+   CMAKE_CURRENT_SOURCE_DIR # is the top CMakeLists.txt path if a caller exists
+   CMAKE_CURRENT_LIST_DIR  # is the current file path
+
 - Pass list to a macro:
 
 .. code-block:: cmake

@@ -176,8 +176,7 @@ that file making it static erasing comments on header (see the file to understan
             version: [1.1, 1.2]
         msvc:
 
- - **Options** (package-specific
-configuration: shared, static, etc).
+ - **Options** (package-specific configuration: shared, static, etc).
 
 .. code-block:: console
   
@@ -574,7 +573,7 @@ def **build_requirements** (self)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The build_requirements() method in a conanfile.py is functionally equivalent to the requirements() method, and it is
-executed just after it. It’s not strictly necessary, and everything that is inside this method could theoretically be
+executed just after it. It's not strictly necessary, and everything that is inside this method could theoretically be
 done at the end of the requirements() method. However, build_requirements() is useful for having a dedicated place to
 define tool_requires and test_requires.
 
