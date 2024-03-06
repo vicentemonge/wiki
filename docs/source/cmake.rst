@@ -54,6 +54,10 @@ Macros vs functions
    endif()
    ...
 
+- Check variables 3: Check variable emptiness
+
+
+
 - Check file exist: for files and directories. The file(EXISTS ...) evaluates to TRUE if exists, and FALSE otherwise.
 
 .. code-block:: cmake
