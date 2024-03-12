@@ -28,7 +28,6 @@ IMAGES
 "/path/to/": tells Docker to look for the build context in the current directory. The Dockerfile and any files it
 references should be located in or below this directory.
 
-
 - **Image from container current state**: Use the docker commit command to create a new Docker image from the current
 state of the container. You'll specify the container ID or name and a name for the new image:
 

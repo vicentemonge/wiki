@@ -7,17 +7,23 @@ Shell startup
 **~/.profile** (executed if no ~/.bash_profile or no ~/.bash_login exists):
 load **.bashrc** and add user's private bin to the PATH PATH="$HOME/bin:$PATH"  PATH="$HOME/.local/bin:$PATH"
 
-File/folder permissions
--------------------------
+File/folder permissions/owner
+---------------------------------
 
-read, write and execute permissions in format **drwxrwxrwx N <user> <group>**
+Read, write and execute permissions in format **drwxrwxrwx N <user> <group>**
 
 directory or file (d or -)
 first rwx: owner permissions over file
 second rwx: group permissions over file
 third rwx: everyone permissions over files
 
-To change permissions: chmod ABC file/folder # A = 4(r) + 2(w) + 1(x)
+To change permissions: **chmod** ABC file/-R folder # A = 4(r) + 2(w) + 1(x)
+To change owner: **chown** [user]:[group] file/-R folder
+
+.. code-block:: console
+
+    $ chmod -R 755 /one/directory # -R recursively
+    $ chown -R vmonge:vmonge /one/directory
 
 Shortcuts
 ---------
