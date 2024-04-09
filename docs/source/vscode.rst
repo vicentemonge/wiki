@@ -89,6 +89,20 @@ debug
 
 **CTRL + SHIFT + D** To access debug view and **createa lauch.json file** select type between available options
 
+Empty file
+
+.. code-block:: json
+
+    {
+        // Use IntelliSense to learn about possible attributes.
+        // Hover to view descriptions of existing attributes.
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": []
+    }
+
+    Example configuration (inside "configurations": [])
+
 .. code-block:: json
 
     {
