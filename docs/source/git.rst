@@ -55,6 +55,9 @@ diff
     A file1
     M file3
 
+    $ git diff <A> <B> -- ':!my_folder01' ':!my_folder02' # skip folders 'my_folder01' and 'my_folder02'
+
+
 --cached
 ---------
 
