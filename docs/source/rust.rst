@@ -2,10 +2,39 @@ RUST
 ==============
 
 .. code-block:: rust
+    // types
+    "XXXXX"     str
+    'X'         char
+    true/false  bool
+
+    // let variable inmutable[: tipo] = initialization
+    let x: i32 = 0;
+
+    // mut makes variable variable
+    let mut y: i32 = 0;
+    y = 22
+
+    //
+    let mut i = 43;
+    i = 42.0; // ERROR -> different type
+
+    // let let you reuse a name (shadowing)
+    let number = "T-H-R-E-E";
+    let number = 3;
+
+    // const needs type
+    const NUMBER: i8 = 3;
+
+    // function ([parameters]) [-> return type] {}
+    fn call_me(param1:i8) -> i32 {2}
+    // return value
+    2
+    return 2
+    return 2;
 
     let cat = ("Furry McFurson", 3.5);
     let (name, age) /* your pattern here */ = cat;
-    println!("{} is {} years old.", name, age);
+    println!("{} is {} years old.", name, age); // println! prints a line
 
 
 .. code-block:: rust
@@ -24,19 +53,51 @@ RUST
         (a, v)
     }
 
+tuple
+----
+
+.. code-block:: rust
+
+    let cat = ("Furry McFurson", 3.5);
+    let (name, age) = cat;
+    let name2 = cat.0
+    let age2 = cat.1
+
+for
+----
+
+.. code-block:: rust
+
+    // for
+    for i in 0..num {
+        println!("Ring! Call number {}", i + 1);
+    }
+
+
+if
+----
+
+.. code-block:: rust
+
+    // if [()]{}[else{}]
+    if a >= b {a} else [if] {b}
+
+array
+-----------------
+
+.. code-block:: rust
+
+    // array [:[type; size]] = [value; elements]
+    let a: [i32; 100] = [0; 100];
+
 
 vectors
 -----------------
 
-empty:
+.. code-block:: rust
 
-let v: Vec<i32> = Vec::new();
-
-from values:
-
-let v = vec![1, 2, 3];
-
-let v = vec![1, 2, 3, 4, 5];
+    let v: Vec<i32> = Vec::new(); // empty
+    let v = vec![1, 2, 3]; // from values
 
 .. code-block:: rust
 
@@ -55,11 +116,10 @@ modificar un vector usando un iterador mutable:
 
     fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
         for element in v.iter_mut() {
-            // TODO: Fill this up so that each element in the Vec `v` is
-            // multiplied by 2.
+            // each element in the Vec `v` is multiplied by 2.
             *element = *element * 2;
+            *element*=2;
         }
-        v
     }
 
 crear vector modificando otro:
@@ -68,9 +128,8 @@ crear vector modificando otro:
 
     fn vec_map(v: &Vec<i32>) -> Vec<i32> {
         v.iter().map(|element| {
-            // TODO: Do the same thing as above - but instead of mutating the
-            // Vec, you can just return the new number!
-            2*element
+            // each element in the Vec `v` is multiplied by 2, just return the new number!
+            element*2
         }).collect()
     }
 
