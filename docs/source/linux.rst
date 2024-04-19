@@ -76,6 +76,7 @@ Services
 
 Status of a service: **systemctl status service_name**
 Enable a service: **systemctl enable service_name**
+Disable a service, do not launch next reboot: **systemctl disable service_name** 
 Start a service: **systemctl start service_name**
 Stop a service: **systemctl stop service_name**
 Logs from service: **journalctl -u service_name**
@@ -83,6 +84,18 @@ Follow logs from service: **journalctl -u service_name -f**
 See running service: **systemctl --state=running**
 See present service: **systemctl --type=service**
 Binary of a service: **systemctl show --property=ExecStart service_name**
+
+journalctl
+-----------------
+
+Retain only the past two days:
+
+journalctl --vacuum-time=2d
+
+Retain only the past 500 MB:
+
+journalctl --vacuum-size=500M
+
 
 Commands
 ------------------------------
