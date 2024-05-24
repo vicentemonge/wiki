@@ -46,7 +46,7 @@ npx ts-node main.ts -> lanza el typescript directamente sin compilarlo
 
 ### 1.- Broker - Server
 
-1.1.- **event_generator** (prueba status): 4 send status; charge point 3; status 6 charging
+1.1.- **event_generator** (prueba status): 4 send status; charge point 6; status 3 charging
 1.2.- **manager**
 
 IN >>> msg_handler: type: 4	group: 64
@@ -94,6 +94,15 @@ Apr 24th 24, 12:08:26 (7)
         },
         "evseId": 6
     }
+]
+
+[
+  2,
+  "1536411756669",
+  "RequestStopTransaction",
+  {
+  		"transactionId": "1715155634-436691"
+  }
 ]
 
 2.2.- **server**

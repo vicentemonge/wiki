@@ -159,3 +159,31 @@ search with line numbers
 .. note::
 
     "search.showLineNumbers": true
+
+REMOTE DEBUG
+--------------
+
+En la consola remota:
+
+.. code-block:: bash
+
+    # sudo para este caso en concreto no para todos
+    $ sudo gdbserver :1234  ./writer_test
+
+Parte del launch.json:
+
+.. code-block:: json
+
+    {
+        "name": "(gdb) rem writer",
+        "type": "cppdbg",
+        "request": "launch",
+        "miDebuggerPath": "/usr/bin/gdb-multiarch",
+        "program": "${workspaceFolder}/build/writer_test",
+        "miDebuggerServerAddress": "172.20.0.10:1234",
+        "cwd": "${workspaceFolder}",
+        "externalConsole": true,
+        "linux": {
+            "MIMode": "gdb"
+        }
+    }
