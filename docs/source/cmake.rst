@@ -55,7 +55,16 @@ Macros vs functions
 
 - Check variables 3: Check variable emptiness
 
+.. code-block:: cmake
+   :linenos:
+   :lineno-start: 1
 
+   # Check if the variable is empty
+   if("${MY_VARIABLE}" STREQUAL "")
+      message(STATUS "MY_VARIABLE is empty")
+   else
+      message(STATUS "MY_VARIABLE is not empty")
+   endif()
 
 - Check file exist: for files and directories. The file(EXISTS ...) evaluates to TRUE if exists, and FALSE otherwise.
 
