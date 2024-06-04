@@ -66,6 +66,22 @@ Macros vs functions
       message(STATUS "MY_VARIABLE is not empty")
    endif()
 
+- Check multiple conditions:
+
+  Combining Conditions: AND, NOT, OR
+
+.. code-block:: cmake
+   :linenos:
+   :lineno-start: 1
+
+   if("${PROJECT_NAME}" STREQUAL "expected_project_name" AND OTHER_CONDITION)
+      message(STATUS "PROJECT_NAME is as expected and OTHER_CONDITION is TRUE")
+   elseif("${PROJECT_NAME}" STREQUAL "" OR NOT OTHER_CONDITION)
+      message(STATUS "PROJECT_NAME is empty or OTHER_CONDITION is FALSE")
+   else()
+      message(STATUS "PROJECT_NAME is different and OTHER_CONDITION is TRUE")
+   endif()
+
 - Check file exist: for files and directories. The file(EXISTS ...) evaluates to TRUE if exists, and FALSE otherwise.
 
 .. code-block:: cmake
