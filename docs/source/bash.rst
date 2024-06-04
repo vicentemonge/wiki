@@ -152,3 +152,23 @@ PATH STACK
 
     $ pushd
     $ popd
+
+
+**Grouping commands**
+-----------------------
+
+**;**
+
+If you want to **run multiple commands consecutively**, i.e., run the next command after the previous one finishes, use the semicolon (;).
+
+**()**
+
+    ( list )
+
+    Placing a list of commands between parentheses **forces the shell to create a subshell** (see Command Execution Environment), and each of the commands in list is executed in that subshell environment. Since the list is executed in a subshell, variable assignments do not remain in effect after the subshell completes.
+
+**{}**
+
+    { list; }
+
+    Placing a list of commands between curly braces causes the list to be **executed in the current shell context**. No subshell is created. The semicolon (or newline) following list is required. 
