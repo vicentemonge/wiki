@@ -172,3 +172,48 @@ If you want to **run multiple commands consecutively**, i.e., run the next comma
     { list; }
 
     Placing a list of commands between curly braces causes the list to be **executed in the current shell context**. No subshell is created. The semicolon (or newline) following list is required. 
+
+
+**LOOPS**
+-----------------------
+
+- **Iterate over a list**
+
+.. code-block:: console
+
+    # by elements
+
+    for line in "${lines[@]}"; do
+        echo "|$line|"
+    done
+
+    # by index
+
+    for index in "${!lines[@]}"; do
+        # Access the element at the current index
+        line="${lines[$index]}"
+        
+        # Print the index and the corresponding line
+        echo "Index: $index, Line: |$line|"
+    done
+
+    # c like for
+
+    start=5
+    max=10
+    for ((i = start; i <= max; i++)); do
+        echo "Current value: $i"
+    done
+
+    #by range
+
+    # Nested loop
+    for i in {1..3}; do
+        echo "Outer loop iteration: $i"
+        for j in {1..3}; do
+            echo "Inner loop iteration: $j"
+            if [ $i -eq 2 ] && [ $j -eq 2 ]; then
+                break 2  # Break out of both outer and inner loops
+            fi
+        done
+    done
