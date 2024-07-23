@@ -1,13 +1,21 @@
 CHARGER
 =====================
 
+ConfigVars
+---------------------
+
+Están en la base de datos /etc/pe/config.db
+
+
+OCPP
+-----------------
 web cargador: https://192.168.204.10/
 
 - Para setear los precios:
 	ConfigVars -> 6. Show prices on HMI and enable POS
 
-PowerComms
---------------------
+[PowerComms]
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 G1 900 clave desarrollador
 OCPP en Rpi:
@@ -17,6 +25,22 @@ Al reiniciar placa hay que remover la protección
 	SG2.3.14 SI
 
 SG1.1.6 Reset sistema 1903
+
+BUPS UPDATES
+-------------
+
+El proceso es **pe-lauchhupdate.sh**
+
+La actualización en curso está en **/var/updates/.upgrade-tmp/**
+La última está en **/var/updates/files/**
+
+Para actualizar a mano hay que hacer:
+
+.. code-block:: bash
+
+	/usr/local/bin/pe-verify-bups.sh /var/updates/files/4.1.0_5_Signed_new_invoice1.0.3_sftp.bups /etc/pe/backend/lib/security/power_official_pub.pem
+ 	nohup /usr/local/bin/pe-launchupdate.sh &
+
 
 PowerComms en Linux
 ------------------------
