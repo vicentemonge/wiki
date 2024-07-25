@@ -1,6 +1,8 @@
 CHARGER
 =====================
 
+Limpiar reglas del firewall /etc/pe/iptables/restore
+
 ConfigVars
 ---------------------
 
@@ -14,6 +16,7 @@ web cargador: https://192.168.204.10/
 - Para setear los precios:
 	ConfigVars -> 6. Show prices on HMI and enable POS
 
+
 [PowerComms]
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -25,6 +28,9 @@ Al reiniciar placa hay que remover la protección
 	SG2.3.14 SI
 
 SG1.1.6 Reset sistema 1903
+
+DC1 192.168.204.12 
+SG2.3.14 bypass a Sí (con esto ya carga al menos en el Nayax)
 
 BUPS UPDATES
 -------------
