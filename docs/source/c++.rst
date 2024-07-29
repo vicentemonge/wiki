@@ -1,7 +1,20 @@
 C++
 =======================
+- printf
+- Condition variable
+- LINKAGE
+- RVALUE REFERENCES
+- Catch SIGINT
+- TO BE LEARNED
 
 
+**TO BE LEARNED**
+=====================
+https://en.cppreference.com/w/cpp/thread/jthread
+clog
+
+**printf**
+-------------------------
 
 *std::cout*
 
@@ -16,7 +29,7 @@ pasarle un objeto en vez de su dirección para el primer %p hace que el 2o se pr
 
 
 
-Condition variable
+**Condition variable**
 ------------------------
 
 .. code-block:: C++
@@ -33,7 +46,7 @@ Condition variable
     cv.notify_all();
 
 
-LINKAGE
+**LINKAGE**
 ----------------
 
 **ld: undefined reference to '' but symbols are defined**
@@ -43,7 +56,7 @@ would be -lA -lB -lC. If you initially link in a different order, the linker wil
 
 **RPATH and RUNPATH**
 
-RVALUE REFERENCES
+**RVALUE REFERENCES**
 -----------------------
 
 Giving a rigorous definition is surprisingly difficult, but the explanation below is good enough for the purpose at hand:
@@ -174,7 +187,7 @@ called on an lvalue or an rvalue?"**
     then, according to the final version of C++11, foo can be called on r-values, but trying to call it on an l-value will
     trigger a compile error.
 
-Forcing Move Semantics
+**Forcing Move Semantics**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **std::move** is a function that turns its argument into an rvalue without doing anything else:
@@ -221,3 +234,27 @@ overload of the copy assignment operator:
     
     return *this;
     }
+
+**Catch SIGINT**
+-------------------------
+
+.. code-block:: C++
+
+    #include <signal.h>
+
+    static volatile int keepRunning = 1;
+
+    void intHandler(int dummy) {
+        keepRunning = 0;
+    }
+
+    // ...
+
+    int main(void) {
+
+    signal(SIGINT, intHandler);
+
+    while (keepRunning) { 
+        // ...
+
+
