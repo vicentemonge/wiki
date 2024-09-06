@@ -88,3 +88,13 @@ user=vmonge
 wine /home/${user}/.wine/drive_c/users/${user}/AppData/Local/PowerCommsV/PowerCommsV.exe &> /dev/null
 
 -->
+
+
+Activar VPN
+~~~~~~~~~~~~~
+Activar VPN: G6.8.1 Habilitado
+subspace02.power-electronics.com:8443
+user sat@power-electronics.com
+psw el mismo que el de la web que tienes memorizado en el firefox
+
+Activar WAN: G6.5.4.0/1 Sí
