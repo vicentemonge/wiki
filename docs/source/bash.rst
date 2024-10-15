@@ -71,6 +71,13 @@ some commands (more commands on linux section)
         echo $USAGE
     fi
 
+    # Check if at least one argument is passed
+    if [ "$#" -ge 1 ]; then
+        echo "Well done!"
+    else
+        echo $USAGE
+    fi
+
 
 - Check file exist:
 
