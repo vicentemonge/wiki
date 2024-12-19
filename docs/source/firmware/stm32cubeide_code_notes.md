@@ -65,3 +65,47 @@ void HAL_MspInit(void)
 ...
 }
 ```
+
+---
+
+### UCPD
+
+**UCPD** stands for **USB Type-C / USB Power Delivery**. It is a peripheral available in certain STM32 microcontrollers, such as the **STM32G4** series, to support USB Type-C connectivity and USB Power Delivery (USB-PD) communication.
+
+### Features of UCPD:
+1. **USB Power Delivery Communication**:  
+   - Handles communication of USB PD protocol messages using **BMC (Biphase Mark Coding)** over the **CC (Configuration Channel)** pins of the Type-C connector.
+   - Supports communication between a Source (power provider) and Sink (power consumer).
+
+2. **Power Negotiation**:  
+   - Allows devices to negotiate voltages (e.g., 5V, 9V, 12V, 20V) and power levels.
+
+3. **Role Management**:  
+   - Supports **Dual Role Power (DRP)**: A device can act as both power source and sink.
+   - Supports **Try.SNK** and **Try.SRC** roles for negotiation priorities.
+
+4. **USB Type-C State Management**:  
+   - Detects cable attachment, orientation, and connection state using the **CC lines**.
+
+5. **Low-Power Operation**:  
+   - The UCPD peripheral is optimized for low-power communication during USB Power Delivery.
+
+---
+
+## Interrupt Service Routines: Core/Src/stm32g4xx_it.c
+
+```diff
++ /**
++   * @brief This function handles EXTI line[15:10] interrupts.
++   */
++ void EXTI15_10_IRQHandler(void)
++ {
++   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
++ 
++   /* USER CODE END EXTI15_10_IRQn 0 */
++   HAL_GPIO_EXTI_IRQHandler(B1_Pin);
++   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
++ 
++   /* USER CODE END EXTI15_10_IRQn 1 */
++ }
+```
